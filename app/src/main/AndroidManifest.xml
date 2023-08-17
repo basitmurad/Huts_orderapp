@@ -13,34 +13,46 @@
         android:theme="@style/Theme.Huts"
         tools:targetApi="31">
         <activity
+            android:name=".ui.HutsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.CartsActivity"
+            android:exported="false"
+            android:theme="@style/Custom.Theme.Huts" />
+        <activity
             android:name=".ui.SpeciaLOfferActivity"
             android:exported="false"
-            android:theme="@style/Custom.Theme.Huts"
-            />
+            android:theme="@style/Custom.Theme.Huts" />
         <activity
             android:name=".ui.FastFoodAndOtherActivity"
             android:exported="false"
-            android:theme="@style/Custom.Theme.Huts"/>
+            android:theme="@style/Custom.Theme.Huts" />
         <activity
             android:name=".ui.LunchAndDinnerActivity"
             android:exported="false"
-            android:theme="@style/Custom.Theme.Huts"/>
+            android:theme="@style/Custom.Theme.Huts" />
         <activity
             android:name=".ui.BreakFastActivity"
             android:exported="false"
-            android:theme="@style/Custom.Theme.Huts"/>
+            android:theme="@style/Custom.Theme.Huts" />
         <activity
             android:name=".ui.SettingActivity"
             android:exported="false"
-            android:theme="@style/Custom.Theme.Huts"/>
+            android:theme="@style/Custom.Theme.Huts" />
         <activity
             android:name=".ui.ProfileActivity"
             android:exported="false"
-            android:theme="@style/Custom.Theme.Huts"/>
+            android:theme="@style/Custom.Theme.Huts" />
         <activity
             android:name=".ui.DashboardActivity"
-            android:exported="false"
-            android:theme="@style/Custom.Theme.Huts" />
+            android:exported="true"
+            android:theme="@style/Custom.Theme.Huts">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.RegistrationActivity"
             android:exported="false"
@@ -52,13 +64,7 @@
         <activity
             android:name=".ui.SplashActivity"
             android:exported="true"
-            android:theme="@style/Custom.Theme.Huts">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Custom.Theme.Huts" />
         <activity
             android:name=".MainActivity"
             android:exported="true" />
