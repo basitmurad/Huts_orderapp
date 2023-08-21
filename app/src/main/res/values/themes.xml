@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Huts" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.Huts1" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
@@ -9,5 +9,5 @@
         <item name="colorPrimary">#FFFC961E</item>
     </style>
 
-    <style name="Theme.Huts" parent="Base.Theme.Huts" />
+    <style name="Theme.Huts1" parent="Base.Theme.Huts" />
 </resources>

@@ -48,17 +48,6 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
 
-// ... other code ...
-
-//        binding.toggleButtonShowwwPassword.setOnCheckedChangeListener((buttonView, isChecked) -> {
-//            if (isChecked) {
-//                binding.editTextTextPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-//            } else {
-//                binding.editTextTextPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-//            }
-//            // Move the cursor to the end of the text to ensure it's still visible
-//            binding.editTextTextPassword.setSelection(binding.editTextTextPassword.getText().length());
-//        });
 
 
         binding.btnNewAccount.setOnClickListener(view -> {
@@ -66,5 +55,11 @@ public class SignUpActivity extends AppCompatActivity {
 
             startActivity(new Intent(SignUpActivity.this , RegistrationActivity.class));
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
     }
 }

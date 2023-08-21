@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.view.View;
 
 import com.example.huts.databinding.ActivitySplashBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -19,20 +21,33 @@ public class SplashActivity extends AppCompatActivity {
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.btnGetStarted.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(SplashActivity.this,SignUpActivity.class));
-            }
-        });
+
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
 
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
-                startActivity(new Intent(SplashActivity.this,SignUpActivity.class));
+                if (currentUser != null) {
+                    // User is authenticated, go to the dashboard
+                    startActivity(new Intent(SplashActivity.this, DashboardActivity.class));
+                    finish(); // Finish the current activity
+                } else {
+                    // User is not authenticated, go to the signup activity
+                    startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
+                    finish(); // Finish the current activity
+                }
             }
-        },1500);
+        },700);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        finish();
     }
 }
