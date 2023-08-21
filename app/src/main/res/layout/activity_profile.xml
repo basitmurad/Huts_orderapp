@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.ProfileActivity">
+
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_height="80dp"
+        android:layout_width="100dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/huts"
+      android:layout_gravity="center"
+
+        />
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Profile"
+        android:textColor="@color/text_color"
+        android:textSize="24sp"
+
+        android:textAlignment="center"
+
+        />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="90dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/baseline_person_24"
+            android:drawablePadding="15dp"
+            android:fontFamily="@font/inter"
+            android:paddingStart="10dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:text="Saleem"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_margin="4dp"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/backButton_color" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/baseline_person_24"
+            android:drawablePadding="15dp"
+            android:fontFamily="@font/inter"
+            android:paddingStart="10dp"
+            android:paddingTop="6dp"
+            android:layout_margin="4dp"
+            android:paddingBottom="6dp"
+            android:text="Number"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/backButton_color" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/baseline_person_24"
+            android:drawablePadding="15dp"
+            android:fontFamily="@font/inter"
+            android:paddingStart="10dp"
+            android:paddingTop="6dp"
+            android:layout_margin="4dp"
+            android:paddingBottom="6dp"
+            android:text="Email"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/backButton_color" />
+
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
