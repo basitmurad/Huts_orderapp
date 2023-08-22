@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +23,9 @@ import com.example.huts.model.CartItem;
 import com.example.huts.model.DishDetail;
 import com.example.huts.ui.DbHelper;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Base64;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
@@ -54,14 +58,26 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.itemName.setText(dishDetail.getName());
         holder.itemPrice.setText(String.valueOf(dishDetail.getPrice()));
         holder.cartItemPriceTOTAL.setText(String.valueOf(dishDetail.getPrice()));
-
-
-
         byte[] imageByteArray = dishDetail.getImageByteArray();
         Bitmap imageBitmap = convertByteArrayToBitmap(imageByteArray);
+
         holder.itemImage.setImageBitmap(imageBitmap);
 
 
+
+//        byte[] imageByteArray = dishDetail.getImageByteArray();
+//        Bitmap imageBitmap = convertByteArrayToBitmap(imageByteArray);
+////
+////        holder.itemImage.setImageURI(getImaEuR(context,imageBitmap));
+////        holder.itemImage.setIma(imageBitmap);
+////
+////        Bitmap imageBitmap = convertByteArrayToBitmap(imageByteArray);
+//
+//// Get the image URI from the Bitmap
+//        Uri imageUri = getImageUriFromBitmap(context, imageBitmap);
+//
+//// Set the image URI to the ImageView
+//        holder.itemImage.setImageURI(imageUri);
         holder.btndelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,9 +149,28 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
 
 
-    private Bitmap convertByteArrayToBitmap(byte[] byteArray) {
-        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+//    private Bitmap convertByteArrayToBitmap(byte[] byteArray) {
+//        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+//    }
+
+    private Uri getImageUriFromBitmap(Context context, Bitmap image) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), image, "Title", null);
+        return Uri.parse(path);
     }
+
+  
+    private Bitmap convertByteArrayToBitmap(byte[] byteArray) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+
+        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length, options);
+    }
+
+
+
 
 
     @Override

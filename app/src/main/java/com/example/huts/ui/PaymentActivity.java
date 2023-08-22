@@ -35,10 +35,21 @@ public class PaymentActivity extends AppCompatActivity {
         sessionManager = new SessionManager(this);
 
       String hut =  sessionManager.getHutName();
+      String userEmail = sessionManager.getEmail();
+      String userName = sessionManager.getNaame();
+
 //
 //        Toast.makeText(this, ""+hut, Toast.LENGTH_SHORT).show();
+// Inside your onClick method in PaymentActivity
 
 
+
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         binding.btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,8 +60,10 @@ public class PaymentActivity extends AppCompatActivity {
 
                 // Send data to Firebase
                 DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("orders");
-                String orderId = ordersRef.push().getKey(); // Generate a unique key
-                OrderData orderData = new OrderData(hut, total, orderDetailsList); // Create a class to hold the data
+                String orderId = ordersRef.push().getKey(); // Generate a unique key as the order ID
+
+                // Create an OrderData instance with the data you want to save
+                OrderData orderData = new OrderData(hut,total,orderDetailsList,orderId);
 
                 ordersRef.child(orderId).setValue(orderData)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -58,15 +71,9 @@ public class PaymentActivity extends AppCompatActivity {
                             public void onSuccess(Void unused) {
                                 // Data sent successfully, start PaymentActivity
                                 dbHelper.deleteAllOrders();
-                                Toast.makeText(PaymentActivity.this, "Order Place successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PaymentActivity.this, "Order Placed successfully", Toast.LENGTH_SHORT).show();
 
-
-                                startActivity(new Intent(PaymentActivity.this,DashboardActivity
-                                        .class));
-//                                Intent intent = new Intent(OrderActivity.this, PaymentActivity.class);
-//
-//                                intent.putExtra("orderId", orderId); // Pass the order ID if needed
-//                                startActivity(intent);
+                                startActivity(new Intent(PaymentActivity.this, DashboardActivity.class));
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -78,6 +85,47 @@ public class PaymentActivity extends AppCompatActivity {
                         });
             }
         });
+
+
+//        binding.btnOrder.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                DbHelper dbHelper = new DbHelper(PaymentActivity.this);
+//                ArrayList<OrderDetails> orderDetailsList = dbHelper.getAll();
+//
+//                int total = (int) dbHelper.calculateTotalNewPrice();
+//
+//                // Send data to Firebase
+//                DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("orders");
+//                String orderId = ordersRef.push().getKey(); // Generate a unique key
+//                OrderData orderData = new OrderData(hut, total, orderDetailsList); // Create a class to hold the data
+//
+//                ordersRef.child(orderId).setValue(orderData)
+//                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                            @Override
+//                            public void onSuccess(Void unused) {
+//                                // Data sent successfully, start PaymentActivity
+//                                dbHelper.deleteAllOrders();
+//                                Toast.makeText(PaymentActivity.this, "Order Place successfully", Toast.LENGTH_SHORT).show();
+//
+//
+//                                startActivity(new Intent(PaymentActivity.this,DashboardActivity
+//                                        .class));
+////                                Intent intent = new Intent(OrderActivity.this, PaymentActivity.class);
+////
+////                                intent.putExtra("orderId", orderId); // Pass the order ID if needed
+////                                startActivity(intent);
+//                            }
+//                        })
+//                        .addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//                                // Handle failure
+//                                Toast.makeText(PaymentActivity.this, "Failed to send data to Firebase", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//            }
+//        });
 
     }
 }

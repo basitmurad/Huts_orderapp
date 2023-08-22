@@ -16,36 +16,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/baseline_arrow_back_24"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
 
         <LinearLayout
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/btnBack"
-            app:layout_constraintTop_toBottomOf="@+id/btnBack">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_marginStart="10dp"
-                android:src="@drawable/menu" />
+                android:id="@+id/btnBack"
+                android:src="@drawable/baseline_arrow_back_24" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -65,11 +56,11 @@
             <ImageView
                 android:id="@+id/btncart"
                 android:layout_width="35dp"
-android:visibility="invisible"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="10dp"
-
                 android:src="@drawable/cart"
+
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent" />
         </LinearLayout>
 
@@ -79,7 +70,7 @@ android:visibility="invisible"
             android:layout_marginStart="40dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="40dp"
-            android:visibility="invisible"
+
             android:layout_marginBottom="16dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -96,7 +87,7 @@ android:visibility="invisible"
 
 
                 android:padding="2dp"
-                android:text="Search Your Dish"
+                android:text="Search Your hut"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
@@ -118,7 +109,7 @@ android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/hutRecycler"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
 
         tools:listitem="@layout/huts_layout"
 

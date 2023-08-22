@@ -7,334 +7,360 @@
     tools:context=".ui.DashboardActivity">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:background="@drawable/backdashboard"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
 
+        >
 
-        <LinearLayout
-            android:id="@+id/linearLayout4"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="wrap_content">
 
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginStart="10dp"
-                android:src="@drawable/menu" />
-
-            <TextView
-                android:id="@+id/textView7"
+            <include
+                android:id="@+id/include"
+                layout="@layout/appbar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/inter_bold"
-                android:text="Huts.com"
-                android:textAlignment="center"
-
-                android:textColor="@color/white"
 
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:layout_height="100dp" />
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="35dp"
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
 
-                android:layout_height="35dp"
-                android:layout_marginEnd="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/include">
 
-                android:src="@drawable/cart"
-                app:layout_constraintEnd_toEndOf="parent" />
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="vertical">
 
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginTop="12dp"
+
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginBottom="12dp"
+                        android:orientation="vertical"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="20dp">
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/btnBreakfast"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/backButton_color">
 
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:orientation="vertical"
-           android:layout_marginTop="6dp"
-           >
-           <androidx.cardview.widget.CardView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               app:cardCornerRadius="20dp"
-               app:cardElevation="20dp"
-
-               android:layout_marginStart="6dp"
-               android:layout_marginEnd="6dp"
-               android:layout_marginTop="12dp"
-               android:layout_marginBottom="12dp"
-               android:orientation="vertical">
-
-
-               <androidx.constraintlayout.widget.ConstraintLayout
-                   android:id="@+id/btnBreakfast"
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"
-                   android:background="@color/backButton_color">
 
+                            <LinearLayout
+                                android:id="@+id/linearLayoutb"
+                                android:layout_width="0dp"
 
-                   <LinearLayout
-                       android:id="@+id/linearLayoutb"
-                       android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginBottom="16dp"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/breakfastImage"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.0">
 
-                       android:layout_height="wrap_content"
-                       android:layout_marginStart="10dp"
-                       android:layout_marginTop="16dp"
-                       android:layout_marginBottom="16dp"
-                       android:orientation="vertical"
-                       app:layout_constraintBottom_toBottomOf="parent"
-                       app:layout_constraintEnd_toStartOf="@+id/breakfastImage"
-                       app:layout_constraintHorizontal_bias="0.0"
-                       app:layout_constraintStart_toStartOf="parent"
-                       app:layout_constraintTop_toTopOf="parent"
-                       app:layout_constraintVertical_bias="0.0">
+                                <TextView
+                                    android:id="@+id/BreakfastName"
 
-                       <TextView
-                           android:id="@+id/BreakfastName"
+                                    style="@style/dishname_style"
+                                    android:text="Breakfast" />
 
-                           style="@style/dishname_style"
-                           android:text="Breakfast"
-                            />
+                                <TextView
+                                    android:id="@+id/Breakfastdescription"
 
-                       <TextView
-                           android:id="@+id/Breakfastdescription"
+                                    style="@style/dishdescription_style"
+                                    android:text="Oder from your favorite\nrestaurants and home\nchefs"
 
-                           android:text="Oder from your favorite\nrestaurants and home\nchefs"
-               style="@style/dishdescription_style"
-
-                           />
+                                    />
 
-                   </LinearLayout>
+                            </LinearLayout>
 
-                   <ImageView
-                       android:id="@+id/breakfastImage"
+                            <ImageView
+                                android:id="@+id/breakfastImage"
 
-                       android:src="@drawable/breakfast"
-                       app:layout_constraintBottom_toBottomOf="@+id/linearLayoutb"
-                       app:layout_constraintEnd_toEndOf="parent"
-                       app:layout_constraintTop_toTopOf="@+id/linearLayoutb"
-                       style="@style/dashboardImage_style" />
+                                style="@style/dashboardImage_style"
+                                android:src="@drawable/breakfast"
+                                app:layout_constraintBottom_toBottomOf="@+id/linearLayoutb"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/linearLayoutb" />
 
 
-               </androidx.constraintlayout.widget.ConstraintLayout>
-           </androidx.cardview.widget.CardView>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
 
 
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginTop="12dp"
 
-           <androidx.cardview.widget.CardView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               app:cardCornerRadius="20dp"
-               app:cardElevation="20dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginBottom="12dp"
+                        android:orientation="vertical"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="20dp">
 
-               android:layout_marginStart="6dp"
-               android:layout_marginEnd="6dp"
-               android:layout_marginTop="12dp"
-               android:layout_marginBottom="12dp"
-               android:orientation="vertical">
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/btnLunchAndDinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/backButton_color">
 
-               <androidx.constraintlayout.widget.ConstraintLayout
-                   android:id="@+id/btnLunchAndDinner"
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"
-                   android:background="@color/backButton_color">
 
+                            <LinearLayout
+                                android:id="@+id/linearLayout6l"
+                                android:layout_width="0dp"
 
-                   <LinearLayout
-                       android:id="@+id/linearLayout6l"
-                       android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginBottom="16dp"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/lunchImage"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
 
-                       android:layout_height="wrap_content"
-                       android:layout_marginStart="10dp"
-                       android:layout_marginTop="16dp"
-                       android:layout_marginBottom="16dp"
-                       android:orientation="vertical"
-                       app:layout_constraintBottom_toBottomOf="parent"
-                       app:layout_constraintEnd_toStartOf="@+id/lunchImage"
-                       app:layout_constraintStart_toStartOf="parent"
-                       app:layout_constraintTop_toTopOf="parent">
+                                <TextView
+                                    android:id="@+id/lunchName"
+                                    style="@style/dishname_style"
+                                    android:text="Lunch and Dinner" />
 
-                       <TextView
-                           android:id="@+id/lunchName"
-                      style="@style/dishname_style"
-                           android:text="Lunch and Dinner"
-                       />
+                                <TextView
+                                    android:id="@+id/lunchDesciptio"
+                                    style="@style/dishdescription_style"
+                                    android:text="Oder from your favorite\nrestaurants and home\nchefs"
 
-                       <TextView
-                           android:id="@+id/lunchDesciptio"
-                      style="@style/dishdescription_style"
-                           android:text="Oder from your favorite\nrestaurants and home\nchefs"
 
+                                    />
 
-                           />
+                            </LinearLayout>
 
-                   </LinearLayout>
 
+                            <ImageView
+                                android:id="@+id/lunchImage"
+                                style="@style/dashboardImage_style"
+                                android:src="@drawable/lunch"
+                                app:layout_constraintBottom_toBottomOf="@+id/linearLayout6l"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/linearLayout6l" />
+
 
-                   <ImageView
-                       android:id="@+id/lunchImage"
-                       style="@style/dashboardImage_style"
-                       android:src="@drawable/lunch"
-                       app:layout_constraintBottom_toBottomOf="@+id/linearLayout6l"
-                       app:layout_constraintEnd_toEndOf="parent"
-                       app:layout_constraintTop_toTopOf="@+id/linearLayout6l" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginTop="12dp"
 
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginBottom="12dp"
+                        android:orientation="vertical"
+                        app:cardCornerRadius="20dp"
 
-               </androidx.constraintlayout.widget.ConstraintLayout>
-           </androidx.cardview.widget.CardView>
+                        app:cardElevation="20dp">
 
-           <androidx.cardview.widget.CardView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               app:cardCornerRadius="20dp"
-               app:cardElevation="20dp"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/btnfastFood"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/backButton_color">
 
-               android:layout_marginStart="6dp"
-               android:layout_marginEnd="6dp"
-               android:layout_marginTop="12dp"
-               android:layout_marginBottom="12dp"
 
-               android:orientation="vertical">
+                            <LinearLayout
+                                android:id="@+id/linearLayout6f"
+                                android:layout_width="0dp"
 
-               <androidx.constraintlayout.widget.ConstraintLayout
-                   android:id="@+id/btnfastFood"
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"
-                   android:background="@color/backButton_color">
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginBottom="16dp"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/fastFoodImage"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
 
+                                <TextView
+                                    android:id="@+id/fastFoodName"
 
-                   <LinearLayout
-                       android:id="@+id/linearLayout6f"
-                       android:layout_width="0dp"
+                                    style="@style/dishname_style"
+                                    android:text="Fast Food and Others" />
 
-                       android:layout_height="wrap_content"
-                       android:layout_marginStart="10dp"
-                       android:layout_marginTop="16dp"
-                       android:layout_marginBottom="16dp"
-                       android:orientation="vertical"
-                       app:layout_constraintBottom_toBottomOf="parent"
-                       app:layout_constraintEnd_toStartOf="@+id/fastFoodImage"
-                       app:layout_constraintStart_toStartOf="parent"
-                       app:layout_constraintTop_toTopOf="parent">
+                                <TextView
+                                    android:id="@+id/fastFoodDescription"
+                                    style="@style/dishdescription_style"
+                                    android:text="Oder from your favorite\nrestaurants and home\nchefs"
 
-                       <TextView
-                           android:id="@+id/fastFoodName"
+                                    />
 
-                           style="@style/dishname_style"
-                           android:text="Fast Food and Others"
-                       />
+                            </LinearLayout>
 
-                       <TextView
-                           android:id="@+id/fastFoodDescription"
-                     style="@style/dishdescription_style"
-                           android:text="Oder from your favorite\nrestaurants and home\nchefs"
 
-                           />
+                            <ImageView
+                                android:id="@+id/fastFoodImage"
+                                style="@style/dashboardImage_style"
+                                android:src="@drawable/fastfood"
+                                app:layout_constraintBottom_toBottomOf="@+id/linearLayout6f"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/linearLayout6f" />
 
-                   </LinearLayout>
 
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
 
-                   <ImageView
-                       android:id="@+id/fastFoodImage"
-                       style="@style/dashboardImage_style"
-                       android:src="@drawable/fastfood"
-                       app:layout_constraintBottom_toBottomOf="@+id/linearLayout6f"
-                       app:layout_constraintEnd_toEndOf="parent"
-                       app:layout_constraintTop_toTopOf="@+id/linearLayout6f" />
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginTop="12dp"
 
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginBottom="12dp"
+                        android:orientation="vertical"
+                        app:cardCornerRadius="20dp"
 
-               </androidx.constraintlayout.widget.ConstraintLayout>
-           </androidx.cardview.widget.CardView>
+                        app:cardElevation="20dp">
 
-           <androidx.cardview.widget.CardView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               app:cardCornerRadius="20dp"
-               app:cardElevation="20dp"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/btnHutsSpecial"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/backButton_color">
 
-               android:layout_marginStart="6dp"
-               android:layout_marginEnd="6dp"
-               android:layout_marginTop="12dp"
-               android:layout_marginBottom="12dp"
 
-               android:orientation="vertical">
+                            <LinearLayout
+                                android:id="@+id/linearLayout6"
+                                android:layout_width="0dp"
 
-               <androidx.constraintlayout.widget.ConstraintLayout
-                   android:id="@+id/btnHutsSpecial"
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"
-                   android:background="@color/backButton_color">
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginBottom="16dp"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/HutSpecialPic"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
 
+                                <TextView
+                                    android:id="@+id/HutSpecialName"
+                                    style="@style/dishname_style"
+                                    android:text="Huts Special" />
 
-                   <LinearLayout
-                       android:id="@+id/linearLayout6"
-                       android:layout_width="0dp"
+                                <TextView
+                                    android:id="@+id/HutSpecialDesciption"
+                                    style="@style/dishdescription_style"
 
-                       android:layout_height="wrap_content"
-                       android:layout_marginStart="10dp"
-                       android:layout_marginTop="16dp"
-                       android:layout_marginBottom="16dp"
-                       android:orientation="vertical"
-                       app:layout_constraintBottom_toBottomOf="parent"
-                       app:layout_constraintEnd_toStartOf="@+id/HutSpecialPic"
-                       app:layout_constraintStart_toStartOf="parent"
-                       app:layout_constraintTop_toTopOf="parent">
+                                    android:text="Oder from your favorite\nrestaurants and home\nchefs" />
 
-                       <TextView
-                           android:id="@+id/HutSpecialName"
-                           android:text="Huts Special"
-                           style="@style/dishname_style" />
+                            </LinearLayout>
 
-                       <TextView
-                           android:id="@+id/HutSpecialDesciption"
-                           android:text="Oder from your favorite\nrestaurants and home\nchefs"
 
-                           style="@style/dishdescription_style" />
+                            <ImageView
+                                android:id="@+id/HutSpecialPic"
+                                style="@style/dashboardImage_style"
+                                android:src="@drawable/hutspecial"
+                                app:layout_constraintBottom_toBottomOf="@+id/linearLayout6"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/linearLayout6" />
 
-                   </LinearLayout>
 
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
 
-                   <ImageView
-                       android:id="@+id/HutSpecialPic"
-                 style="@style/dashboardImage_style"
-                       android:src="@drawable/hutspecial"
-                       app:layout_constraintBottom_toBottomOf="@+id/linearLayout6"
-                       app:layout_constraintEnd_toEndOf="parent"
-                       app:layout_constraintTop_toTopOf="@+id/linearLayout6" />
+            </ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-               </androidx.constraintlayout.widget.ConstraintLayout>
-           </androidx.cardview.widget.CardView>
-       </LinearLayout>
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navigation_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:headerLayout="@layout/header_layout"
+            app:itemIconTint="#0CAA0D"
+            app:menu="@menu/navigation_drawerlayout" />
 
-    </ScrollView>
-
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--        android:id="@+id/constraintLayout"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="130dp"-->
+    <!--        android:background="@drawable/backdashboard"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent">-->
+
+
+    <!--        <LinearLayout-->
+    <!--            android:id="@+id/linearLayout4"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+
+    <!--            android:layout_marginStart="8dp"-->
+    <!--            android:layout_marginTop="24dp"-->
+    <!--            android:layout_marginEnd="8dp"-->
+    <!--            android:gravity="center"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent">-->
+
+    <!--            <ImageView-->
+    <!--                android:id="@+id/navDrawer"-->
+    <!--                android:layout_width="25dp"-->
+
+    <!--                android:layout_height="25dp"-->
+    <!--                android:layout_marginStart="10dp"-->
+    <!--                android:src="@drawable/menu" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/textView7"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_weight="1"-->
+    <!--                android:fontFamily="@font/inter_bold"-->
+    <!--                android:text="Huts.com"-->
+    <!--                android:textAlignment="center"-->
+
+    <!--                android:textColor="@color/white"-->
+
+    <!--                android:textSize="24sp"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent" />-->
+
+    <!--            <ImageView-->
+    <!--                android:id="@+id/imageView3"-->
+    <!--                android:layout_width="35dp"-->
+
+    <!--                android:layout_height="35dp"-->
+    <!--                android:layout_marginEnd="10dp"-->
+
+    <!--                android:src="@drawable/cart"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent" />-->
+    <!--        </LinearLayout>-->
+
+
+    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+

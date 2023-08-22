@@ -1,11 +1,13 @@
 package com.example.huts.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.huts.DashboardClass;
@@ -72,15 +74,41 @@ private DashboardAdapter dashboardAdapter;
         sessionManager = new SessionManager(this);
 
 
-        binding.imageView3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(DashboardActivity.this, CartsActivity.class));
-            }
+//        binding.imageView3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(DashboardActivity.this, CartsActivity.class));
+//            }
+//        });
+
+
+        Toast.makeText(this, ""+sessionManager.getEmail(), Toast.LENGTH_SHORT).show();
+
+
+
+
+        View appbarVIew  = findViewById(R.id.include);
+
+
+        ImageView imageView = findViewById(R.id.navDrawer);
+
+
+        imageView.setOnClickListener(v -> {
+            if (binding.drawerLayout.isOpen())
+
+                binding.drawerLayout.closeDrawer(GravityCompat.START);
+
+            else binding.drawerLayout   .openDrawer(GravityCompat.START);
         });
 
+        ImageView imageView1 = findViewById(R.id.imageView3);
 
-
+        imageView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardActivity.this,CartsActivity.class));
+            }
+        });
 
 
     }

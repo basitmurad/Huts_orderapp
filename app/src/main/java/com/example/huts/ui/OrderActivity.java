@@ -79,6 +79,15 @@ public class OrderActivity extends AppCompatActivity {
         binding.hutName.setText(hutName);
 
 
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                finish();
+            }
+        });
+
+
 //        Toast.makeText(this, "total price is " + total, Toast.LENGTH_SHORT).show();
 
         binding.btnSubmit.setOnClickListener(new View.OnClickListener() {

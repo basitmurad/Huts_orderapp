@@ -9,7 +9,8 @@ public class SessionManager {
     private static final String KEY_NAME = "name";
     private static final String KEY_PASSWORD = "password";
     private static final String KEY_EMAIL = "email";
-    private static final String HUT_NAME = "email";
+    private static final String KEY_NUMBER = "number";
+    private static final String HUT_NAME = "hutName";
 
 
     private SharedPreferences sharedPreferences;
@@ -20,14 +21,16 @@ public class SessionManager {
         this.context = context;
         sharedPreferences = context.getSharedPreferences(HUT_NAME, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(KEY_NUMBER , Context.MODE_PRIVATE);
 
         editor = sharedPreferences.edit();
     }
 
-    public void saveCredentials(String name, String password, String email) {
+    public void saveCredentials(String name, String password, String email ,String number) {
         editor.putString(KEY_NAME, name);
         editor.putString(KEY_PASSWORD, password);
         editor.putString(KEY_EMAIL, email);
+        editor.putString(KEY_NUMBER ,number);
         editor.apply();
     }
 
@@ -42,6 +45,14 @@ public class SessionManager {
     public String getEmail() {
         return sharedPreferences.getString(KEY_EMAIL, "");
     }
+
+    public String getNumber()
+    {
+        return sharedPreferences.getString(KEY_NUMBER,"");
+    }
+
+
+
 
 
     public void saveHutName(String hutName) {

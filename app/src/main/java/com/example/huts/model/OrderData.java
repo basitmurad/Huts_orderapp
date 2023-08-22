@@ -8,9 +8,24 @@ public class OrderData {
     private String hutName;
     private int totalPrice;
     private ArrayList<OrderDetails> orderDetailsList;
-
+    private String orderId;
     public OrderData() {
         // Default constructor required for Firebase
+    }
+
+    public OrderData(String hutName, int totalPrice, ArrayList<OrderDetails> orderDetailsList, String orderId) {
+        this.hutName = hutName;
+        this.totalPrice = totalPrice;
+        this.orderDetailsList = orderDetailsList;
+        this.orderId = orderId;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public OrderData(String hutName, int totalPrice, ArrayList<OrderDetails> orderDetailsList) {
