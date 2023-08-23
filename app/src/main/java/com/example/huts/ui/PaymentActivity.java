@@ -15,10 +15,12 @@ import com.example.huts.model.OrderData;
 import com.example.huts.model.OrderDetails;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class PaymentActivity extends AppCompatActivity {
 
@@ -34,7 +36,9 @@ public class PaymentActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         sessionManager = new SessionManager(this);
 
-      String hut =  sessionManager.getHutName();
+        String userId = FirebaseAuth.getInstance().getUid();
+        String pushID = UUID.randomUUID().toString();
+        String hut =  sessionManager.getHutName();
       String userEmail = sessionManager.getEmail();
       String userName = sessionManager.getNaame();
 
@@ -59,13 +63,15 @@ public class PaymentActivity extends AppCompatActivity {
                 int total = (int) dbHelper.calculateTotalNewPrice();
 
                 // Send data to Firebase
-                DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("orders");
-                String orderId = ordersRef.push().getKey(); // Generate a unique key as the order ID
+                DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("ActiveOrders");
+           // Generate a unique key as the order ID
 
                 // Create an OrderData instance with the data you want to save
-                OrderData orderData = new OrderData(hut,total,orderDetailsList,orderId);
+//                OrderData orderData = new OrderData(hut,total,orderDetailsList,orderId);
+//                OrderData orderData1  = new OrderData(hut, total,)
 
-                ordersRef.child(orderId).setValue(orderData)
+                OrderData orderData = new OrderData(hut,userId,pushID,total,orderDetailsList, true);
+                ordersRef.child(userId).child(pushID).setValue(orderData)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {

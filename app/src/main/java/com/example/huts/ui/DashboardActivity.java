@@ -86,6 +86,24 @@ private DashboardAdapter dashboardAdapter;
 
 
 
+        binding.navigationView.setNavigationItemSelectedListener(item -> {
+            // Handle navigation item clicks here
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.nav_myordders) {
+
+                startActivity(new Intent(DashboardActivity.this,MyOrdersActivity.class));
+            } else if (itemId == R.id.nav_profile) {
+                // Navigate to ProfileFragment
+                Toast.makeText(this, "Profile here", Toast.LENGTH_SHORT).show();
+            }
+            // Add similar cases for other menu items...
+
+            // Close the drawer after handling the click
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        });
+
 
         View appbarVIew  = findViewById(R.id.include);
 
@@ -100,6 +118,8 @@ private DashboardAdapter dashboardAdapter;
 
             else binding.drawerLayout   .openDrawer(GravityCompat.START);
         });
+
+
 
         ImageView imageView1 = findViewById(R.id.imageView3);
 

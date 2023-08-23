@@ -36,7 +36,7 @@ public class OtpViewActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private long totalTimeInMillis;
     private long intervalInMillis;
-    private String verificatonID, number, randomUUId, email, name;
+    private String verificatonID, number, randomUUId, email, name , password;
     private ProgressDialog progressDialog;
     private DatabaseReference databaseRef;
 
@@ -53,11 +53,13 @@ public class OtpViewActivity extends AppCompatActivity {
         progressDialog.setMessage("Please wait..");
         progressDialog.setCancelable(false);
 
+//        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         verificatonID = getIntent().getStringExtra("verificationID");
-        number = (getIntent().getStringExtra("number"));
-        name = (getIntent().getStringExtra("name"));
-        email = (getIntent().getStringExtra("email"));
+        number = getIntent().getStringExtra("number");
+        name = getIntent().getStringExtra("name");
+        email = getIntent().getStringExtra("email");
+        password = getIntent().getStringExtra("password");
 
 
 
@@ -131,8 +133,8 @@ public class OtpViewActivity extends AppCompatActivity {
     }
 
     private void SendDataToFireBase() {
-        Users users = new Users(name,email, number, randomUUId);
-        databaseRef.child("usersDetail").child(randomUUId).setValue(users)
+        Users users = new Users(name,email, number, password ,randomUUId);
+        databaseRef.child("usersDetail").child("randomUUId").setValue(users)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {

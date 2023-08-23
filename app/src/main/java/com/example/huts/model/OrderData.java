@@ -5,31 +5,36 @@ import java.util.ArrayList;
 public class OrderData {
 
 
-    private String hutName;
+    private String hutName , userId , pushId;
     private int totalPrice;
     private ArrayList<OrderDetails> orderDetailsList;
-    private String orderId;
+
+    private boolean isActive ;
     public OrderData() {
         // Default constructor required for Firebase
     }
 
-    public OrderData(String hutName, int totalPrice, ArrayList<OrderDetails> orderDetailsList, String orderId) {
+    public OrderData(String hutName, String userId, String pushId, int totalPrice, ArrayList<OrderDetails> orderDetailsList, boolean isActive) {
         this.hutName = hutName;
+        this.userId = userId;
+        this.pushId = pushId;
         this.totalPrice = totalPrice;
         this.orderDetailsList = orderDetailsList;
-        this.orderId = orderId;
+        this.isActive = isActive;
     }
 
-    public String getOrderId() {
-        return orderId;
+    public boolean isActive() {
+        return isActive;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
-    public OrderData(String hutName, int totalPrice, ArrayList<OrderDetails> orderDetailsList) {
+    public OrderData(String hutName, String userId, String pushId, int totalPrice, ArrayList<OrderDetails> orderDetailsList) {
         this.hutName = hutName;
+        this.userId = userId;
+        this.pushId = pushId;
         this.totalPrice = totalPrice;
         this.orderDetailsList = orderDetailsList;
     }
@@ -40,6 +45,22 @@ public class OrderData {
 
     public void setHutName(String hutName) {
         this.hutName = hutName;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getPushId() {
+        return pushId;
+    }
+
+    public void setPushId(String pushId) {
+        this.pushId = pushId;
     }
 
     public int getTotalPrice() {
@@ -57,7 +78,6 @@ public class OrderData {
     public void setOrderDetailsList(ArrayList<OrderDetails> orderDetailsList) {
         this.orderDetailsList = orderDetailsList;
     }
-//
 }
 
 

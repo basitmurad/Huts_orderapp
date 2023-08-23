@@ -135,6 +135,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             intent.putExtra("number", "+92" + number);
                             intent.putExtra("email", email);
                             intent.putExtra("name", name);
+                            intent.putExtra("password", password);
 
                             sessionManager.saveCredentials(name
                             ,password,email,number

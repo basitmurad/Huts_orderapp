@@ -1,15 +1,17 @@
 package com.example.huts.model;
 
 public class Users {
-    private String name ,email , number ,userId;
+    private String name ,email , number , password ,userId;
 
     public Users() {
     }
 
-    public Users(String name, String email, String number, String userId) {
+
+    public Users(String name, String email, String number, String password, String userId) {
         this.name = name;
         this.email = email;
         this.number = number;
+        this.password = password;
         this.userId = userId;
     }
 
@@ -43,5 +45,13 @@ public class Users {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
