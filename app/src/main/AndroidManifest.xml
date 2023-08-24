@@ -20,11 +20,7 @@
             android:name=".ui.MyOrdersActivity"
             android:exported="true"
             android:theme="@style/Custom.Theme.Huts">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
@@ -74,7 +70,13 @@
         <activity
             android:name=".ui.DashboardActivity"
             android:exported="true"
-            android:theme="@style/Custom.Theme.Huts" />
+            android:theme="@style/Custom.Theme.Huts" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.RegistrationActivity"
             android:exported="false"

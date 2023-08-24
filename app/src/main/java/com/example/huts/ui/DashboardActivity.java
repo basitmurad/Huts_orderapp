@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.huts.DashboardClass;
@@ -15,15 +18,18 @@ import com.example.huts.R;
 import com.example.huts.SessionManager;
 import com.example.huts.adapters.DashboardAdapter;
 import com.example.huts.databinding.ActivityDashboardBinding;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
 public class DashboardActivity extends AppCompatActivity {
 
     private ActivityDashboardBinding binding;
-private DashboardAdapter dashboardAdapter;
+    private DashboardAdapter dashboardAdapter;
     private SessionManager sessionManager;
-    private ArrayList<DashboardClass> list ;
+    private ArrayList<DashboardClass> list;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,26 +38,28 @@ private DashboardAdapter dashboardAdapter;
         setContentView(binding.getRoot());
 
 
+        sessionManager = new SessionManager(this);
 
-         list = new ArrayList<>();
-         list.add(new DashboardClass("BreakFast" , "Oder from your favorite\n" +
-                 "restaurants and home \n" +
-                 "chefs" , R.drawable.breakfast));
 
-        list.add(new DashboardClass("Lunch & Dinner" , "Oder from your favorite\n" +
+        list = new ArrayList<>();
+        list.add(new DashboardClass("BreakFast", "Oder from your favorite\n" +
                 "restaurants and home \n" +
-                "chefs" , R.drawable.lunch));
-        list.add(new DashboardClass("BreakFast" , "Oder from your favorite\n" +
-                "restaurants and home \n" +
-                "chefs" ));
+                "chefs", R.drawable.breakfast));
 
-        list.add(new DashboardClass("Fast Food & Others" , "Oder from your favorite\n" +
+        list.add(new DashboardClass("Lunch & Dinner", "Oder from your favorite\n" +
                 "restaurants and home \n" +
-                "chefs" , R.drawable.huts));
+                "chefs", R.drawable.lunch));
+        list.add(new DashboardClass("BreakFast", "Oder from your favorite\n" +
+                "restaurants and home \n" +
+                "chefs"));
 
-        list.add(new DashboardClass("Huts Special" , "Oder from your favorite\n" +
+        list.add(new DashboardClass("Fast Food & Others", "Oder from your favorite\n" +
                 "restaurants and home \n" +
-                "chefs" , R.drawable.hutspecial));
+                "chefs", R.drawable.huts));
+
+        list.add(new DashboardClass("Huts Special", "Oder from your favorite\n" +
+                "restaurants and home \n" +
+                "chefs", R.drawable.hutspecial));
 
 
         binding.btnBreakfast.setOnClickListener(v -> startActivity(new Intent(
@@ -74,16 +82,6 @@ private DashboardAdapter dashboardAdapter;
         sessionManager = new SessionManager(this);
 
 
-//        binding.imageView3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(DashboardActivity.this, CartsActivity.class));
-//            }
-//        });
-
-
-        Toast.makeText(this, ""+sessionManager.getEmail(), Toast.LENGTH_SHORT).show();
-
 
 
         binding.navigationView.setNavigationItemSelectedListener(item -> {
@@ -92,7 +90,7 @@ private DashboardAdapter dashboardAdapter;
 
             if (itemId == R.id.nav_myordders) {
 
-                startActivity(new Intent(DashboardActivity.this,MyOrdersActivity.class));
+                startActivity(new Intent(DashboardActivity.this, MyOrdersActivity.class));
             } else if (itemId == R.id.nav_profile) {
                 // Navigate to ProfileFragment
                 Toast.makeText(this, "Profile here", Toast.LENGTH_SHORT).show();
@@ -105,7 +103,7 @@ private DashboardAdapter dashboardAdapter;
         });
 
 
-        View appbarVIew  = findViewById(R.id.include);
+        View appbarVIew = findViewById(R.id.include);
 
 
         ImageView imageView = findViewById(R.id.navDrawer);
@@ -116,9 +114,8 @@ private DashboardAdapter dashboardAdapter;
 
                 binding.drawerLayout.closeDrawer(GravityCompat.START);
 
-            else binding.drawerLayout   .openDrawer(GravityCompat.START);
+            else binding.drawerLayout.openDrawer(GravityCompat.START);
         });
-
 
 
         ImageView imageView1 = findViewById(R.id.imageView3);
@@ -126,11 +123,18 @@ private DashboardAdapter dashboardAdapter;
         imageView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DashboardActivity.this,CartsActivity.class));
+                startActivity(new Intent(DashboardActivity.this, CartsActivity.class));
             }
         });
 
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        View headerView = navigationView.getHeaderView(0); // Get the header view
 
+        TextView emailHeaderTextView = headerView.findViewById(R.id.emailHeader);
+        TextView nameHeaderTextView = headerView.findViewById(R.id.nameHeader);
+
+        emailHeaderTextView.setText(sessionManager.getEmail());
+        nameHeaderTextView.setText(sessionManager.getNaame());
     }
 
 

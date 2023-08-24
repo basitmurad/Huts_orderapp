@@ -4,13 +4,18 @@ public class OrderDetails {
 
     private String name;
     private int newPrice;
-    private int quantity;
+    private int quantity ;
 
+
+
+    public OrderDetails() {
+    }
 
     public OrderDetails(String name, int newPrice, int quantity) {
         this.name = name;
         this.newPrice = newPrice;
         this.quantity = quantity;
+
     }
 
     public String getName() {
@@ -36,4 +41,6 @@ public class OrderDetails {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+
 }

@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Toast;
 
@@ -52,6 +55,7 @@ public class OrderActivity extends AppCompatActivity {
         StringBuilder dataBuilder = new StringBuilder();
         StringBuilder dataBuilder1 = new StringBuilder();
         StringBuilder dataBuilder2 = new StringBuilder();
+        StringBuilder dataBuilder3 = new StringBuilder();
         binding.quantityTextView.setText("");
         binding.nameTextView.setText("");
         binding.priceTextView.setText("");
@@ -60,11 +64,16 @@ public class OrderActivity extends AppCompatActivity {
             String quantity = String.valueOf(dish.getQuantity()) + "\n";
             dataBuilder.append(quantity);
 
+
+
             String name = dish.getName() + "\n";
             dataBuilder1.append(name);
 
             String price = String.valueOf(dish.getNewPrice()) + "\n";
             dataBuilder2.append(price);
+
+
+
         }
 
         binding.quantityTextView.setText(dataBuilder.toString());

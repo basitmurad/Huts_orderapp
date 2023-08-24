@@ -109,7 +109,8 @@ public class DbHelper extends SQLiteOpenHelper {
         String[] columns = {
                 COLUMN_NAME,
                 COLUMN_NEW_PRICE,
-                COLUMN_NEW_QUANTITY
+                COLUMN_NEW_QUANTITY,
+                COLUMN_IMAGE
         };
 
         Cursor cursor = db.query(TABLE_NAME, columns, null, null, null, null, null);
@@ -120,7 +121,10 @@ public class DbHelper extends SQLiteOpenHelper {
                 @SuppressLint("Range") int price = cursor.getInt(cursor.getColumnIndex(COLUMN_NEW_PRICE));
                 @SuppressLint("Range") int quantity = cursor.getInt(cursor.getColumnIndex(COLUMN_NEW_QUANTITY));
 
-                OrderDetails dish = new OrderDetails(name, price, quantity);
+
+
+
+                OrderDetails dish = new OrderDetails(name, price, quantity );
                 orderDetailsList.add(dish);
             } while (cursor.moveToNext());
 

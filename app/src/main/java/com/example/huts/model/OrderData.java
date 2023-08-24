@@ -9,9 +9,11 @@ public class OrderData {
     private int totalPrice;
     private ArrayList<OrderDetails> orderDetailsList;
 
+
     private boolean isActive ;
+
+
     public OrderData() {
-        // Default constructor required for Firebase
     }
 
     public OrderData(String hutName, String userId, String pushId, int totalPrice, ArrayList<OrderDetails> orderDetailsList, boolean isActive) {
@@ -21,22 +23,6 @@ public class OrderData {
         this.totalPrice = totalPrice;
         this.orderDetailsList = orderDetailsList;
         this.isActive = isActive;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public OrderData(String hutName, String userId, String pushId, int totalPrice, ArrayList<OrderDetails> orderDetailsList) {
-        this.hutName = hutName;
-        this.userId = userId;
-        this.pushId = pushId;
-        this.totalPrice = totalPrice;
-        this.orderDetailsList = orderDetailsList;
     }
 
     public String getHutName() {
@@ -77,6 +63,16 @@ public class OrderData {
 
     public void setOrderDetailsList(ArrayList<OrderDetails> orderDetailsList) {
         this.orderDetailsList = orderDetailsList;
+    }
+
+
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }
 

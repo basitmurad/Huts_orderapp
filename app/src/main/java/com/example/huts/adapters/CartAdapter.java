@@ -64,20 +64,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.itemImage.setImageBitmap(imageBitmap);
 
 
-
-//        byte[] imageByteArray = dishDetail.getImageByteArray();
-//        Bitmap imageBitmap = convertByteArrayToBitmap(imageByteArray);
-////
-////        holder.itemImage.setImageURI(getImaEuR(context,imageBitmap));
-////        holder.itemImage.setIma(imageBitmap);
-////
-////        Bitmap imageBitmap = convertByteArrayToBitmap(imageByteArray);
-//
-//// Get the image URI from the Bitmap
-//        Uri imageUri = getImageUriFromBitmap(context, imageBitmap);
-//
-//// Set the image URI to the ImageView
-//        holder.itemImage.setImageURI(imageUri);
         holder.btndelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,10 +71,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 DbHelper dbHelper = new DbHelper(context);
                 dbHelper.deleteDish(dishDetail.getName());
 
-                // Remove the item from the cartItems list
+
                 dishDetails.remove(position);
 
-                // Notify the adapter that an item has been removed
+
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, dishDetails.size());
 
@@ -149,9 +135,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
 
 
-//    private Bitmap convertByteArrayToBitmap(byte[] byteArray) {
-//        return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-//    }
+
 
     private Uri getImageUriFromBitmap(Context context, Bitmap image) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

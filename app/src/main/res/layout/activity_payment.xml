@@ -24,7 +24,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="24dp"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,10 +33,10 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:id="@+id/btnBack"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_marginStart="10dp"
-                android:id="@+id/btnBack"
                 android:src="@drawable/baseline_arrow_back_24" />
 
             <TextView
@@ -101,9 +101,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
 
-            android:textColor="@color/white"
+            android:textColor="@color/black"
 
-            android:background="@drawable/back_button"
+
             android:hint="your Exect Location For Delevery"
             android:paddingStart="20dp"
             android:paddingTop="12dp"
@@ -129,7 +129,7 @@
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="100dp"
-          android:background="@drawable/back_button"
+
           android:paddingTop="20dp"
           android:layout_marginStart="16dp"
           android:layout_marginEnd="16dp"
@@ -149,9 +149,10 @@
               android:textSize="18sp"
               />
 
-          <RadioButton
+          <CheckBox
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:id="@+id/checkBox"
               android:gravity="center"
               android:layout_marginEnd="20dp"
               android:layout_weight="1"

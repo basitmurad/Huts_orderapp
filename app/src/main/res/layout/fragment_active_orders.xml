@@ -4,29 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     tools:context=".fragments.ActiveOrdersFragment">
 
-    <!-- TODO: Update blank fragment layout -->
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+<androidx.recyclerview.widget.RecyclerView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:listitem="@layout/active1_layout"
+    android:id="@+id/activeRecycler"
 
 
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Are You want to Cancel the order"
-            android:textSize="16sp"
-            android:fontFamily="@font/inter"
-            android:layout_margin="5dp"
-            />
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cancel"
-    </LinearLayout>
+    />
 
 </LinearLayout>

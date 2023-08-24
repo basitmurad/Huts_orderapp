@@ -1,62 +1,45 @@
 package com.example.huts.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.huts.R;
+import com.example.huts.fragments.fragmentAdapter.ActiveAdapter;
+import com.example.huts.model.OrderData;
+import com.example.huts.model.OrderDetails;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ActiveOrdersFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class ActiveOrdersFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+     private ActiveAdapter adapter;
+     private  RecyclerView recyclerView;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
-    public ActiveOrdersFragment() {
-        // Required empty public constructor
-    }
+    private  ArrayList<OrderData> activeOrdersList = new ArrayList<>();
+   private DatabaseReference ordersRef ;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ActiveOrdersFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ActiveOrdersFragment newInstance(String param1, String param2) {
-        ActiveOrdersFragment fragment = new ActiveOrdersFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,9 +47,66 @@ public class ActiveOrdersFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_active_orders, container, false);
 
 
+        recyclerView = rootView.findViewById(R.id.activeRecycler);
 
+       String uid =  FirebaseAuth.getInstance().getUid();
+
+
+
+
+
+        ordersRef = FirebaseDatabase.getInstance().getReference("ActiveOrders").child(uid);
+
+        if (activeOrdersList.isEmpty())
+        {
+            Toast.makeText(getActivity(), "no active order ", Toast.LENGTH_SHORT).show();
+        }
+
+        ordersRef.addValueEventListener(new ValueEventListener() {
+
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                activeOrdersList.clear();
+//                activeOrdersList.clear();
+                Log.d("Firebase", "Snapshot: " + snapshot.toString());
+
+           try {
+               for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                   OrderData orderData = dataSnapshot.getValue(OrderData.class);
+                   if (orderData != null && orderData.isActive()) {
+                       activeOrdersList.add(orderData);
+                   }
+                   else {
+                       Toast.makeText(getContext(), "No Active Orders", Toast.LENGTH_SHORT).show();
+                   }
+               }
+               adapter = new ActiveAdapter(getContext(),activeOrdersList);
+               recyclerView.setAdapter(adapter);
+               recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+               adapter.notifyDataSetChanged();
+           }
+           catch (ArrayIndexOutOfBoundsException e)
+           {
+               Toast.makeText(getContext(), "" +e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+           }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+                Toast.makeText(getActivity(), "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 }

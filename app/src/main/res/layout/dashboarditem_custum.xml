@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
+    android:layout_margin="10dp"
     android:padding="15dp"
    android:background="@drawable/custum_dashboarditem"
 
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_weight="1"
-        android:padding="16dp"
+       android:paddingLeft="4dp"
         >
 
         <TextView
@@ -22,7 +22,7 @@
             android:id="@+id/lunchName"
             android:text="Breakfast"
             android:textColor="@color/white"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:padding="4dp"
             android:fontFamily="@font/inter_bold"
             />
@@ -30,7 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/lunchDesciption"
-            android:padding="4dp"
+            android:padding="2dp"
+            android:textSize="10sp"
             android:text="Oder from your favorite\n
 restaurants and home\n chefs"
             android:textColor="@color/white"

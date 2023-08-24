@@ -1,14 +1,13 @@
 package com.example.huts.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 
-import com.example.huts.R;
 import com.example.huts.adapters.MyFragmentStateAdapter;
 import com.example.huts.databinding.ActivityMyOrdersBinding;
 import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 
 public class MyOrdersActivity extends AppCompatActivity {
 
@@ -20,24 +19,53 @@ public class MyOrdersActivity extends AppCompatActivity {
         binding = ActivityMyOrdersBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        myFragmentStateAdapter = new MyFragmentStateAdapter(this);
+
+        myFragmentStateAdapter = new MyFragmentStateAdapter(MyOrdersActivity.this);
         binding.viewPager.setAdapter(myFragmentStateAdapter);
 
-        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(binding.tablayout, binding.viewPager,
-                (tab, position) -> {
-                    // Set tab text based on position
-                    switch (position) {
-                        case 0:
-                            tab.setText("Active Orders");
-                            break;
-                        case 1:
-                            tab.setText("Deliver Orders");
-                            break;
-                        case 2:
-                            tab.setText("Cancel Orders");
-                            break;
-                    }
-                });
-        tabLayoutMediator.attach();
+
+
+        binding.tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+                binding.viewPager.setCurrentItem(tab.getPosition(),true);
+//                switch (tab.getPosition())
+//                {
+//                    case 0 :
+//                        new ActiveOrdersFragment();
+//                        break;
+//                    case 1 :
+//                        new DeliveredOrdersFragment();
+//                        break;
+//                    case 2 :
+//                        new CancelOrdersFragment();
+//                        break;
+//
+//
+//                }
+            }
+
+
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                binding.tablayout.selectTab(binding.tablayout.getTabAt(position));
+            }
+        });
+
+
     }
 }
