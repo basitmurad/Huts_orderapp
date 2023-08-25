@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.send" />
+    <uses-permission android:name="com.google.android.c2dm.permission.Recieve" />
 
     <application
         android:allowBackup="true"
@@ -17,16 +19,30 @@
         android:theme="@style/Theme.Huts1"
         tools:targetApi="31">
         <activity
-            android:name=".ui.MyOrdersActivity"
+            android:name="com.example.MessegeActivity"
             android:exported="true"
             android:theme="@style/Custom.Theme.Huts">
 
         </activity>
 
+
+        <service
+            android:name=".messeges.MessegeClass"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSEGING_EVENT" />
+                <action android:name="com.google.android.c2dm.intent.Recieve" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".ui.MyOrdersActivity"
+            android:exported="true"
+            android:theme="@style/Custom.Theme.Huts"></activity>
         <activity
             android:name=".ui.OtpViewActivity"
             android:exported="true"
-            android:theme="@style/Custom.Theme.Huts"></activity>
+            android:theme="@style/Custom.Theme.Huts" />
         <activity
             android:name=".ui.PaymentActivity"
             android:exported="false"
@@ -70,13 +86,7 @@
         <activity
             android:name=".ui.DashboardActivity"
             android:exported="true"
-            android:theme="@style/Custom.Theme.Huts" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Custom.Theme.Huts"></activity>
         <activity
             android:name=".ui.RegistrationActivity"
             android:exported="false"
@@ -90,6 +100,11 @@
             android:exported="true"
             android:theme="@style/Custom.Theme.Huts">
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.huts.R;
+import com.example.huts.adapters.ParentAdpter;
 import com.example.huts.fragments.fragmentAdapter.ActiveAdapter;
 import com.example.huts.model.OrderData;
 import com.example.huts.model.OrderDetails;
@@ -33,10 +34,12 @@ import java.util.List;
 public class ActiveOrdersFragment extends Fragment {
 
      private ActiveAdapter adapter;
+
      private  RecyclerView recyclerView;
 
 
     private  ArrayList<OrderData> activeOrdersList = new ArrayList<>();
+    private  ArrayList<OrderDetails> orderDetailsArrayList = new ArrayList<>();
    private DatabaseReference ordersRef ;
 
     @SuppressLint("MissingInflatedId")
@@ -63,42 +66,82 @@ public class ActiveOrdersFragment extends Fragment {
         }
 
         ordersRef.addValueEventListener(new ValueEventListener() {
-
-
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 activeOrdersList.clear();
-//                activeOrdersList.clear();
-                Log.d("Firebase", "Snapshot: " + snapshot.toString());
+                try {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        OrderData orderData = dataSnapshot.getValue(OrderData.class);
+                        if (orderData != null && orderData.isActive()) {
+                            activeOrdersList.add(orderData);
+                        } else {
+                            Toast.makeText(getContext(), "No Active Orders", Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
-           try {
-               for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                   OrderData orderData = dataSnapshot.getValue(OrderData.class);
-                   if (orderData != null && orderData.isActive()) {
-                       activeOrdersList.add(orderData);
-                   }
-                   else {
-                       Toast.makeText(getContext(), "No Active Orders", Toast.LENGTH_SHORT).show();
-                   }
-               }
-               adapter = new ActiveAdapter(getContext(),activeOrdersList);
-               recyclerView.setAdapter(adapter);
-               recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    adapter = new ActiveAdapter(getContext(), activeOrdersList);
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-               adapter.notifyDataSetChanged();
-           }
-           catch (ArrayIndexOutOfBoundsException e)
-           {
-               Toast.makeText(getContext(), "" +e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-           }
+                    adapter.notifyDataSetChanged();
+                }catch (ArrayIndexOutOfBoundsException e)
+                {
+                    Toast.makeText(getActivity(), " catch"+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
-                Toast.makeText(getActivity(), "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "database "+error.getMessage(), Toast.LENGTH_SHORT).show();
+
             }
         });
+
+
+
+
+
+
+
+
+//        ordersRef.addValueEventListener(new ValueEventListener() {
+//
+//
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                activeOrdersList.clear();
+////                activeOrdersList.clear();
+//                Log.d("Firebase", "Snapshot: " + snapshot.toString());
+//
+//           try {
+//               for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                   OrderData orderData = dataSnapshot.getValue(OrderData.class);
+//                   if (orderData != null && orderData.isActive()) {
+//                       activeOrdersList.add(orderData);
+//                   }
+//                   else {
+//                       Toast.makeText(getContext(), "No Active Orders", Toast.LENGTH_SHORT).show();
+//                   }
+//               }
+//               adapter = new ActiveAdapter(getContext(),activeOrdersList);
+//               recyclerView.setAdapter(adapter);
+//               recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//
+//               adapter.notifyDataSetChanged();
+//           }
+//           catch (ArrayIndexOutOfBoundsException e)
+//           {
+//               Toast.makeText(getContext(), "" +e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+//           }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//                Toast.makeText(getActivity(), "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
         return rootView;

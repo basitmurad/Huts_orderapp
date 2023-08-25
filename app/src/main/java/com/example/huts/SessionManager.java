@@ -11,6 +11,7 @@ public class SessionManager {
     private static final String KEY_EMAIL = "email";
     private static final String KEY_NUMBER = "number";
     private static final String HUT_NAME = "hutName";
+    private static final String HUT_IMAGEURI = "hutImage";
 
 
     private SharedPreferences sharedPreferences;
@@ -20,6 +21,7 @@ public class SessionManager {
     public SessionManager(Context context) {
         this.context = context;
         sharedPreferences = context.getSharedPreferences(HUT_NAME, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(HUT_IMAGEURI, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(KEY_NUMBER , Context.MODE_PRIVATE);
 
@@ -62,5 +64,14 @@ public class SessionManager {
 
     public String getHutName() {
         return sharedPreferences.getString(HUT_NAME, "");
+    }
+
+    public void saveHutImage(String hutName) {
+        editor.putString(HUT_IMAGEURI, hutName);
+        editor.apply();
+    }
+
+    public String getHutImage() {
+        return sharedPreferences.getString(HUT_IMAGEURI, "");
     }
 }

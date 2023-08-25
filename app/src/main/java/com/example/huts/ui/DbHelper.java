@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.huts.model.ChildItem;
 import com.example.huts.model.DishDetail;
 import com.example.huts.model.OrderDetails;
 
@@ -80,6 +81,8 @@ public class DbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+
+
     public ArrayList<DishDetail> getAllDishes() {
         ArrayList<DishDetail> dishList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -101,7 +104,41 @@ public class DbHelper extends SQLiteOpenHelper {
         return dishList;
     }
 
+    public ArrayList<ChildItem> getAll1() {
+        ArrayList<ChildItem> childItemArrayList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
 
+        String[] columns = {
+                COLUMN_NAME,
+                COLUMN_NEW_PRICE,
+                COLUMN_NEW_QUANTITY,
+
+        };
+
+        Cursor cursor = db.query(TABLE_NAME, columns, null, null, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
+                @SuppressLint("Range") int price = cursor.getInt(cursor.getColumnIndex(COLUMN_NEW_PRICE));
+                @SuppressLint("Range") int quantity = cursor.getInt(cursor.getColumnIndex(COLUMN_NEW_QUANTITY));
+
+
+//                @SuppressLint("Range") byte[] imageUriByteArray = cursor.getBlob(cursor.getColumnIndex(COLUMN_IMAGE));
+
+//                String imageUri = new String(imageUriByteArray);
+
+
+
+                ChildItem childItem = new ChildItem(name,String.valueOf(quantity),String.valueOf(price));
+                childItemArrayList.add(childItem);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        return childItemArrayList;
+    }
     public ArrayList<OrderDetails> getAll() {
         ArrayList<OrderDetails> orderDetailsList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -122,9 +159,12 @@ public class DbHelper extends SQLiteOpenHelper {
                 @SuppressLint("Range") int quantity = cursor.getInt(cursor.getColumnIndex(COLUMN_NEW_QUANTITY));
 
 
+//                @SuppressLint("Range") byte[] imageUriByteArray = cursor.getBlob(cursor.getColumnIndex(COLUMN_IMAGE));
+
+//                String imageUri = new String(imageUriByteArray);
 
 
-                OrderDetails dish = new OrderDetails(name, price, quantity );
+                OrderDetails dish = new OrderDetails(name, price, quantity);
                 orderDetailsList.add(dish);
             } while (cursor.moveToNext());
 

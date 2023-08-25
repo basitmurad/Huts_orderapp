@@ -2,42 +2,24 @@ package com.example.huts.model;
 
 import java.util.ArrayList;
 
-public class OrderData {
-
-
+public class ParentItem {
     private String hutName , userId , pushId ,orderId;
     private int totalPrice;
-    private ArrayList<OrderDetails> orderDetailsList;
+    private ArrayList<ChildItem> childItemArrayList;
 
 
     private boolean isActive ;
 
 
-    public OrderData() {
-    }
-
-
-    public OrderData(String hutName, String userId, String pushId,String orderId, int totalPrice, ArrayList<OrderDetails> orderDetailsList, boolean isActive) {
+    public ParentItem(String hutName, String userId, String pushId, String orderId, int totalPrice, ArrayList<ChildItem> childItemArrayList, boolean isActive) {
         this.hutName = hutName;
         this.userId = userId;
         this.pushId = pushId;
-
         this.orderId = orderId;
         this.totalPrice = totalPrice;
-        this.orderDetailsList = orderDetailsList;
+        this.childItemArrayList = childItemArrayList;
         this.isActive = isActive;
     }
-
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
-
-
-
 
     public String getHutName() {
         return hutName;
@@ -63,6 +45,14 @@ public class OrderData {
         this.pushId = pushId;
     }
 
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
     public int getTotalPrice() {
         return totalPrice;
     }
@@ -71,15 +61,13 @@ public class OrderData {
         this.totalPrice = totalPrice;
     }
 
-    public ArrayList<OrderDetails> getOrderDetailsList() {
-        return orderDetailsList;
+    public ArrayList<ChildItem> getChildItemArrayList() {
+        return childItemArrayList;
     }
 
-    public void setOrderDetailsList(ArrayList<OrderDetails> orderDetailsList) {
-        this.orderDetailsList = orderDetailsList;
+    public void setChildItemArrayList(ArrayList<ChildItem> childItemArrayList) {
+        this.childItemArrayList = childItemArrayList;
     }
-
-
 
     public boolean isActive() {
         return isActive;
@@ -89,5 +77,3 @@ public class OrderData {
         isActive = active;
     }
 }
-
-

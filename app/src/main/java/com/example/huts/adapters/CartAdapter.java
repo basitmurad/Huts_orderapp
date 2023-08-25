@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -24,6 +26,11 @@ import com.example.huts.model.DishDetail;
 import com.example.huts.ui.DbHelper;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 
@@ -59,9 +66,26 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.itemPrice.setText(String.valueOf(dishDetail.getPrice()));
         holder.cartItemPriceTOTAL.setText(String.valueOf(dishDetail.getPrice()));
         byte[] imageByteArray = dishDetail.getImageByteArray();
-        Bitmap imageBitmap = convertByteArrayToBitmap(imageByteArray);
 
-        holder.itemImage.setImageBitmap(imageBitmap);
+
+
+
+        Bitmap imageBitmap1 = convertByteArrayToBitmap(imageByteArray);
+
+        holder.itemImage.setImageBitmap(imageBitmap1);
+//        Bitmap imageBitmap = convertByteArrayToBitmap(imageByteArray);
+//        if (imageBitmap != null) {
+//            Uri imageUri = getImageUriFromBitmap(context, imageBitmap);
+//            if (imageUri != null) {
+//                // Set the image Uri or use it as needed
+//                Log.e("image", " get imageUri from Bitmap");
+//
+//            } else {
+//                Log.e("no Image", "Failed to get imageUri from Bitmap");
+//            }
+//        } else {
+//            Log.e("nullimae", "Bitmap is null");
+//        }
 
 
         holder.btndelete.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +126,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 holder.cartItemPriceTOTAL.setText(String.valueOf(totalPrice));
                 Toast.makeText(context, ""+totalPrice, Toast.LENGTH_SHORT).show();
                 dbHelper.updateDishQuantityAndPrice(dishDetail.getName(),item, totalPrice);
+
             }
         });
 
@@ -132,20 +157,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     }
 
 
-
-
-
-
-
-    private Uri getImageUriFromBitmap(Context context, Bitmap image) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), image, "Title", null);
-        return Uri.parse(path);
-    }
-
-  
     private Bitmap convertByteArrayToBitmap(byte[] byteArray) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
@@ -181,6 +192,27 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             btnPlus = itemView.findViewById(R.id.btnPlus);
             btnMinus = itemView.findViewById(R.id.btnMinus);
             layout = itemView.findViewById(R.id.linearLayout);
+        }
+    }
+    private Uri getImageUriFromBitmap(Context context, Bitmap image) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+
+        // Insert the image into the MediaStore and get its path
+        String imagePath = MediaStore.Images.Media.insertImage(
+                context.getContentResolver(),
+                image,
+                "Title", // Change this to your desired title
+                null
+        );
+
+        if (imagePath != null) {
+            return Uri.parse(imagePath);
+        } else {
+            // Handle the case where imagePath is null (conversion failed)
+            // For example, log an error message
+            Log.e("CartAdapter", "Failed to convert Bitmap to Uri");
+            return null;
         }
     }
 

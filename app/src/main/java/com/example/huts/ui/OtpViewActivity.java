@@ -73,7 +73,6 @@ public class OtpViewActivity extends AppCompatActivity {
         // Set the interval for the countdown timer in milliseconds
         intervalInMillis = 1000;
 
-
         StartCounter();
 
         OtpListner();
@@ -89,6 +88,8 @@ public class OtpViewActivity extends AppCompatActivity {
         });
 
     }
+
+
 
     private void OtpListner() {
 
@@ -176,4 +177,7 @@ public class OtpViewActivity extends AppCompatActivity {
 
         countDownTimer.start();
     }
+
+
+
 }

@@ -7,7 +7,6 @@ public class OrderDetails {
     private int quantity ;
 
 
-
     public OrderDetails() {
     }
 
