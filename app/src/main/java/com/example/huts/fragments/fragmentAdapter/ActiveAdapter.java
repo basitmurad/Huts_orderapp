@@ -1,12 +1,7 @@
 package com.example.huts.fragments.fragmentAdapter;
 
-import static java.security.AccessController.getContext;
-
 import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.huts.R;
@@ -25,14 +19,10 @@ import com.example.huts.model.OrderDetails;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ActiveAdapter extends RecyclerView.Adapter<ActiveAdapter.Myholder> {
     private Context context;
@@ -49,7 +39,8 @@ public class ActiveAdapter extends RecyclerView.Adapter<ActiveAdapter.Myholder> 
         this.refCancel = FirebaseDatabase.getInstance().getReference("CancelOrders");
 
 
-    }
+     }
+
 
     @NonNull
     @Override
@@ -68,7 +59,7 @@ public class ActiveAdapter extends RecyclerView.Adapter<ActiveAdapter.Myholder> 
 
         holder.t3.setText("Huts : " + orderData1.getHutName());
         holder.t2.setText("Total Price : " + String.valueOf(orderData1.getTotalPrice()));
-        Toast.makeText(context, "" + orderData1.isActive(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "" + orderData1.isActive(), Toast.LENGTH_SHORT).show();
 
         for (OrderDetails orderDetails : orderData1.getOrderDetailsList()) {
 
@@ -128,6 +119,10 @@ public class ActiveAdapter extends RecyclerView.Adapter<ActiveAdapter.Myholder> 
             }
         });
 
+//
+
+
+
 
 //        holder.btnCancel.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -171,8 +166,6 @@ public class ActiveAdapter extends RecyclerView.Adapter<ActiveAdapter.Myholder> 
 //        });
 
 
-
-
     }
 
     @Override
@@ -185,11 +178,13 @@ public class ActiveAdapter extends RecyclerView.Adapter<ActiveAdapter.Myholder> 
         TextView t1, t2, t3;
         Button btnCancel;
 
+
         public Myholder(@NonNull View itemView) {
             super(itemView);
             t1 = itemView.findViewById(R.id.activeNam);
-            t2 = itemView.findViewById(R.id.activePric);
-            t3 = itemView.findViewById(R.id.activeQan);
+            t2 = itemView.findViewById(R.id.activeQan);
+            t3 = itemView.findViewById(R.id.activePric);
+
             btnCancel = itemView.findViewById(R.id.btnCancel);
         }
     }

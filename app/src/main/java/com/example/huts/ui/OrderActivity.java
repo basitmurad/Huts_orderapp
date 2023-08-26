@@ -1,32 +1,13 @@
 package com.example.huts.ui;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.util.Base64;
 import android.view.View;
-import android.widget.Toast;
 
-import com.example.huts.R;
-import com.example.huts.adapters.CartAdapter;
 import com.example.huts.databinding.ActivityOrderBinding;
-import com.example.huts.model.ChildItem;
-import com.example.huts.model.DishDetail;
-import com.example.huts.model.OrderData;
 import com.example.huts.model.OrderDetails;
-import com.example.huts.model.ParentItem;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -37,7 +18,7 @@ public class OrderActivity extends AppCompatActivity {
 
     private String quantity, name, price;
 private  ArrayList<OrderDetails> orderDetailsList;
-private  ArrayList<ChildItem> childItemArrayList;
+
     private String hutName , hutImage ;
 
     @Override
@@ -54,10 +35,9 @@ private  ArrayList<ChildItem> childItemArrayList;
 
 
 
-//        orderDetailsList = new ArrayList<>();
-//       orderDetailsList = dbHelper.getAll();
-       childItemArrayList = new ArrayList<>();
-       childItemArrayList = dbHelper.getAll1();
+        orderDetailsList = new ArrayList<>();
+       orderDetailsList = dbHelper.getAll();
+
 
 
 
@@ -69,16 +49,16 @@ private  ArrayList<ChildItem> childItemArrayList;
         binding.nameTextView.setText("");
         binding.priceTextView.setText("");
 
-        for (ChildItem dish : childItemArrayList) {
-            String quantity = String.valueOf(dish.getItemQuantity()) + "\n";
+        for (OrderDetails dish : orderDetailsList) {
+            String quantity = String.valueOf(dish.getQuantity()) + "\n";
             dataBuilder.append(quantity);
 
 
 
-            String name = dish.getItemName() + "\n";
+            String name = dish.getName() + "\n";
             dataBuilder1.append(name);
 
-            String price = String.valueOf(dish.getItemPrice()) + "\n";
+            String price = String.valueOf(dish.getNewPrice()) + "\n";
             dataBuilder2.append(price);
 
 

@@ -2,28 +2,16 @@ package com.example;
 
 import static com.example.huts.messeges.Values.TO;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.huts.R;
-import com.example.huts.adapters.ChildAdapter;
-import com.example.huts.adapters.ParentAdpter;
-import com.example.huts.databinding.ActivityMainBinding;
 import com.example.huts.databinding.ActivityMessegeBinding;
 import com.example.huts.messeges.ApiUtilsClass;
 import com.example.huts.messeges.NotificationsData;
 import com.example.huts.messeges.PushNotifications;
-import com.example.huts.model.ChildItem;
-import com.example.huts.model.ParentItem;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
@@ -37,9 +25,7 @@ public class MessegeActivity extends AppCompatActivity {
     ActivityMessegeBinding binding;
     String title, messege;
 
-     private  ParentAdpter parentAdpter ;
-     private  ArrayList<ParentItem> parentItemArrayList;
-     private ArrayList<ChildItem> childItemArrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +38,7 @@ public class MessegeActivity extends AppCompatActivity {
         String [] itemName = {"burger","singer","2c42c424","sandwich"};
         int [] imageIId = {R.drawable.cart,R.drawable.chaneychat, R.drawable.aluanda};
 
-        parentItemArrayList = new ArrayList<>();
-        childItemArrayList = new ArrayList<>();
+
 
 //
 //        for (int i = 0 ;i <orderId.length;i++)

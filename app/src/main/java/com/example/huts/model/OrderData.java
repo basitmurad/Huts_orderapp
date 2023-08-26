@@ -5,24 +5,21 @@ import java.util.ArrayList;
 public class OrderData {
 
 
-    private String hutName , userId , pushId ,orderId;
+    private String hutName , userId , pushId ,orderId ,address;
     private int totalPrice;
     private ArrayList<OrderDetails> orderDetailsList;
-
-
     private boolean isActive ;
 
 
     public OrderData() {
     }
 
-
-    public OrderData(String hutName, String userId, String pushId,String orderId, int totalPrice, ArrayList<OrderDetails> orderDetailsList, boolean isActive) {
+    public OrderData(String hutName, String userId, String pushId, String orderId, String address, int totalPrice, ArrayList<OrderDetails> orderDetailsList, boolean isActive) {
         this.hutName = hutName;
         this.userId = userId;
         this.pushId = pushId;
-
         this.orderId = orderId;
+        this.address = address;
         this.totalPrice = totalPrice;
         this.orderDetailsList = orderDetailsList;
         this.isActive = isActive;
@@ -36,8 +33,13 @@ public class OrderData {
         this.orderId = orderId;
     }
 
+    public String getAddress() {
+        return address;
+    }
 
-
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public String getHutName() {
         return hutName;

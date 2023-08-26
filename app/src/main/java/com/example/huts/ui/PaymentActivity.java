@@ -6,17 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.huts.R;
 import com.example.huts.SessionManager;
 import com.example.huts.databinding.ActivityPaymentBinding;
-import com.example.huts.model.ChildItem;
 import com.example.huts.model.OrderData;
 import com.example.huts.model.OrderDetails;
-import com.example.huts.model.ParentItem;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,7 +29,7 @@ public class PaymentActivity extends AppCompatActivity {
     private ActivityPaymentBinding binding ;
     private SessionManager sessionManager;
     private ProgressDialog progressDialog;
-    private ArrayList<ChildItem> childItemArrayList;
+
     private int total;
 
     @Override
@@ -53,14 +49,15 @@ public class PaymentActivity extends AppCompatActivity {
         String pushID = UUID.randomUUID().toString();
         String hut =  sessionManager.getHutName();
         String imageUri = sessionManager.getHutImage();
-        Toast.makeText(this, ""+imageUri, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, ""+imageUri, Toast.LENGTH_SHORT).show();
         String orderId = generateRandomNumber(16);
       String userEmail = sessionManager.getEmail();
       String userName = sessionManager.getNaame();
         DbHelper dbHelper = new DbHelper(PaymentActivity.this);
          total = (int) dbHelper.calculateTotalNewPrice();
 
-     childItemArrayList = dbHelper.getAll1();
+
+
 
 
 
@@ -77,23 +74,25 @@ public class PaymentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (! binding.editextDelivery.getText().toString().isEmpty())
+                if (binding.editextDelivery.getText().toString().isEmpty())
                 {
                     Toast.makeText(PaymentActivity.this, "Please enter you detail", Toast.LENGTH_SHORT).show();
                 }
                 else {
+
+                    String address = binding.editextDelivery.getText().toString();
                     progressDialog.show();
                     Toast.makeText(PaymentActivity.this, "orders placed successfully", Toast.LENGTH_SHORT).show();
                     DbHelper dbHelper = new DbHelper(PaymentActivity.this);
                 ArrayList<OrderDetails> orderDetailsList = dbHelper.getAll();
                 total = (int) dbHelper.calculateTotalNewPrice();
 
+
                 // Send data to Firebase
                 DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("ActiveOrders");
 
-                    ParentItem parentItem = new ParentItem(hut,userId,pushID,orderId,total,childItemArrayList,true);
-//                OrderData orderData = new OrderData(hut,userId,pushID,orderId,total,orderDetailsList, true);
-                ordersRef.child(userId).child(pushID).setValue(parentItem)
+                OrderData orderData = new OrderData(hut,userId,pushID,orderId,address,total,orderDetailsList, true);
+                ordersRef.child(userId).child(pushID).setValue(orderData)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {

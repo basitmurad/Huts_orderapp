@@ -50,7 +50,6 @@
 
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_bold"
-                    android:maxLines="1"
                     android:padding="1dp"
                     android:text="Lahori Chaney Single"
                     android:textColor="@color/white"
