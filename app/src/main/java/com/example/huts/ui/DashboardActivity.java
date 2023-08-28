@@ -1,5 +1,6 @@
 package com.example.huts.ui;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,7 +19,15 @@ import com.example.huts.R;
 import com.example.huts.SessionManager;
 import com.example.huts.adapters.DashboardAdapter;
 import com.example.huts.databinding.ActivityDashboardBinding;
+import com.example.huts.model.Users;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -28,6 +37,8 @@ public class DashboardActivity extends AppCompatActivity {
     private DashboardAdapter dashboardAdapter;
     private SessionManager sessionManager;
     private ArrayList<DashboardClass> list;
+    private FirebaseAuth firebaseAuth;
+    private String userEmail ,userName;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -37,8 +48,86 @@ public class DashboardActivity extends AppCompatActivity {
 
         setContentView(binding.getRoot());
 
-
+        firebaseAuth = FirebaseAuth.getInstance();
         sessionManager = new SessionManager(this);
+
+
+
+
+        DatabaseReference adminDetailRef = FirebaseDatabase.getInstance().getReference("AdminDetail");
+        DatabaseReference userRef = adminDetailRef.child("aylalHdctZWghIdg9UCvGLdFZzw2"); // Replace with the actual userId
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String fcmToken = dataSnapshot.child("fcmToken").getValue(String.class);
+
+                    sessionManager.setAdminFcmToken(fcmToken);
+          //          Toast.makeText(DashboardActivity.this, ""+fcmToken, Toast.LENGTH_SHORT).show();
+                    // Use the fcmToken as needed (e.g., sending notifications)
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle error
+            }
+        });
+
+
+
+
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//        Toast.makeText(this, "" + userID
+//                , Toast.LENGTH_SHORT).show();
+
+
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+
+        database.child("UsersDetail").child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Retrieve user data using the User class
+                    Users user = dataSnapshot.getValue(Users.class);
+
+                    if (user != null) {
+                        userEmail = user.getEmail();
+                        userName= user.getName();
+
+                        // ... other fields
+                        Toast.makeText(DashboardActivity.this, " user" + userName + userEmail, Toast.LENGTH_SHORT).show();
+                        NavigationView navigationView = findViewById(R.id.navView);
+                        View headerView = navigationView.getHeaderView(0); // Get the header layout
+                        TextView nameHeaderTextView = headerView.findViewById(R.id.nameHeader);
+                        TextView emailHeaderTextView = headerView.findViewById(R.id.emailHeader);
+
+
+                       sessionManager.saveEmailAndPassword(userName, userEmail);
+
+                        nameHeaderTextView.setText(userName);
+                        emailHeaderTextView.setText(userEmail);
+
+                    }
+                    else {
+                        Toast.makeText(DashboardActivity.this, "No user", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(DashboardActivity.this, "database error" + databaseError
+                        .getMessage(), Toast.LENGTH_SHORT).show();
+
+                // Handle error
+            }
+        });
+
+
+
 
 
         list = new ArrayList<>();
@@ -62,6 +151,17 @@ public class DashboardActivity extends AppCompatActivity {
                 "chefs", R.drawable.hutspecial));
 
 
+        binding.logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                firebaseAuth.signOut();
+
+                startActivity(new Intent(DashboardActivity.this,SignUpActivity.class));
+                finish();
+            }
+        });
+
         binding.btnBreakfast.setOnClickListener(v -> startActivity(new Intent(
                 DashboardActivity.this, BreakFastActivity.class
         )));
@@ -84,7 +184,7 @@ public class DashboardActivity extends AppCompatActivity {
 
 
 
-        binding.navigationView.setNavigationItemSelectedListener(item -> {
+        binding.navView.setNavigationItemSelectedListener(item -> {
             // Handle navigation item clicks here
             int itemId = item.getItemId();
 
@@ -95,11 +195,15 @@ public class DashboardActivity extends AppCompatActivity {
                 // Navigate to ProfileFragment
                 Toast.makeText(this, "Profile here", Toast.LENGTH_SHORT).show();
             }
-            // Add similar cases for other menu items...
 
-            // Close the drawer after handling the click
+
             binding.drawerLayout.closeDrawer(GravityCompat.START);
             return true;
+        });
+
+        binding.btnLogout.setOnClickListener(v -> {
+
+            firebaseAuth.signOut();
         });
 
 
@@ -127,15 +231,40 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
-        NavigationView navigationView = findViewById(R.id.navigation_view);
-        View headerView = navigationView.getHeaderView(0); // Get the header view
 
-        TextView emailHeaderTextView = headerView.findViewById(R.id.emailHeader);
-        TextView nameHeaderTextView = headerView.findViewById(R.id.nameHeader);
+        Toast.makeText(this, ""+sessionManager.getNaame(), Toast.LENGTH_SHORT).show();
 
-        emailHeaderTextView.setText(sessionManager.getEmail());
-        nameHeaderTextView.setText(sessionManager.getNaame());
+
+
     }
+    private void getUserDetail() {
+
+
+        String uerID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("UsersDetail").child(uerID)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            userName = snapshot.child("username").getValue(String.class);
+                            Toast.makeText(DashboardActivity.this, "Exist" + userName, Toast.LENGTH_SHORT).show();
+                            String userEmail = snapshot.child("email").getValue(String.class);
+
+                        } else {
+                            Toast.makeText(DashboardActivity.this, "no data", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(DashboardActivity.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+    }
+
 
 
     @Override

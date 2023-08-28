@@ -118,10 +118,7 @@ public class ActiveOrdersFragment extends Fragment {
 
 //
 
-        if (activeOrdersList.isEmpty())
-        {
-            Toast.makeText(getActivity(), "no active order ", Toast.LENGTH_SHORT).show();
-        }
+
 
         ordersRef.addValueEventListener(new ValueEventListener() {
             @Override

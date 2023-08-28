@@ -13,7 +13,7 @@ public class SessionManager {
     private static final String HUT_NAME = "hutName";
     private static final String HUT_IMAGEURI = "hutImage";
 
-
+    private static final String KEY_ADMIN_FCM_TOKEN = "admin_fcm_token";
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private Context context;
@@ -24,6 +24,7 @@ public class SessionManager {
         sharedPreferences = context.getSharedPreferences(HUT_IMAGEURI, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(KEY_NUMBER , Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(KEY_ADMIN_FCM_TOKEN , Context.MODE_PRIVATE);
 
         editor = sharedPreferences.edit();
     }
@@ -34,6 +35,21 @@ public class SessionManager {
         editor.putString(KEY_EMAIL, email);
         editor.putString(KEY_NUMBER ,number);
         editor.apply();
+    }
+    public void saveEmailAndPassword(String name, String email ) {
+        editor.putString(KEY_NAME, name);
+
+        editor.putString(KEY_EMAIL, email);
+
+        editor.apply();
+    }
+    public void setAdminFcmToken(String adminFcmToken) {
+        editor.putString(KEY_ADMIN_FCM_TOKEN, adminFcmToken);
+        editor.apply();
+    }
+
+    public String getAdminFcmToken() {
+        return sharedPreferences.getString(KEY_ADMIN_FCM_TOKEN, null);
     }
 
     public String getNaame() {

@@ -1,6 +1,7 @@
 package com.example.huts.messeges;
 
-import static com.example.huts.messeges.Values.CONTENT_TYPES;
+import static com.example.huts.messeges.Values.CONTENT_TYPE;
+
 import static com.example.huts.messeges.Values.SERVER_KEY;
 
 import retrofit2.Call;
@@ -12,7 +13,7 @@ import retrofit2.http.POST;
 public interface ApiInterface {
 
 
-    @Headers({"Authorization: "+SERVER_KEY , "COntent-type:" + CONTENT_TYPES})
+    @Headers({"Authorization: key="+SERVER_KEY,"Content-Type:"+CONTENT_TYPE})
     @POST("fcm/send")
-    Call<PushNotifications> sendNotifications(@Body PushNotifications pushNotifications);
+    Call<PushNotification> sendNotification(@Body PushNotification notification);
 }

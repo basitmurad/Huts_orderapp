@@ -12,7 +12,8 @@ import com.google.android.material.tabs.TabLayout;
 public class MyOrdersActivity extends AppCompatActivity {
 
     private ActivityMyOrdersBinding binding;
-    private MyFragmentStateAdapter myFragmentStateAdapter;
+
+    private MyFragmentStateAdapter fragmentStateAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,8 +21,8 @@ public class MyOrdersActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
-        myFragmentStateAdapter = new MyFragmentStateAdapter(MyOrdersActivity.this);
-        binding.viewPager.setAdapter(myFragmentStateAdapter);
+fragmentStateAdapter = new MyFragmentStateAdapter(MyOrdersActivity.this);
+binding.viewPager.setAdapter(fragmentStateAdapter);
 
 
 
@@ -30,20 +31,7 @@ public class MyOrdersActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
 
                 binding.viewPager.setCurrentItem(tab.getPosition(),true);
-//                switch (tab.getPosition())
-//                {
-//                    case 0 :
-//                        new ActiveOrdersFragment();
-//                        break;
-//                    case 1 :
-//                        new DeliveredOrdersFragment();
-//                        break;
-//                    case 2 :
-//                        new CancelOrdersFragment();
-//                        break;
-//
-//
-//                }
+
             }
 
 
@@ -65,6 +53,7 @@ public class MyOrdersActivity extends AppCompatActivity {
                 binding.tablayout.selectTab(binding.tablayout.getTabAt(position));
             }
         });
+
 
 
     }

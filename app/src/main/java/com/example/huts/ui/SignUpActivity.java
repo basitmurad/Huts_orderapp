@@ -1,8 +1,11 @@
 package com.example.huts.ui;
 
+import static com.example.huts.model.HideKeyBoard.hideKeyboard;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -28,61 +31,34 @@ public class SignUpActivity extends AppCompatActivity {
 
     private SessionManager sessionManager;
     private  String email , password ;
+    private ProgressDialog progressDialog;
+    private       DatabaseReference usersRef;
+    private FirebaseAuth firebaseAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("usersDetail");
-        Query userRef = usersRef.orderByChild("email").equalTo(email);
 
-//        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Logging in...");
+        progressDialog.setMessage("Please wait");
+        progressDialog.setCancelable(false);
+         usersRef = FirebaseDatabase.getInstance().getReference("UsersDetail");
+         firebaseAuth = FirebaseAuth.getInstance();
         sessionManager = new SessionManager(this);
         String nameS = sessionManager.getNaame();
         String emailS = sessionManager.getEmail();
         String passwordS = sessionManager.getPassword();
-//    binding.btnLogin.setOnClickListener(new View.OnClickListener() {
-//        @Override
-//        public void onClick(View v) {
-//            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    if (snapshot.exists()) {
-//                        for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-//                            Users user = userSnapshot.getValue(Users.class);
-//                            String enteredPasswordHash = hashFunction(password);
-//
-//                            if (enteredPasswordHash.equals(user.getPassword())) {
-//                                // Successful login
-//                                Toast.makeText(SignUpActivity.this, "User login successful", Toast.LENGTH_SHORT).show();
-//
-//                                // Redirect to Dashboard or wherever you need
-//                                startActivity(new Intent(SignUpActivity.this, DashboardActivity.class));
-//                                finish();
-//                            } else {
-//                                // Invalid password
-//                                Toast.makeText(SignUpActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    } else {
-//                        // User not found
-//                        Toast.makeText(SignUpActivity.this, "User not found", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//                    Toast.makeText(SignUpActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        }
-//    });
+
+
 
 
 
         Toast.makeText(this, " email is"+sessionManager.getEmail() + "password is  " +sessionManager.getPassword()
                  + "name is  " + sessionManager.getNaame(), Toast.LENGTH_SHORT).show();
+
         binding.btnLogin.setOnClickListener(view -> {
 
 
@@ -97,11 +73,9 @@ public class SignUpActivity extends AppCompatActivity {
 
             else
             {
-                email = binding.editTextTextEmail.getText().toString();
-                password = binding.editTextTextPassword.getText().toString();
 
 
-                startActivity(new Intent(SignUpActivity.this,DashboardActivity.class));
+                loginWithEmailAndPassword();
             }
         });
 
@@ -115,20 +89,91 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    private String hashFunction(String password) {
-        // Generate a salt for BCrypt
-        String salt = BCrypt.gensalt();
+    private void checkEmail(String email, String password) {
 
-        // Hash the password with the generated salt
-        String hashedPassword = BCrypt.hashpw(password, salt);
+        progressDialog.show();
+        usersRef.orderByChild("email").equalTo(email)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        progressDialog.dismiss();
+                        if (snapshot.exists()) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                String storedPassword = dataSnapshot.child("password").getValue(String.class);
+                                if (password.equals(storedPassword)) {
 
-        return hashedPassword;
+
+//                                    FirebaseUser user=    FirebaseAuth.getInstance().getCurrentUser();
+//                                    Toast.makeText(SignUpActivity.this,   " "  +user.getUid(), Toast.LENGTH_SHORT).show();
+
+
+                                    startActivity(new Intent(SignUpActivity.this, DashboardActivity.class));
+                                    finish();
+                                } else {
+                                    progressDialog.dismiss();
+                                    // Password is incorrect
+                                    Toast.makeText(SignUpActivity.this, "Incorrect password.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        } else {
+                            progressDialog.dismiss();
+                            // Email not found in the database
+                            Toast.makeText(SignUpActivity.this, "Email not found.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        progressDialog.dismiss();
+                        Toast.makeText(SignUpActivity.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
+    private void loginWithEmailAndPassword() {
+        String email = binding.editTextTextEmail.getText().toString();
+        String password = binding.editTextTextPassword.getText().toString();
 
+        if (email.isEmpty()) {
+            binding.editTextTextEmail.setError("Enter email");
+            return;
+        }
+
+        if (password.isEmpty()) {
+            binding.editTextTextPassword.setError("Enter password");
+            return;
+        }
+
+        progressDialog.show();
+        hideKeyboard(this);
+
+
+
+
+        firebaseAuth.signInWithEmailAndPassword(email,password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+
+                        FirebaseUser user=     firebaseAuth.getCurrentUser();
+
+
+                        Toast.makeText(this, ""+user.getEmail() +" " +user.getUid(), Toast.LENGTH_SHORT).show();
+
+                        startActivity(new Intent(SignUpActivity.this,DashboardActivity.class));
+
+                    }else{
+                        progressDialog.dismiss();
+                        Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(e -> {
+
+                });
+    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finishAffinity();
     }
+
+
 }

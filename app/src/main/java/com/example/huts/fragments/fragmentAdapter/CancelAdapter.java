@@ -43,7 +43,7 @@ public class CancelAdapter extends RecyclerView.Adapter<CancelAdapter.Myholder> 
 
         holder.t3.setText("Huts : " + orderData1.getHutName());
         holder.t2.setText("Total Price : " + String.valueOf(orderData1.getTotalPrice()));
-//        Toast.makeText(context, "" + orderData1.isActive(), Toast.LENGTH_SHORT).show();
+//
 
         for (OrderDetails orderDetails : orderData1.getOrderDetailsList()) {
 

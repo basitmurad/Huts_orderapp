@@ -45,56 +45,16 @@ public class CancelOrdersFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_cancel_orders, container, false);
 
         ShowDialoge.showProgressDialog(getContext(),"Fetching your cancel orders");
-        String uiD = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         recyclerView = view.findViewById(R.id.cancelRecy);
 
-//        adapter = new YourAdapter(retrievedDataList); // Replace with your adapter class
+
         cancelAdapter = new CancelAdapter(getContext(), canceledOrdersList);
         recyclerView.setAdapter(cancelAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         retrieveDataFromFirebase();
-//        canceledOrdersRef = FirebaseDatabase.getInstance().getReference("CancelOrders");
-//
-//
-//
-//        canceledOrdersRef.addValueEventListener(new ValueEventListener() {
-//
-//
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                canceledOrdersList.clear();
-////                activeOrdersList.clear();
-//                Log.d("Firebase", "Snapshot: " + snapshot.toString());
-//
-//                try {
-//                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                        OrderData orderData = dataSnapshot.getValue(OrderData.class);
-//                        if (orderData != null && orderData.isActive()) {
-//                            canceledOrdersList.add(orderData);
-//                        }
-//                        else {
-//                            Toast.makeText(getContext(), "No Active Orders", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                   cancelAdapter = new CancelAdapter(getContext(), canceledOrdersList);
-//                    recyclerView.setAdapter(cancelAdapter);
-//                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//
-//                    cancelAdapter.notifyDataSetChanged();
-//                }
-//                catch (ArrayIndexOutOfBoundsException e)
-//                {
-//                    Toast.makeText(getContext(), "" +e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//                Toast.makeText(getActivity(), "" + error.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
 
         return view;
     }
@@ -121,6 +81,9 @@ public class CancelOrdersFragment extends Fragment {
                     OrderData orderData = dataSnapshot.getValue(OrderData.class);
                     if (orderData != null) {
                         canceledOrdersList.add(orderData);
+                    }
+                    else {
+                        Toast.makeText(getActivity(), "No orders are cancel", Toast.LENGTH_SHORT).show();
                     }
                 }
 

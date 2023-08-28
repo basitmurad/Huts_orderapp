@@ -65,7 +65,7 @@
             android:layout_marginTop="8dp"
 
             android:background="@drawable/back_edittext"
-            android:drawableEnd="@drawable/baseline_person_24"
+            android:drawableEnd="@drawable/baseline_person"
 
             android:fontFamily="@font/inter"
             android:hint="Enter your User/Email"

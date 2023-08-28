@@ -37,7 +37,7 @@ public class LunchAndDinnerActivity extends AppCompatActivity {
         filterList.clear();
 
 
-        list.add(new BreakfastClass("Chicken Biryani","100", R.drawable.chickenbiryani));
+        list.add(new BreakfastClass("Chicken Biryani","190", R.drawable.chickenbiryani));
         list.add(new BreakfastClass("Mutton Pulao","100", R.drawable.muttonpulao));
         list.add(new BreakfastClass("Boiled Rice","100", R.drawable.boiledrice));
         list.add(new BreakfastClass("Beef Pulao","100", R.drawable.beefpulao));

@@ -14,6 +14,7 @@ public class OrderData {
     public OrderData() {
     }
 
+
     public OrderData(String hutName, String userId, String pushId, String orderId, String address, int totalPrice, ArrayList<OrderDetails> orderDetailsList, boolean isActive) {
         this.hutName = hutName;
         this.userId = userId;

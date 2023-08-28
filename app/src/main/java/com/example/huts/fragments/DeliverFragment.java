@@ -22,7 +22,6 @@ public class DeliverFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_deliver, container, false);
 
-        Toast.makeText(getContext(), "No order are delivers", Toast.LENGTH_SHORT).show();
         return view;
     }
 }

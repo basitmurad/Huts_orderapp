@@ -34,9 +34,9 @@
 
                 <ImageView
                     android:id="@+id/navDrawer"
-                    android:layout_width="25dp"
+                    android:layout_width="20dp"
 
-                    android:layout_height="25dp"
+                    android:layout_height="20dp"
                     android:layout_marginStart="10dp"
                     android:src="@drawable/menu" />
 
@@ -51,13 +51,13 @@
 
                     android:textColor="@color/white"
 
-                    android:textSize="24sp" />
+                    android:textSize="20sp" />
 
                 <ImageView
                     android:id="@+id/imageView3"
-                    android:layout_width="35dp"
+                    android:layout_width="30dp"
 
-                    android:layout_height="35dp"
+                    android:layout_height="30dp"
                     android:layout_marginEnd="10dp"
 
                     android:src="@drawable/cart" />

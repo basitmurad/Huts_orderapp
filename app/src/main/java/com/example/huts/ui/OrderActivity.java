@@ -87,6 +87,13 @@ private  ArrayList<OrderDetails> orderDetailsList;
 
 
 
+        binding.btncart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(OrderActivity.this,CartsActivity.class));
+            }
+        });
+
 
         binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override

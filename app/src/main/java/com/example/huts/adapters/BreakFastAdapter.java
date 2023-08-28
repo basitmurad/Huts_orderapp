@@ -85,9 +85,9 @@ public class BreakFastAdapter extends RecyclerView.Adapter<BreakFastAdapter.MyHo
                     Intent intent = new Intent(context.getApplicationContext(), CartsActivity.class);
                     v.getContext().startActivity(intent);
 
-                    Toast.makeText(context, "Dish inserted successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Add to cart", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(context, "Dish is Exist in card", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, " Exist in cart", Toast.LENGTH_SHORT).show();
                 }
             }
         });

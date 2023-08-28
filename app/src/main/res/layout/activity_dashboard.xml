@@ -26,16 +26,18 @@
                 android:layout_height="100dp" />
 
             <ScrollView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
 
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/include">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
+                    android:layout_height="match_parent"
+              android:layout_marginTop="24dp"
                     android:orientation="vertical">
 
                     <androidx.cardview.widget.CardView
@@ -48,7 +50,7 @@
                         android:layout_marginBottom="12dp"
                         android:orientation="vertical"
                         app:cardCornerRadius="20dp"
-                        app:cardElevation="20dp">
+    >
 
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -176,7 +178,7 @@
                         android:orientation="vertical"
                         app:cardCornerRadius="20dp"
 
-                        app:cardElevation="20dp">
+                        app:cardElevation="10dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/btnfastFood"
@@ -238,7 +240,7 @@
                         android:orientation="vertical"
                         app:cardCornerRadius="20dp"
 
-                        app:cardElevation="20dp">
+                        app:cardElevation="10dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/btnHutsSpecial"
@@ -293,13 +295,54 @@
 
 
         <com.google.android.material.navigation.NavigationView
-            android:id="@+id/navigation_view"
+            android:id="@+id/navView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             app:headerLayout="@layout/header_layout"
-            app:itemIconTint="#0CAA0D"
-            app:menu="@menu/navigation_drawerlayout" />
+
+            app:menu="@menu/navigation_drawerlayout">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|bottom"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="50dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="5dp">
+
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="8dp"
+                    android:padding="2dp"
+                    android:src="@drawable/logout"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/btnLogout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+
+                    android:padding="2dp"
+                    android:text="Log Out"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+                    app:layout_constraintStart_toEndOf="@+id/imageView4"
+                    app:layout_constraintTop_toTopOf="@+id/imageView4" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.navigation.NavigationView>
 
     </androidx.drawerlayout.widget.DrawerLayout>
 

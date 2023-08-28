@@ -31,7 +31,7 @@ public class HutsActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         list = new ArrayList<>();
-        list.add(new HutsClass("Majeed Huts" , R.drawable.chaneychat));
+        list.add(new HutsClass("Majeed Hut" , R.drawable.chaneychat));
         list.add(new HutsClass("Chemistry Hut" , R.drawable.chaneychat));
         list.add(new HutsClass("Social Hut" , R.drawable.chaneychat));
         list.add(new HutsClass("NIPS Hut" , R.drawable.chaneychat));
@@ -40,6 +40,8 @@ public class HutsActivity extends AppCompatActivity {
         list.add(new HutsClass("Paradise Hut" , R.drawable.chaneychat));
         list.add(new HutsClass("Bio Hut" , R.drawable.chaneychat));
         list.add(new HutsClass("Shabbir Hut" , R.drawable.chaneychat));
+        list.add(new HutsClass("Daniyal Hut" , R.drawable.chaneychat));
+        list.add(new HutsClass("Mphil Hut" , R.drawable.chaneychat));
 
 
 

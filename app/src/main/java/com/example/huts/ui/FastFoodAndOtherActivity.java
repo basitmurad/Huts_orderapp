@@ -35,11 +35,11 @@ public class FastFoodAndOtherActivity extends AppCompatActivity {
        list.clear();
        filterList.clear();
 
-       list.add(new BreakfastClass("Zinger Burger" , "100", R.drawable.zingerburger));
+       list.add(new BreakfastClass("Zinger Burger" , "250", R.drawable.zingerburger));
        list.add(new BreakfastClass("Chicken Burger  " , "100", R.drawable.chickenburger));
        list.add(new BreakfastClass("Anda Burger " , "100", R.drawable.andaburger));
-       list.add(new BreakfastClass("Zinger Shawarma " , "100", R.drawable.zingershawarma));
-       list.add(new BreakfastClass("Chicken Shawarma " , "100", R.drawable.chickenshawarma));
+       list.add(new BreakfastClass("Zinger Shwrma " , "250", R.drawable.zingershawarma));
+       list.add(new BreakfastClass("Chick Shawarma " , "100", R.drawable.chickenshawarma));
        list.add(new BreakfastClass("Zinger Roll " , "100", R.drawable.zingerroll));
        list.add(new BreakfastClass("Samosa Chat " , "100", R.drawable.samosachat));
        list.add(new BreakfastClass("Dahi Baley " , "100", R.drawable.dahibaley));

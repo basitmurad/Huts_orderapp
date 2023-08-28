@@ -36,7 +36,7 @@ public class OtpViewActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private long totalTimeInMillis;
     private long intervalInMillis;
-    private String verificatonID, number, randomUUId, email, name , password;
+    private String verificatonID, number, userId, email, name , password;
     private ProgressDialog progressDialog;
     private DatabaseReference databaseRef;
 
@@ -63,11 +63,12 @@ public class OtpViewActivity extends AppCompatActivity {
 
 
 
-        randomUUId = UUID.randomUUID().toString();
-        Toast.makeText(this, ""+number + name + email + randomUUId, Toast.LENGTH_SHORT).show();
 
 
-        binding.textNumber.setText(name);
+
+
+
+        binding.textNumber.setText(number);
         totalTimeInMillis = 60000; // 60 seconds
 
         // Set the interval for the countdown timer in milliseconds
@@ -134,8 +135,9 @@ public class OtpViewActivity extends AppCompatActivity {
     }
 
     private void SendDataToFireBase() {
-        Users users = new Users(name,email, number, password ,randomUUId);
-        databaseRef.child("usersDetail").child("randomUUId").setValue(users)
+        userId = FirebaseAuth.getInstance().getUid();
+        Users users = new Users(name,email, number, password ,userId);
+        databaseRef.child("usersDetail").child(userId).setValue(users)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {

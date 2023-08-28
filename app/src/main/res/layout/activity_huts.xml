@@ -32,8 +32,8 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginStart="10dp"
                 android:id="@+id/btnBack"
                 android:src="@drawable/baseline_arrow_back_24" />
@@ -49,7 +49,7 @@
 
                 android:textColor="@color/white"
 
-                android:textSize="24sp"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:ignore="HardcodedText" />
 
