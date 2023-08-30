@@ -97,7 +97,7 @@ public class DashboardActivity extends AppCompatActivity {
                         userName= user.getName();
 
                         // ... other fields
-                        Toast.makeText(DashboardActivity.this, " user" + userName + userEmail, Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(DashboardActivity.this, " user" + userName + userEmail, Toast.LENGTH_SHORT).show();
                         NavigationView navigationView = findViewById(R.id.navView);
                         View headerView = navigationView.getHeaderView(0); // Get the header layout
                         TextView nameHeaderTextView = headerView.findViewById(R.id.nameHeader);
@@ -232,7 +232,7 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
 
-        Toast.makeText(this, ""+sessionManager.getNaame(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, ""+sessionManager.getNaame(), Toast.LENGTH_SHORT).show();
 
 
 

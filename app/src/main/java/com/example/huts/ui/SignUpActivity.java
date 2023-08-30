@@ -55,9 +55,7 @@ public class SignUpActivity extends AppCompatActivity {
 
 
 
-
-        Toast.makeText(this, " email is"+sessionManager.getEmail() + "password is  " +sessionManager.getPassword()
-                 + "name is  " + sessionManager.getNaame(), Toast.LENGTH_SHORT).show();
+//.
 
         binding.btnLogin.setOnClickListener(view -> {
 

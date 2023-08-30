@@ -91,7 +91,11 @@ public class PaymentActivity extends AppCompatActivity {
             public void onClick(View v) {
                 finish();
             }
+
+
         });
+
+
 
         binding.btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,7 +164,7 @@ public class PaymentActivity extends AppCompatActivity {
     private void getToken() {
 
         DatabaseReference adminDetailRef = FirebaseDatabase.getInstance().getReference("AdminDetail");
-        DatabaseReference userRef = adminDetailRef.child("fsWmnv6WAIc8PFvBRhpYBHfQRAA3"); // Replace with the actual userId
+        DatabaseReference userRef = adminDetailRef.child("EzJ7BSbY8vgNhIGyuHjefhUASgo2");// Replace with the actual userId
 
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -168,6 +172,7 @@ public class PaymentActivity extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
                     fcmToken = dataSnapshot.child("fcmToken").getValue(String.class);
                     sessionManager.setAdminFcmToken(fcmToken);
+                    Toast.makeText(PaymentActivity.this, ""+fcmToken, Toast.LENGTH_SHORT).show();
                     onSendNotification(fcmToken, sessionManager.getNaame(), "Place an order");
 
                 }
@@ -206,17 +211,15 @@ public class PaymentActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
 
-                            Toast.makeText(PaymentActivity.this, "" + response.toString(), Toast.LENGTH_SHORT).show();
-                            // showDriverDialog(order);
-                            // saveNotifData(order, new NotifFirebase(order.getUserId(), name, send_you_and_interest, String.valueOf(System.currentTimeMillis()), String.valueOf(UUID.randomUUID().toString())));
+                            Toast.makeText(PaymentActivity.this, "notifications send  " + response.toString(), Toast.LENGTH_SHORT).show();
+
                             Log.d("Notification", "sent notification");
                         }
 
                     }, error -> {
-                //    showDriverDialog(order);
-                //   saveNotifData(order, new NotifFirebase(order.getUserId(), name, send_you_and_interest, String.valueOf(System.currentTimeMillis()), String.valueOf(UUID.randomUUID().toString())));
+
                 Log.d("Notification", "sent not notification");
-                Toast.makeText(this, "" + error.networkResponse, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "not send " + error.networkResponse, Toast.LENGTH_SHORT).show();
             }) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
