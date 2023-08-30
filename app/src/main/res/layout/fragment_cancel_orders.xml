@@ -17,6 +17,6 @@
 
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp"
-        tools:listitem="@layout/cancel_layout" />
+        tools:listitem="@layout/cancelitem_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
