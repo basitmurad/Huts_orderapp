@@ -17,8 +17,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.huts.R;
-import com.example.huts.fragments.fragmentAdapter.ActiveAdapter;
-import com.example.huts.fragments.fragmentAdapter.CancelAdapter;
+
+import com.example.huts.adapters.ParentAdapter;
+import com.example.huts.fragments.fragmentAdapter.CancelAdpter;
 import com.example.huts.model.OrderData;
 import com.example.huts.model.ShowDialoge;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,7 +34,8 @@ import java.util.ArrayList;
 
 public class CancelOrdersFragment extends Fragment {
     private RecyclerView recyclerView;
-    private CancelAdapter cancelAdapter;
+
+    private CancelAdpter cancelAdpter;
     private ArrayList<OrderData> canceledOrdersList = new ArrayList<>();
     private DatabaseReference canceledOrdersRef;
 
@@ -44,57 +46,64 @@ public class CancelOrdersFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cancel_orders, container, false);
 
-        ShowDialoge.showProgressDialog(getContext(),"Fetching your cancel orders");
+        ShowDialoge.showProgressDialog(getContext(), "Fetching your cancel orders");
 
         recyclerView = view.findViewById(R.id.cancelRecy);
 
 
-        cancelAdapter = new CancelAdapter(getContext(), canceledOrdersList);
-        recyclerView.setAdapter(cancelAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        String uid = FirebaseAuth.getInstance().getUid();
+        canceledOrdersRef = FirebaseDatabase.getInstance().getReference("CancelOrders").child(uid);
 
-        retrieveDataFromFirebase();
+
+        canceledOrdersList = new ArrayList<>();
+
+
+        canceledOrdersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                canceledOrdersList.clear();
+                ShowDialoge.dismissProgressDialog();
+
+                try {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        OrderData orderData = dataSnapshot.getValue(OrderData.class);
+                        if (orderData != null && orderData.isActive()) {
+                            canceledOrdersList.add(orderData);
+                        } else {
+                            ShowDialoge.dismissProgressDialog();
+
+                            Toast.makeText(getContext(), "No Cancel Orders", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+
+                    cancelAdpter = new CancelAdpter(requireContext(), canceledOrdersList);
+
+
+                    recyclerView.setAdapter(cancelAdpter);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    ShowDialoge.dismissProgressDialog();
+
+                    Toast.makeText(getActivity(), " catch" + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                ShowDialoge.dismissProgressDialog();
+
+
+                Toast.makeText(getActivity(), "database " + error.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
 
         return view;
     }
 
-
-    private void retrieveDataFromFirebase() {
-        DatabaseReference refCancel = FirebaseDatabase.getInstance().getReference("CancelOrders");
-
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        refCancel.child(userId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    ShowDialoge.dismissProgressDialog();
-                }
-            },700);
-                canceledOrdersList.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    OrderData orderData = dataSnapshot.getValue(OrderData.class);
-                    if (orderData != null) {
-                        canceledOrdersList.add(orderData);
-                    }
-                    else {
-                        Toast.makeText(getActivity(), "No orders are cancel", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                cancelAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle error if needed
-            }
-        });
-    }
 
 }

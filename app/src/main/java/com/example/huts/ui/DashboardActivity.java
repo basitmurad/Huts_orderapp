@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -67,8 +68,7 @@ public class DashboardActivity extends AppCompatActivity {
                     String fcmToken = dataSnapshot.child("fcmToken").getValue(String.class);
 
                     sessionManager.setAdminFcmToken(fcmToken);
-          //          Toast.makeText(DashboardActivity.this, ""+fcmToken, Toast.LENGTH_SHORT).show();
-                    // Use the fcmToken as needed (e.g., sending notifications)
+
                 }
             }
 
@@ -82,8 +82,7 @@ public class DashboardActivity extends AppCompatActivity {
 
 
         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        Toast.makeText(this, "" + userID
-//                , Toast.LENGTH_SHORT).show();
+
 
 
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
@@ -154,7 +153,7 @@ public class DashboardActivity extends AppCompatActivity {
                 "chefs", R.drawable.hutspecial));
 
 
-        binding.logout.setOnClickListener(new View.OnClickListener() {
+        binding.logout12.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -194,9 +193,33 @@ public class DashboardActivity extends AppCompatActivity {
             if (itemId == R.id.nav_myordders) {
 
                 startActivity(new Intent(DashboardActivity.this, MyOrdersActivity.class));
-            } else if (itemId == R.id.nav_profile) {
-                // Navigate to ProfileFragment
-                Toast.makeText(this, "Profile here", Toast.LENGTH_SHORT).show();
+            }
+            else if (   itemId==R.id.nav_invites){
+
+                // Create an invitation message with an Instagram profile link
+                String inviteMessage = "Join us on our awesome app!\n" + "Follow us on Instagram: https://www.instagram.com/mr__bushoo/";
+
+                // Create an intent to send the message
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, inviteMessage);
+
+                // Create a chooser dialog to let the user choose an app
+                Intent chooser = Intent.createChooser(intent, "Invite Friends");
+
+                // Check if there are apps that can handle the intent
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(chooser);
+                } else {
+                    // No apps can handle the intent
+                    Toast.makeText(DashboardActivity.this, "No apps available", Toast.LENGTH_SHORT).show();
+                }
+
+            } else if (itemId==R.id.nav_terms) {
+                {
+                    Toast.makeText(this, "terms and conditions", Toast.LENGTH_SHORT).show();
+                }
+
             }
 
 
@@ -204,10 +227,7 @@ public class DashboardActivity extends AppCompatActivity {
             return true;
         });
 
-        binding.btnLogout.setOnClickListener(v -> {
 
-            firebaseAuth.signOut();
-        });
 
 
         View appbarVIew = findViewById(R.id.include);

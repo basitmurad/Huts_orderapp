@@ -73,19 +73,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         Bitmap imageBitmap1 = convertByteArrayToBitmap(imageByteArray);
 
         holder.itemImage.setImageBitmap(imageBitmap1);
-//        Bitmap imageBitmap = convertByteArrayToBitmap(imageByteArray);
-//        if (imageBitmap != null) {
-//            Uri imageUri = getImageUriFromBitmap(context, imageBitmap);
-//            if (imageUri != null) {
-//                // Set the image Uri or use it as needed
-//                Log.e("image", " get imageUri from Bitmap");
-//
-//            } else {
-//                Log.e("no Image", "Failed to get imageUri from Bitmap");
-//            }
-//        } else {
-//            Log.e("nullimae", "Bitmap is null");
-//        }
+
 
 
         holder.btndelete.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +112,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
 
                 holder.cartItemPriceTOTAL.setText(String.valueOf(totalPrice));
-                Toast.makeText(context, ""+totalPrice, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, ""+totalPrice, Toast.LENGTH_SHORT).show();
                 dbHelper.updateDishQuantityAndPrice(dishDetail.getName(),item, totalPrice);
 
             }
@@ -145,7 +133,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                     int totalPrice = item * actualPrice;
 
                     holder.cartItemPriceTOTAL.setText(String.valueOf(totalPrice));
-                    Toast.makeText(context, "" + totalPrice, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "" + totalPrice, Toast.LENGTH_SHORT).show();
                     dbHelper.updateDishQuantityAndPrice(dishDetail.getName(),item, totalPrice);
                 }
             }

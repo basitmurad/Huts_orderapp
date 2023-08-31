@@ -305,7 +305,7 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/logout"
+                android:id="@+id/logout12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start|bottom"
@@ -329,7 +329,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/btnLogout"
+                    android:id="@+id/btnLogoutqw"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
@@ -347,63 +347,4 @@
     </androidx.drawerlayout.widget.DrawerLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--        android:id="@+id/constraintLayout"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="130dp"-->
-    <!--        android:background="@drawable/backdashboard"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent">-->
-
-
-    <!--        <LinearLayout-->
-    <!--            android:id="@+id/linearLayout4"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-
-    <!--            android:layout_marginStart="8dp"-->
-    <!--            android:layout_marginTop="24dp"-->
-    <!--            android:layout_marginEnd="8dp"-->
-    <!--            android:gravity="center"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="parent">-->
-
-    <!--            <ImageView-->
-    <!--                android:id="@+id/navDrawer"-->
-    <!--                android:layout_width="25dp"-->
-
-    <!--                android:layout_height="25dp"-->
-    <!--                android:layout_marginStart="10dp"-->
-    <!--                android:src="@drawable/menu" />-->
-
-    <!--            <TextView-->
-    <!--                android:id="@+id/textView7"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_weight="1"-->
-    <!--                android:fontFamily="@font/inter_bold"-->
-    <!--                android:text="Huts.com"-->
-    <!--                android:textAlignment="center"-->
-
-    <!--                android:textColor="@color/white"-->
-
-    <!--                android:textSize="24sp"-->
-    <!--                app:layout_constraintEnd_toEndOf="parent" />-->
-
-    <!--            <ImageView-->
-    <!--                android:id="@+id/imageView3"-->
-    <!--                android:layout_width="35dp"-->
-
-    <!--                android:layout_height="35dp"-->
-    <!--                android:layout_marginEnd="10dp"-->
-
-    <!--                android:src="@drawable/cart"-->
-    <!--                app:layout_constraintEnd_toEndOf="parent" />-->
-    <!--        </LinearLayout>-->
-
-
-    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
