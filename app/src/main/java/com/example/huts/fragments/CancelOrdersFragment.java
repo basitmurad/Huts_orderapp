@@ -74,8 +74,9 @@ public class CancelOrdersFragment extends Fragment {
                 {
                     activeOrdersList.clear();
                     orderDetailsArrayList.clear();
+
                     ShowDialoge.dismissProgressDialog();
-                    Toast.makeText(getActivity().getApplicationContext(), "data is exist", Toast.LENGTH_SHORT).show();
+            //        Toast.makeText(getActivity().getApplicationContext(), "data is exist", Toast.LENGTH_SHORT).show();
 
              for (DataSnapshot snapshot1 :snapshot.getChildren())
              {
@@ -85,7 +86,8 @@ public class CancelOrdersFragment extends Fragment {
              }
 
 
-             cancelAdpter = new CancelAdpter(getActivity().getApplicationContext(),activeOrdersList);
+//             cancelAdpter = new CancelAdpter(getActivity().getApplicationContext(),activeOrdersList);
+             cancelAdpter = new CancelAdpter(requireContext(),activeOrdersList);
              recyclerView.setAdapter(cancelAdpter);
              recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
              cancelAdpter.notifyDataSetChanged();

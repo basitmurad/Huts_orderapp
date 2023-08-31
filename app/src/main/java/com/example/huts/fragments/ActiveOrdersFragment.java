@@ -94,7 +94,7 @@ private ParentAdapter parentAdapter ;
                         }
 
 
-                        parentAdapter = new ParentAdapter(getActivity(), activeOrdersList);
+                        parentAdapter = new ParentAdapter(requireContext(), activeOrdersList);
                         recyclerView.setAdapter(parentAdapter);
                         parentAdapter.notifyDataSetChanged();
                         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

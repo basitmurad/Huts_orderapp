@@ -20,6 +20,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.huts.Admin;
 import com.example.huts.SessionManager;
 
 
@@ -102,12 +103,12 @@ public class PaymentActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (binding.editextDelivery.getText().toString().isEmpty()) {
-                    Toast.makeText(PaymentActivity.this, "Please enter you detail", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PaymentActivity.this, "Please enter you detail address", Toast.LENGTH_SHORT).show();
                 } else {
 
                     String address = binding.editextDelivery.getText().toString();
                     progressDialog.show();
-                    Toast.makeText(PaymentActivity.this, "orders placed successfully", Toast.LENGTH_SHORT).show();
+                 //   Toast.makeText(PaymentActivity.this, "orders placed successfully", Toast.LENGTH_SHORT).show();
                     DbHelper dbHelper = new DbHelper(PaymentActivity.this);
                     ArrayList<OrderDetails> orderDetailsList = dbHelper.getAll();
                     total = (int) dbHelper.calculateTotalNewPrice();
@@ -129,6 +130,8 @@ public class PaymentActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onSuccess(Void unused) {
                                                     dbHelper.deleteAllOrders();
+
+
                                                     getToken();
                                                     Toast.makeText(PaymentActivity.this, "Order Placed successfully", Toast.LENGTH_SHORT).show();
                                                     startActivity(new Intent(PaymentActivity.this, DashboardActivity.class));
@@ -160,29 +163,100 @@ public class PaymentActivity extends AppCompatActivity {
 
     }
 
+    private void fetchAdminData(){
 
-    private void getToken() {
+        DatabaseReference adminDetailRef ;
 
-        DatabaseReference adminDetailRef = FirebaseDatabase.getInstance().getReference("AdminDetail");
-        DatabaseReference userRef = adminDetailRef.child("EzJ7BSbY8vgNhIGyuHjefhUASgo2");// Replace with the actual userId
-
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        adminDetailRef = FirebaseDatabase.getInstance().getReference("AdminDetail");
+        adminDetailRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    fcmToken = dataSnapshot.child("fcmToken").getValue(String.class);
-                    sessionManager.setAdminFcmToken(fcmToken);
-                    Toast.makeText(PaymentActivity.this, ""+fcmToken, Toast.LENGTH_SHORT).show();
-                    onSendNotification(fcmToken, sessionManager.getNaame(), "Place an order");
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
 
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        Admin admin = dataSnapshot.getValue(Admin.class);
+                        Toast.makeText(PaymentActivity.this, ""+admin.getFcmToken() + admin.getName(), Toast.LENGTH_SHORT).show();
+
+                    }
+
+
+
+                } else {
+
+                    Toast.makeText(PaymentActivity.this, "No user", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle error
+            public void onCancelled(@NonNull DatabaseError error) {
+
+
+                Toast.makeText(PaymentActivity.this, "database error" + error.getMessage(), Toast.LENGTH_SHORT).show();
+
+
             }
         });
+
+
+    }
+    private void getToken() {
+
+        DatabaseReference adminDetailRef ;
+
+        adminDetailRef = FirebaseDatabase.getInstance().getReference("AdminDetail");
+        adminDetailRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        Admin admin = dataSnapshot.getValue(Admin.class);
+
+                        onSendNotification(admin.getFcmToken(),sessionManager.getNaame(), "Place an Order");
+
+
+//                        Toast.makeText(PaymentActivity.this, ""+admin.g, Toast.LENGTH_SHORT).show();
+                    }
+
+
+
+                } else {
+
+                    Toast.makeText(PaymentActivity.this, "No user", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+
+                Toast.makeText(PaymentActivity.this, "database error" + error.getMessage(), Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
+//        DatabaseReference adminDetailRef = FirebaseDatabase.getInstance().getReference("AdminDetail");
+//
+//     //   DatabaseReference userRef = adminDetailRef.child();// Replace with the actual userId
+//
+//        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()) {
+//                    fcmToken = dataSnapshot.child("fcmToken").getValue(String.class);
+//                    sessionManager.setAdminFcmToken(fcmToken);
+//                    Toast.makeText(PaymentActivity.this, ""+fcmToken, Toast.LENGTH_SHORT).show();
+//                    onSendNotification(fcmToken, sessionManager.getNaame(), "Place an order");
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                // Handle error
+//            }
+//        });
 
 
     }
@@ -211,7 +285,7 @@ public class PaymentActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
 
-                            Toast.makeText(PaymentActivity.this, "notifications send  " + response.toString(), Toast.LENGTH_SHORT).show();
+                       //     Toast.makeText(PaymentActivity.this, "notifications send  " + response.toString(), Toast.LENGTH_SHORT).show();
 
                             Log.d("Notification", "sent notification");
                         }
