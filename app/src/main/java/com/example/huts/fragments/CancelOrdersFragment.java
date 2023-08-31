@@ -17,10 +17,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.huts.R;
-import com.example.huts.adapters.ParentAdapter;
-import com.example.huts.fragments.fragmentAdapter.CancelAdpter;
+import com.example.huts.fragments.fragmentAdapter.ActiveAdapter;
+import com.example.huts.fragments.fragmentAdapter.CancelAdapter;
 import com.example.huts.model.OrderData;
-import com.example.huts.model.OrderDetails;
 import com.example.huts.model.ShowDialoge;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -34,17 +33,9 @@ import java.util.ArrayList;
 
 public class CancelOrdersFragment extends Fragment {
     private RecyclerView recyclerView;
-
-
-
-
-    private ArrayList<OrderData> activeOrdersList = new ArrayList<>();
-    private ArrayList<OrderDetails> orderDetailsArrayList = new ArrayList<>();
-
-    private DatabaseReference ordersRef;
-
-    private CancelAdpter cancelAdpter;
-
+    private CancelAdapter cancelAdapter;
+    private ArrayList<OrderData> canceledOrdersList = new ArrayList<>();
+    private DatabaseReference canceledOrdersRef;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -53,63 +44,57 @@ public class CancelOrdersFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cancel_orders, container, false);
 
+        ShowDialoge.showProgressDialog(getContext(),"Fetching your cancel orders");
+
         recyclerView = view.findViewById(R.id.cancelRecy);
 
-        ShowDialoge.showProgressDialog(getContext(),"Fetching your orders");
 
+        cancelAdapter = new CancelAdapter(getContext(), canceledOrdersList);
+        recyclerView.setAdapter(cancelAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        String uid = FirebaseAuth.getInstance().getUid();
-        ordersRef = FirebaseDatabase.getInstance().getReference("CancelOrders").child(uid);
-
-
-        activeOrdersList = new ArrayList<>();
-        orderDetailsArrayList   =new ArrayList<>();
-
-
-        ordersRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                if (snapshot.exists())
-                {
-                    activeOrdersList.clear();
-                    orderDetailsArrayList.clear();
-
-                    ShowDialoge.dismissProgressDialog();
-            //        Toast.makeText(getActivity().getApplicationContext(), "data is exist", Toast.LENGTH_SHORT).show();
-
-             for (DataSnapshot snapshot1 :snapshot.getChildren())
-             {
-
-                 OrderData orderData = snapshot1.getValue(OrderData.class);
-                 activeOrdersList.add(orderData);
-             }
-
-
-//             cancelAdpter = new CancelAdpter(getActivity().getApplicationContext(),activeOrdersList);
-             cancelAdpter = new CancelAdpter(requireContext(),activeOrdersList);
-             recyclerView.setAdapter(cancelAdpter);
-             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-             cancelAdpter.notifyDataSetChanged();
-                }
-                else {
-                    ShowDialoge.dismissProgressDialog();
-                    Toast.makeText(getActivity().getApplicationContext(), " no data", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                ShowDialoge.dismissProgressDialog();
-                Log.d("Exception" , "error");
-            }
-        });
+        retrieveDataFromFirebase();
 
 
         return view;
     }
 
 
+    private void retrieveDataFromFirebase() {
+        DatabaseReference refCancel = FirebaseDatabase.getInstance().getReference("CancelOrders");
 
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        refCancel.child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ShowDialoge.dismissProgressDialog();
+                }
+            },700);
+                canceledOrdersList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    OrderData orderData = dataSnapshot.getValue(OrderData.class);
+                    if (orderData != null) {
+                        canceledOrdersList.add(orderData);
+                    }
+                    else {
+                        Toast.makeText(getActivity(), "No orders are cancel", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                cancelAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle error if needed
+            }
+        });
+    }
 
 }

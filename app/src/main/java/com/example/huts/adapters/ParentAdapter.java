@@ -91,111 +91,63 @@ public class ParentAdapter extends RecyclerView.Adapter<ParentAdapter.MyHolder> 
 
 
         holder.recyclerView.setVisibility(isChildVisible[position] ? View.VISIBLE : View.GONE);
-//        holder.btnCancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                try {
-//                    final int clickedPosition = holder.getAdapterPosition();
-//
-//                    if (clickedPosition != RecyclerView.NO_POSITION) {
-//                        OrderData orderData = orderDataArrayList.get(clickedPosition);
-//                        orderData.setActive(false);
-//
-//
-//                        databaseReferenceActive.child(orderData.getUserId()).child(orderData.getPushId())
-//                                .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                    @Override
-//                                    public void onSuccess(Void unused) {
-//
-//
-//                                        databaseReferenceCancel.child(orderData.getUserId())
-//                                                .child(orderData.getPushId())
-//                                                .setValue(orderData)
-//                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                                    @Override
-//                                                    public void onSuccess(Void unused) {
-//                                                        orderDataArrayList.remove(clickedPosition); // Remove from local data source
-//                                                        notifyItemRemoved(clickedPosition);
-//                                                        Toast.makeText(context, "item deleted ", Toast.LENGTH_SHORT).show();
-//                                                    }
-//                                                }).addOnFailureListener(new OnFailureListener() {
-//                                                    @Override
-//                                                    public void onFailure(@NonNull Exception e) {
-//                                                        Toast.makeText(context, "" + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-//
-//                                                    }
-//                                                });
-//
-//
-//                                    }
-//                                })
-//                                .addOnFailureListener(new OnFailureListener() {
-//                                    @Override
-//                                    public void onFailure(@NonNull Exception e) {
-//                                        Toast.makeText(context, "" + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-//
-//                                    }
-//                                });
-//
-////
-////                        orderDataArrayList.remove(clickedPosition);
-////                        notifyItemRemoved(clickedPosition);
-//                    } else {
-//                        Log.e("Adapter", "Invalid position for click event");
-//                    }
-//                } catch (Exception e) {
-//                    Toast.makeText(context, "Error: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-
         holder.btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               try {
-                   int positon1 = holder.getAdapterPosition();
-                   orderDataArrayList.remove(positon1);
-                   notifyItemRemoved(positon1);
-                   databaseReferenceActive.child(orderData.getUserId()) .child(orderData.getPushId())
-                           .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                               @Override
-                               public void onSuccess(Void unused) {
+                try {
+                    final int clickedPosition = holder.getAdapterPosition();
 
-                                   databaseReferenceCancel.child(orderData.getUserId()).child(orderData.getPushId())
-                                           .setValue(orderData)
-                                           .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                               @Override
-                                               public void onSuccess(Void unused) {
-
-                                                   Toast.makeText(context, "item saved to cancelorder", Toast.LENGTH_SHORT).show();
-                                               }
-                                           })
-                                           .addOnFailureListener(new OnFailureListener() {
-                                               @Override
-                                               public void onFailure(@NonNull Exception e) {
-                                                   Toast.makeText(context, ""+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-
-                                               }
-                                           });
-                               }
-                           })
-                           .addOnFailureListener(new OnFailureListener() {
-                               @Override
-                               public void onFailure(@NonNull Exception e) {
-
-                               }
-                           });
-               }
-
-               catch (ArrayIndexOutOfBoundsException array)
-               {
-                   Toast.makeText(context, ""+array.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-               }
+                    if (clickedPosition != RecyclerView.NO_POSITION) {
+                        OrderData orderData = orderDataArrayList.get(clickedPosition);
+                        orderData.setActive(false);
 
 
+                        databaseReferenceActive.child(orderData.getUserId()).child(orderData.getPushId())
+                                .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+
+
+                                        databaseReferenceCancel.child(orderData.getUserId())
+                                                .child(orderData.getPushId())
+                                                .setValue(orderData)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void unused) {
+                                                        orderDataArrayList.remove(clickedPosition); // Remove from local data source
+                                                        notifyItemRemoved(clickedPosition);
+                                                        Toast.makeText(context, "item deleted ", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(context, "" + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+                                                    }
+                                                });
+
+
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(context, "" + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+                                    }
+                                });
+
+//
+//                        orderDataArrayList.remove(clickedPosition);
+//                        notifyItemRemoved(clickedPosition);
+                    } else {
+                        Log.e("Adapter", "Invalid position for click event");
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(context, "Error: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
 
 
     }

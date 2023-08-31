@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.huts.R;
-import com.example.huts.adapters.ParentAdapter;
-import com.example.huts.fragments.fragmentAdapter.CancelAdpter;
+import com.example.huts.fragments.fragmentAdapter.ActiveAdapter;
 import com.example.huts.model.OrderData;
 import com.example.huts.model.OrderDetails;
 import com.example.huts.model.ShowDialoge;
@@ -28,12 +28,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 
 public class ActiveOrdersFragment extends Fragment {
 
-
+    private ActiveAdapter adapter;
 
     private RecyclerView recyclerView;
 
@@ -42,7 +41,7 @@ public class ActiveOrdersFragment extends Fragment {
     private ArrayList<OrderDetails> orderDetailsArrayList = new ArrayList<>();
 
     private DatabaseReference ordersRef;
-private ParentAdapter parentAdapter ;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -62,77 +61,143 @@ private ParentAdapter parentAdapter ;
 
 
         activeOrdersList = new ArrayList<>();
-        orderDetailsArrayList   =new ArrayList<>();
+
+
+//        ordersRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                parentItemArrayList.clear();
+//
+//                if (snapshot.exists())
+//                {
+//                    Toast.makeText(getActivity(), "data exist", Toast.LENGTH_SHORT).show();
+//                }
+//                else {
+//                    Toast.makeText(getActivity(), "no data exist", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                try {
+//                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//
+//                        ParentItem parentItem = dataSnapshot.getValue(ParentItem.class);
+//                        if (parentItem!=null && parentItem.isActive())
+//                        {
+//                            parentItemArrayList.add(parentItem);
+//                        }
+//                        else {
+//                            Toast.makeText(getActivity(), "No Data", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                    parentAdpter = new ParentAdpter(getActivity(),parentItemArrayList,childItemArrayList);
+//                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+//                    recyclerView.setLayoutManager(linearLayoutManager);
+//                    recyclerView.setAdapter(parentAdpter);
+//
+//                    parentAdpter.notifyDataSetChanged();
+//                }
+//                catch (ArrayIndexOutOfBoundsException e) {
+//
+//
+//                    Toast.makeText(getActivity(), "" + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Toast.makeText(getActivity(), ""+error.getMessage(), Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+
+
+//        parentAdpter = new ParentAdpter(getActivity(),parentItemArrayList,childItemArrayList);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+//recyclerView.setLayoutManager(linearLayoutManager);
+//recyclerView.setAdapter(parentAdpter);
+
+//
+
+
 
         ordersRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                try {
 
-
-                    if (snapshot.exists()) {
-                        activeOrdersList.clear();
-                        orderDetailsArrayList.clear();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
                         ShowDialoge.dismissProgressDialog();
-
-
-                        for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                            OrderData orderData = snapshot1.getValue(OrderData.class);
-                            if (orderData != null && orderData.isActive()) {
-                                activeOrdersList.add(orderData);
-
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                    OrderDetails orderDetails = dataSnapshot.getValue(OrderDetails.class);
-
-                                    orderDetailsArrayList.add(orderDetails);
-
-                                }
-
-
-                            }
-
-                        }
-
-
-                        parentAdapter = new ParentAdapter(requireContext(), activeOrdersList);
-                        recyclerView.setAdapter(parentAdapter);
-                        parentAdapter.notifyDataSetChanged();
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-                    } else {
-                        ShowDialoge.dismissProgressDialog();
-                        Log.d("Exception" , "error");
                     }
-                }
-                catch (ArrayIndexOutOfBoundsException e)
-                {
-                    Log.d("Exception" , "error");
-                   // Toast.makeText(getActivity().getApplicationContext(), " "+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                },700);
+                activeOrdersList.clear();
+                try {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        OrderData orderData = dataSnapshot.getValue(OrderData.class);
+                        if (orderData != null && orderData.isActive()) {
+                            activeOrdersList.add(orderData);
+                        } else {
+                            Toast.makeText(getContext(), "No Active Orders", Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
+                    adapter = new ActiveAdapter(getContext(), activeOrdersList);
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                    adapter.notifyDataSetChanged();
+                }catch (ArrayIndexOutOfBoundsException e)
+                {
+                    Toast.makeText(getActivity(), " catch"+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                ShowDialoge.dismissProgressDialog();
-                Log.d("Exception" , "error");
+
+                Toast.makeText(getActivity(), "database "+error.getMessage(), Toast.LENGTH_SHORT).show();
+
             }
         });
 
 
+        ordersRef.addValueEventListener(new ValueEventListener() {
 
 
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                activeOrdersList.clear();
+//                activeOrdersList.clear();
+                Log.d("Firebase", "Snapshot: " + snapshot.toString());
 
+           try {
+               for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                   OrderData orderData = dataSnapshot.getValue(OrderData.class);
+                   if (orderData != null && orderData.isActive()) {
+                       activeOrdersList.add(orderData);
+                   }
+                   else {
+                       Toast.makeText(getContext(), "No Active Orders", Toast.LENGTH_SHORT).show();
+                   }
+               }
+               adapter = new ActiveAdapter(getContext(),activeOrdersList);
+               recyclerView.setAdapter(adapter);
+               recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+               adapter.notifyDataSetChanged();
+           }
+           catch (ArrayIndexOutOfBoundsException e)
+           {
+               Toast.makeText(getContext(), "" +e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+           }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-
-
-
-
-
-
-
+                Toast.makeText(getActivity(), "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         return rootView;
@@ -141,11 +206,6 @@ private ParentAdapter parentAdapter ;
     @Override
     public void onResume() {
         super.onResume();
-
-        if (parentAdapter != null) {
-            parentAdapter.notifyDataSetChanged();
-        }
-
 
     }
 }
