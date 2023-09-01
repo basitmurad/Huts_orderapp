@@ -136,7 +136,7 @@ public class OtpViewActivity extends AppCompatActivity {
 
     private void SendDataToFireBase() {
         userId = FirebaseAuth.getInstance().getUid();
-        Users users = new Users(name,email, number, password ,userId);
+        Users users = new Users(name,email, number, password ,userId,"fc;");
         databaseRef.child("usersDetail").child(userId).setValue(users)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

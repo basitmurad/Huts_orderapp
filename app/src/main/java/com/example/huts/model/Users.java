@@ -1,18 +1,19 @@
 package com.example.huts.model;
 
 public class Users {
-    private String name ,email , number , password ,userId;
+    private String name ,email , number , password ,userId ,userFcmToken;
 
     public Users() {
     }
 
 
-    public Users(String name, String email, String number, String password, String userId) {
+    public Users(String name, String email, String number, String password, String userId, String userFcmToken) {
         this.name = name;
         this.email = email;
         this.number = number;
         this.password = password;
         this.userId = userId;
+        this.userFcmToken = userFcmToken;
     }
 
     public String getName() {
@@ -39,6 +40,14 @@ public class Users {
         this.number = number;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -47,11 +56,11 @@ public class Users {
         this.userId = userId;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserFcmToken() {
+        return userFcmToken;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserFcmToken(String userFcmToken) {
+        this.userFcmToken = userFcmToken;
     }
 }

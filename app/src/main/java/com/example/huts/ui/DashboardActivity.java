@@ -1,7 +1,6 @@
 package com.example.huts.ui;
 
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -43,7 +42,7 @@ public class DashboardActivity extends AppCompatActivity {
     private SessionManager sessionManager;
     private ArrayList<DashboardClass> list;
     private FirebaseAuth firebaseAuth;
-    private String userEmail ,userName;
+    private String userEmail, userName;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -56,33 +55,12 @@ public class DashboardActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         sessionManager = new SessionManager(this);
 
-
-
-        DatabaseReference adminDetailRef = FirebaseDatabase.getInstance().getReference("AdminDetail");
-        DatabaseReference userRef = adminDetailRef.child("aylalHdctZWghIdg9UCvGLdFZzw2"); // Replace with the actual userId
-
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    String fcmToken = dataSnapshot.child("fcmToken").getValue(String.class);
-
-                    sessionManager.setAdminFcmToken(fcmToken);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle error
-            }
-        });
+        getToken();
 
 
 
 
         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
 
 
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
@@ -96,23 +74,22 @@ public class DashboardActivity extends AppCompatActivity {
 
                     if (user != null) {
                         userEmail = user.getEmail();
-                        userName= user.getName();
+                        userName = user.getName();
 
                         // ... other fields
-                     //   Toast.makeText(DashboardActivity.this, " user" + userName + userEmail, Toast.LENGTH_SHORT).show();
+                        //   Toast.makeText(DashboardActivity.this, " user" + userName + userEmail, Toast.LENGTH_SHORT).show();
                         NavigationView navigationView = findViewById(R.id.navView);
                         View headerView = navigationView.getHeaderView(0); // Get the header layout
                         TextView nameHeaderTextView = headerView.findViewById(R.id.nameHeader);
                         TextView emailHeaderTextView = headerView.findViewById(R.id.emailHeader);
 
 
-                       sessionManager.saveEmailAndPassword(userName, userEmail);
+                        sessionManager.saveEmailAndPassword(userName, userEmail);
 
                         nameHeaderTextView.setText(userName);
                         emailHeaderTextView.setText(userEmail);
 
-                    }
-                    else {
+                    } else {
                         Toast.makeText(DashboardActivity.this, "No user", Toast.LENGTH_SHORT).show();
 
                     }
@@ -127,9 +104,6 @@ public class DashboardActivity extends AppCompatActivity {
                 // Handle error
             }
         });
-
-
-
 
 
         list = new ArrayList<>();
@@ -159,7 +133,7 @@ public class DashboardActivity extends AppCompatActivity {
 
                 firebaseAuth.signOut();
 
-                startActivity(new Intent(DashboardActivity.this,SignUpActivity.class));
+                startActivity(new Intent(DashboardActivity.this, SignUpActivity.class));
                 finish();
             }
         });
@@ -184,8 +158,6 @@ public class DashboardActivity extends AppCompatActivity {
         sessionManager = new SessionManager(this);
 
 
-
-
         binding.navView.setNavigationItemSelectedListener(item -> {
             // Handle navigation item clicks here
             int itemId = item.getItemId();
@@ -193,8 +165,7 @@ public class DashboardActivity extends AppCompatActivity {
             if (itemId == R.id.nav_myordders) {
 
                 startActivity(new Intent(DashboardActivity.this, MyOrdersActivity.class));
-            }
-            else if (   itemId==R.id.nav_invites){
+            } else if (itemId == R.id.nav_invites) {
 
                 // Create an invitation message with an Instagram profile link
                 String inviteMessage = "Join us on our awesome app!\n" + "Follow us on Instagram: https://www.instagram.com/mr__bushoo/";
@@ -215,7 +186,11 @@ public class DashboardActivity extends AppCompatActivity {
                     Toast.makeText(DashboardActivity.this, "No apps available", Toast.LENGTH_SHORT).show();
                 }
 
-            } else if (itemId==R.id.nav_terms) {
+            }
+            else if (itemId == R.id.nav_chats) {
+
+                startActivity(new Intent(DashboardActivity.this, ChatsActivity.class));
+            } else if (itemId == R.id.nav_terms) {
                 {
                     Toast.makeText(this, "terms and conditions", Toast.LENGTH_SHORT).show();
                 }
@@ -226,8 +201,6 @@ public class DashboardActivity extends AppCompatActivity {
             binding.drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         });
-
-
 
 
         View appbarVIew = findViewById(R.id.include);
@@ -255,11 +228,10 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
 
-//        Toast.makeText(this, ""+sessionManager.getNaame(), Toast.LENGTH_SHORT).show();
-
 
 
     }
+
     private void getUserDetail() {
 
 
@@ -289,7 +261,6 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -297,5 +268,47 @@ public class DashboardActivity extends AppCompatActivity {
         finishAffinity();
         DbHelper dbHelper = new DbHelper(this);
         dbHelper.deleteAllOrders();
+    }
+
+    private void getToken() {
+
+        DatabaseReference adminDetailRef;
+
+        adminDetailRef = FirebaseDatabase.getInstance().getReference("AdminDetail");
+        adminDetailRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        Admin admin = dataSnapshot.getValue(Admin.class);
+
+
+
+                        sessionManager.setAdminFcmToken(admin.getFcmToken());
+                        sessionManager.setAdminUerId(admin.getUserId());
+
+
+
+                    }
+
+
+                } else {
+
+                    Toast.makeText(DashboardActivity.this, "No user", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+
+                Toast.makeText(DashboardActivity.this, "database error" + error.getMessage(), Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
+
     }
 }

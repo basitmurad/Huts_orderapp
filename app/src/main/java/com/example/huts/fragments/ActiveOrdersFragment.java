@@ -78,6 +78,7 @@ public class ActiveOrdersFragment extends Fragment {
                         OrderData orderData = dataSnapshot.getValue(OrderData.class);
                         if (orderData != null && orderData.isActive()) {
                             activeOrdersList.add(orderData);
+
                         } else {
                             ShowDialoge.dismissProgressDialog();
 
@@ -110,43 +111,6 @@ public class ActiveOrdersFragment extends Fragment {
         });
 
 
-//        ordersRef.addValueEventListener(new ValueEventListener() {
-//
-//
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                activeOrdersList.clear();
-////                activeOrdersList.clear();
-//                Log.d("Firebase", "Snapshot: " + snapshot.toString());
-//
-//           try {
-//               for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                   OrderData orderData = dataSnapshot.getValue(OrderData.class);
-//                   if (orderData != null && orderData.isActive()) {
-//                       activeOrdersList.add(orderData);
-//                   }
-//                   else {
-//                       Toast.makeText(getContext(), "No Active Orders", Toast.LENGTH_SHORT).show();
-//                   }
-//               }
-//               adapter = new ActiveAdapter(getContext(),activeOrdersList);
-//               recyclerView.setAdapter(adapter);
-//               recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//
-//               adapter.notifyDataSetChanged();
-//           }
-//           catch (ArrayIndexOutOfBoundsException e)
-//           {
-//               Toast.makeText(getContext(), "" +e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-//           }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//                Toast.makeText(getActivity(), "" + error.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
 
         return rootView;

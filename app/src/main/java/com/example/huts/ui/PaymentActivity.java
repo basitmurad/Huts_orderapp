@@ -234,27 +234,7 @@ public class PaymentActivity extends AppCompatActivity {
             }
         });
 
-//        DatabaseReference adminDetailRef = FirebaseDatabase.getInstance().getReference("AdminDetail");
-//
-//     //   DatabaseReference userRef = adminDetailRef.child();// Replace with the actual userId
-//
-//        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.exists()) {
-//                    fcmToken = dataSnapshot.child("fcmToken").getValue(String.class);
-//                    sessionManager.setAdminFcmToken(fcmToken);
-//                    Toast.makeText(PaymentActivity.this, ""+fcmToken, Toast.LENGTH_SHORT).show();
-//                    onSendNotification(fcmToken, sessionManager.getNaame(), "Place an order");
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                // Handle error
-//            }
-//        });
+
 
 
     }

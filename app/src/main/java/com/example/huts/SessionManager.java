@@ -14,6 +14,8 @@ public class SessionManager {
     private static final String HUT_IMAGEURI = "hutImage";
 
     private static final String KEY_ADMIN_FCM_TOKEN = "admin_fcm_token";
+    private static final String KEY_USER_FCM_TOKEN = "admin_fcm_token";
+    private static final String KEY_ADMIN_USERID = "admin_userId";
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private Context context;
@@ -25,15 +27,18 @@ public class SessionManager {
         sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(KEY_NUMBER , Context.MODE_PRIVATE);
         sharedPreferences = context.getSharedPreferences(KEY_ADMIN_FCM_TOKEN , Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(KEY_USER_FCM_TOKEN ,Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(KEY_ADMIN_USERID ,Context.MODE_PRIVATE);
 
         editor = sharedPreferences.edit();
     }
 
-    public void saveCredentials(String name, String password, String email ,String number) {
+    public void saveCredentials(String name, String password, String email ,String number , String fcmkToken) {
         editor.putString(KEY_NAME, name);
         editor.putString(KEY_PASSWORD, password);
         editor.putString(KEY_EMAIL, email);
         editor.putString(KEY_NUMBER ,number);
+        editor.putString(KEY_USER_FCM_TOKEN, fcmkToken);
         editor.apply();
     }
     public void saveEmailAndPassword(String name, String email ) {
@@ -47,10 +52,20 @@ public class SessionManager {
         editor.putString(KEY_ADMIN_FCM_TOKEN, adminFcmToken);
         editor.apply();
     }
-
     public String getAdminFcmToken() {
         return sharedPreferences.getString(KEY_ADMIN_FCM_TOKEN, null);
     }
+
+    public String getAdminUserId() {
+        return sharedPreferences.getString(KEY_ADMIN_USERID, null);
+    }
+
+    public void setAdminUerId(String adminUerId) {
+        editor.putString(KEY_ADMIN_USERID, adminUerId);
+        editor.apply();
+    }
+
+
 
     public String getNaame() {
         return sharedPreferences.getString(KEY_NAME, "");
@@ -58,6 +73,9 @@ public class SessionManager {
 
     public String getPassword() {
         return sharedPreferences.getString(KEY_PASSWORD, "");
+    }
+    public String getFcmToken() {
+        return sharedPreferences.getString(KEY_USER_FCM_TOKEN, "");
     }
 
     public String getEmail() {
