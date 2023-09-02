@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import com.example.huts.R;
+import com.example.huts.ui.ChatsActivity;
 import com.example.huts.ui.DashboardActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -25,7 +26,7 @@ public class MessegeClass extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage message) {
         super.onMessageReceived(message);
-        Intent intent = new Intent(this, DashboardActivity.class);
+        Intent intent = new Intent(this, ChatsActivity.class);
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         int notificationId= new Random().nextInt();

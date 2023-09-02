@@ -1,6 +1,7 @@
 package com.example.huts.adapters;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,11 +47,18 @@ public class MessAdapter extends RecyclerView.Adapter<MessAdapter.MyHolder> {
         MessegeDetails messegeDetails = messegeDetailsArrayList.get(position);
 
         holder.textView.setText(messegeDetails.getMessege());
-        if (messegeDetails.getSenderId().equals(FirebaseAuth.getInstance().getUid())) {
-            holder.layout.setBackgroundColor(context.getResources().getColor(R.color.black));
+        if (messegeDetails.getSenderId().equals(FirebaseAuth.getInstance().getUid()))
+        {
+            holder.layout.setBackground(context.getResources().getDrawable(R.drawable.back_messege));
+
             holder.textView.setTextColor(context.getResources().getColor(R.color.white));
-        } else {
-            holder.layout.setBackgroundColor(context.getResources().getColor(R.color.white));
+        }
+
+        else {
+            holder.textView.setGravity(Gravity.END);
+            holder.layout.setBackground(context.getResources().getDrawable(R.drawable.back_messgerece));
+
+
 
 
         }

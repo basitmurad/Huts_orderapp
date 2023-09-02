@@ -34,7 +34,7 @@ public class ParentAdapter extends RecyclerView.Adapter<ParentAdapter.MyHolder> 
     private ArrayList<OrderData> orderDataArrayList;
     private ArrayList<OrderDetails> orderDetailsArrayList;
     private boolean[] isChildVisible;
-    private DatabaseReference databaseReferenceActive, databaseReferenceCancel;
+    private DatabaseReference databaseReferenceActive, databaseReferenceCancel , ref;
 
     public ParentAdapter(Context context, ArrayList<OrderData> orderDataArrayList) {
         this.context = context;
@@ -43,6 +43,7 @@ public class ParentAdapter extends RecyclerView.Adapter<ParentAdapter.MyHolder> 
         isChildVisible = new boolean[orderDataArrayList.size()];
         this.databaseReferenceActive = FirebaseDatabase.getInstance().getReference("ActiveOrders");
         this.databaseReferenceCancel = FirebaseDatabase.getInstance().getReference("CancelOrders");
+        this.ref = FirebaseDatabase.getInstance().getReference("ActiveOrdersUser");
     }
 
 
@@ -110,6 +111,11 @@ public class ParentAdapter extends RecyclerView.Adapter<ParentAdapter.MyHolder> 
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void unused) {
+
+
+                                                    ref.child(orderData.getUserId())
+                                                                    .child("hasOrder")
+                                                                            .setValue(false);
 
                                                     Toast.makeText(context, "item saved to cancelorder", Toast.LENGTH_SHORT).show();
                                                 }

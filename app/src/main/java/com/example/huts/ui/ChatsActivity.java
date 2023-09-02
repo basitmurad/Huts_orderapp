@@ -160,6 +160,13 @@ public class ChatsActivity extends AppCompatActivity {
             }
         });
 
+        binding.btnback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 
     private void getToken() {
@@ -176,7 +183,7 @@ public class ChatsActivity extends AppCompatActivity {
                         Admin admin = dataSnapshot.getValue(Admin.class);
 
 
-                        onSendNotification(admin.getFcmToken(), sessionManager.getNaame(), messege);
+                        onSendNotification(admin.getFcmToken(), sessionManager.getNaame(), messege,"messege");
 
 
 //
@@ -203,7 +210,7 @@ public class ChatsActivity extends AppCompatActivity {
 
     }
 
-    private void onSendNotification(String token, String name, String order) {
+    private void onSendNotification(String token, String name, String order , String notificationType) {
 
         try {
 
@@ -212,8 +219,11 @@ public class ChatsActivity extends AppCompatActivity {
             String url = "https://fcm.googleapis.com/fcm/send";
             JSONObject jsonObject = new JSONObject();
 
+//            jsonObject.put("title", name);
+//            jsonObject.put("body", order);
             jsonObject.put("title", name);
             jsonObject.put("body", order);
+            jsonObject.put("data", new JSONObject().put("notification_type", notificationType));
 
 
             JSONObject jsonObject1 = new JSONObject();

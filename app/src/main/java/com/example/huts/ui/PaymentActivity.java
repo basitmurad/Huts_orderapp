@@ -26,6 +26,7 @@ import com.example.huts.SessionManager;
 
 import com.example.huts.databinding.ActivityPaymentBinding;
 
+import com.example.huts.model.ActiveOrderUsers;
 import com.example.huts.model.OrderData;
 import com.example.huts.model.OrderDetails;
 import com.example.huts.model.Users;
@@ -129,11 +130,31 @@ public class PaymentActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onSuccess(Void unused) {
                                                     dbHelper.deleteAllOrders();
+                                                    DatabaseReference activeOrder = FirebaseDatabase.getInstance().getReference("ActiveOrdersUser");
 
 
-                                                    getToken();
-                                                    Toast.makeText(PaymentActivity.this, "Order Placed successfully", Toast.LENGTH_SHORT).show();
-                                                    startActivity(new Intent(PaymentActivity.this, DashboardActivity.class));
+
+                                                    ActiveOrderUsers activeOrderUsers = new ActiveOrderUsers(sessionManager.getNaame(),sessionManager.getEmail(),sessionManager.getNumber() ,userId,true);
+
+                                                    activeOrder.child(orderData.getUserId())
+                                                                    .setValue(activeOrderUsers).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override
+                                                                public void onSuccess(Void unused) {
+
+                                                                    getToken();
+                                                                    Toast.makeText(PaymentActivity.this, "Order Placed successfully", Toast.LENGTH_SHORT).show();
+                                                                    startActivity(new Intent(PaymentActivity.this, DashboardActivity.class));
+                                                                }
+                                                            })
+                                                                    .addOnFailureListener(new OnFailureListener() {
+                                                                        @Override
+                                                                        public void onFailure(@NonNull Exception e) {
+
+                                                                            Toast.makeText(PaymentActivity.this, ""+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                                                                        }
+                                                                    });
+
+
 
                                                 }
                                             }).addOnFailureListener(new OnFailureListener() {
@@ -233,8 +254,6 @@ public class PaymentActivity extends AppCompatActivity {
 
             }
         });
-
-
 
 
     }
