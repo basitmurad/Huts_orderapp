@@ -34,7 +34,7 @@ public class MessegeClass extends FirebaseMessagingService {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel(manager);
         }
-        PendingIntent intent1 = PendingIntent.getActivities(this,0,new Intent[]{intent},PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent intent1 = PendingIntent.getActivities(this,0,new Intent[]{intent},PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification ;
 
         notification = new NotificationCompat.Builder(this,CHANNEL_ID)

@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +26,8 @@ import com.example.huts.SessionManager;
 import com.example.huts.adapters.DashboardAdapter;
 import com.example.huts.databinding.ActivityDashboardBinding;
 import com.example.huts.model.Users;
+import com.example.utils.InternetChecker;
+import com.example.utils.NetworkChanger;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,6 +48,7 @@ public class DashboardActivity extends AppCompatActivity {
     private ArrayList<DashboardClass> list;
     private FirebaseAuth firebaseAuth;
     private String userEmail, userName;
+    private BroadcastReceiver broadcastReceiver;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -52,6 +58,8 @@ public class DashboardActivity extends AppCompatActivity {
 
         setContentView(binding.getRoot());
 
+        broadcastReceiver = new NetworkChanger();
+        registerNetworkChangeReceiver();
         firebaseAuth = FirebaseAuth.getInstance();
         sessionManager = new SessionManager(this);
 
@@ -310,5 +318,33 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        InternetChecker internetChecker = new InternetChecker(DashboardActivity.this);
+        if (!internetChecker.isConnected()) {
+
+            internetChecker.showInternetDialog();
+        }
+    }
+
+    private void registerNetworkChangeReceiver() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(broadcastReceiver, filter);
+    }
+
+    private void unregisterNetworkChangeReceiver() {
+        if (broadcastReceiver != null) {
+            unregisterReceiver(broadcastReceiver);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterNetworkChangeReceiver();
     }
 }

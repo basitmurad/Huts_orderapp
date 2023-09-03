@@ -112,6 +112,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
 
                             progressDialog.dismiss();
+
                             Toast.makeText(RegistrationActivity.this, "Account Created Successfully", Toast.LENGTH_SHORT).show();
 
                             hideKeyboard(RegistrationActivity.this);
@@ -157,69 +158,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     }
 
-//    private void CheckValidationsq() {
-//        if (binding.editTextTextUserName.getText().toString().isEmpty()) {
-//            binding.editTextTextUserName.setError("Name is empty");
-//        } else if (binding.editTextTextPassword.getText().toString().isEmpty()) {
-//            binding.editTextTextPassword.setError("Password is missing");
-//        } else if (binding.editTextTextEmail.getText().toString().isEmpty()) {
-//            binding.editTextTextEmail.setError("Email is empty");
-//        } else if (binding.editTextTextNumber.getText().toString().isEmpty()) {
-//            binding.editTextTextNumber.setError("Number is empty");
-//        } else {
-//            progressDialog.setTitle("PLease wait..");
-//            progressDialog.setMessage("Sending Otp");
-//            progressDialog.setCancelable(false);
-//            progressDialog.show();
-//
-//            name = binding.editTextTextUserName.getText().toString();
-//            password = binding.editTextTextPassword.getText().toString();
-//            email = binding.editTextTextEmail.getText().toString();
-//            number = binding.editTextTextNumber.getText().toString();
-//
-//
-//            PhoneAuthProvider.getInstance().verifyPhoneNumber("+92" + number,
-//                    60l,
-//                    TimeUnit.SECONDS, RegistrationActivity.this,
-//                    new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-//                        @Override
-//                        public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-//
-//
-//                        }
-//
-//                        @Override
-//                        public void onVerificationFailed(@NonNull FirebaseException e) {
-//
-//                            Log.d("Exception", e.getMessage());
-//                            Toast.makeText(RegistrationActivity.this, "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                            progressDialog.dismiss();
-//                        }
-//
-//                        @Override
-//                        public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-//
-//
-//                            progressDialog.dismiss();
-//
-//                            Intent intent = new Intent(RegistrationActivity.this, OtpViewActivity.class);
-//                            intent.putExtra("verificationID", s);
-//                            intent.putExtra("number", "+92" + number);
-//                            intent.putExtra("email", email);
-//                            intent.putExtra("name", name);
-//                            intent.putExtra("password", password);
-//
-//                            sessionManager.saveCredentials(name,password,email,number,userFcmToken);
-//
-//
-//                            startActivity(intent);
-//
-//
-//                        }
-//                    });
-//
-//        }
-//    }
+
 
     private void fcmToken() {
         FirebaseMessaging.getInstance().getToken()

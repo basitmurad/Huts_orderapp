@@ -10,7 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +33,8 @@ import com.example.huts.model.ActiveOrderUsers;
 import com.example.huts.model.OrderData;
 import com.example.huts.model.OrderDetails;
 import com.example.huts.model.Users;
+import com.example.utils.InternetChecker;
+import com.example.utils.NetworkChanger;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -57,7 +62,7 @@ public class PaymentActivity extends AppCompatActivity {
     private ActivityPaymentBinding binding;
     private SessionManager sessionManager;
     private ProgressDialog progressDialog;
-
+    private BroadcastReceiver broadcastReceiver;
     private int total;
     private String fcmToken, userName;
     private DatabaseReference databaseReference;
@@ -68,6 +73,9 @@ public class PaymentActivity extends AppCompatActivity {
         binding = ActivityPaymentBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
+        broadcastReceiver = new NetworkChanger();
+        registerNetworkChangeReceiver();
+
         sessionManager = new SessionManager(this);
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please wait");
@@ -321,6 +329,31 @@ public class PaymentActivity extends AppCompatActivity {
 
         return stringBuilder.toString();
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        InternetChecker internetChecker = new InternetChecker(PaymentActivity.this);
+        if (!internetChecker.isConnected()) {
 
+            internetChecker.showInternetDialog();
+        }
+    }
+
+    private void registerNetworkChangeReceiver() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(broadcastReceiver, filter);
+    }
+
+    private void unregisterNetworkChangeReceiver() {
+        if (broadcastReceiver != null) {
+            unregisterReceiver(broadcastReceiver);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterNetworkChangeReceiver();
+    }
 }
