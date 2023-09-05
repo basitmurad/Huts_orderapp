@@ -37,11 +37,11 @@ public class LunchAndDinnerActivity extends AppCompatActivity {
         filterList.clear();
 
 
-        list.add(new BreakfastClass("Chicken Biryani","190", R.drawable.chickenbiryani));
-        list.add(new BreakfastClass("Mutton Pulao","100", R.drawable.muttonpulao));
+        list.add(new BreakfastClass("Chicken Biryani","200", R.drawable.chickenbiryani));
+        list.add(new BreakfastClass("Mutton Pulao","250", R.drawable.muttonpulao));
         list.add(new BreakfastClass("Boiled Rice","100", R.drawable.boiledrice));
-        list.add(new BreakfastClass("Beef Pulao","100", R.drawable.beefpulao));
-        list.add(new BreakfastClass("Kabuli Pulao","100", R.drawable.kabulipulao));
+        list.add(new BreakfastClass("Beef Pulao","250", R.drawable.beefpulao));
+        list.add(new BreakfastClass("Kabuli Pulao","250", R.drawable.kabulipulao));
         list.add(new BreakfastClass("Vegetable Pulao","100", R.drawable.vegetablepulao));
         list.add(new BreakfastClass("Chicken Qorma","100", R.drawable.chickenqorma));
         list.add(new BreakfastClass("Chicken Haleem","100", R.drawable.chickenhaleem));
@@ -63,7 +63,7 @@ public class LunchAndDinnerActivity extends AppCompatActivity {
         list.add(new BreakfastClass("Alu Anda","100", R.drawable.aluanda));
         list.add(new BreakfastClass("Lobia Anda","100", R.drawable.lobiaanda));
         list.add(new BreakfastClass("Seekh Kabab","100", R.drawable.seekhkabab));
-        list.add(new BreakfastClass("Chowmin","100", R.drawable.chowmin));
+        list.add(new BreakfastClass("Chowmein","380", R.drawable.chowmin));
         list.add(new BreakfastClass("Egg Fried Rice","100", R.drawable.eggfiedrice));
         list.add(new BreakfastClass("Chicken Gried Rice","100", R.drawable.chickengriedrice));
         list.add(new BreakfastClass("Manchurian Rice","100", R.drawable.manchurianrice));

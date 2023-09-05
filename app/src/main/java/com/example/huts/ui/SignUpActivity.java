@@ -155,7 +155,7 @@ public class SignUpActivity extends AppCompatActivity {
                         FirebaseUser user=     firebaseAuth.getCurrentUser();
 
 
-                        Toast.makeText(this, ""+user.getEmail() +" " +user.getUid(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(this, ""+user.getEmail() +" " +user.getUid(), Toast.LENGTH_SHORT).show();
 
                         startActivity(new Intent(SignUpActivity.this,DashboardActivity.class));
 

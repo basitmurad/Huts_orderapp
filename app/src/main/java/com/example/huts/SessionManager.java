@@ -52,9 +52,7 @@ public class SessionManager {
         editor.putString(KEY_ADMIN_FCM_TOKEN, adminFcmToken);
         editor.apply();
     }
-    public String getAdminFcmToken() {
-        return sharedPreferences.getString(KEY_ADMIN_FCM_TOKEN, null);
-    }
+
 
     public String getAdminUserId() {
         return sharedPreferences.getString(KEY_ADMIN_USERID, null);
@@ -67,6 +65,7 @@ public class SessionManager {
 
 
 
+
     public String getNaame() {
         return sharedPreferences.getString(KEY_NAME, "");
     }
@@ -74,9 +73,7 @@ public class SessionManager {
     public String getPassword() {
         return sharedPreferences.getString(KEY_PASSWORD, "");
     }
-    public String getFcmToken() {
-        return sharedPreferences.getString(KEY_USER_FCM_TOKEN, "");
-    }
+
 
     public String getEmail() {
         return sharedPreferences.getString(KEY_EMAIL, "");
@@ -86,7 +83,10 @@ public class SessionManager {
     {
         return sharedPreferences.getString(KEY_NUMBER,"");
     }
-
+    public String getUserToken()
+    {
+        return sharedPreferences.getString(KEY_USER_FCM_TOKEN,"");
+    }
 
 
 

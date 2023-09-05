@@ -47,7 +47,7 @@ public class DashboardActivity extends AppCompatActivity {
     private SessionManager sessionManager;
     private ArrayList<DashboardClass> list;
     private FirebaseAuth firebaseAuth;
-    private String userEmail, userName;
+    private String userEmail, userName , userNumber , userFcmToken;
     private BroadcastReceiver broadcastReceiver;
 
     @SuppressLint("MissingInflatedId")
@@ -68,6 +68,7 @@ public class DashboardActivity extends AppCompatActivity {
 
 
 
+
         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
@@ -83,6 +84,14 @@ public class DashboardActivity extends AppCompatActivity {
                     if (user != null) {
                         userEmail = user.getEmail();
                         userName = user.getName();
+                        userNumber = user.getNumber();
+                        userFcmToken = user.getUserFcmToken();
+                        String pass = user.getPassword();
+
+
+                        sessionManager.saveCredentials(userName,pass,userEmail,userNumber,userFcmToken);
+
+
 
                         // ... other fields
                         //   Toast.makeText(DashboardActivity.this, " user" + userName + userEmail, Toast.LENGTH_SHORT).show();

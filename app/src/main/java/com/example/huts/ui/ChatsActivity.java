@@ -1,5 +1,7 @@
 package com.example.huts.ui;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,17 +16,16 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.huts.Admin;
 import com.example.huts.SessionManager;
 
 import com.example.huts.adapters.MessAdapter;
-import com.example.huts.adapters.MessegeAdapter;
 import com.example.huts.databinding.ActivityChatsBinding;
 import com.example.huts.model.MessegeDetails;
+import com.example.huts.model.Senders;
+import com.example.huts.model.Users;
 import com.example.utils.InternetChecker;
 import com.example.utils.NetworkChanger;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,6 +36,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,12 +49,12 @@ import java.util.Map;
 public class ChatsActivity extends AppCompatActivity {
 
     private ActivityChatsBinding binding;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference ,senderRef;
     String senderRoom, recieverRoom;
 
     private SessionManager sessionManager;
     private MessAdapter messAdapter;
-    private BroadcastReceiver broadcastReceiver;
+    private BroadcastReceiver broadcastReceiver ;
     String token, adminId, userId;
     String messege;
 
@@ -66,9 +68,19 @@ public class ChatsActivity extends AppCompatActivity {
         binding = ActivityChatsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         databaseReference = FirebaseDatabase.getInstance().getReference("chats");
+        senderRef = FirebaseDatabase.getInstance().getReference("Sender");
         broadcastReceiver = new NetworkChanger();
         registerNetworkChangeReceiver();
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                        return;
+                    }
 
+
+                    token = task.getResult();
+                });
 
         sessionManager = new SessionManager(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -121,16 +133,22 @@ public class ChatsActivity extends AppCompatActivity {
 
                     }
                 });
+
+
+
         binding.btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 messege = binding.editText.getText().toString();
                 Date date = new Date();
+
                 String randomKey = firebaseDatabase.getReference().push().getKey();
                 binding.editText.setText("");
 
 
-                MessegeDetails messegeDetails1 = new MessegeDetails(messege, userId, randomKey);
+
+
+                MessegeDetails messegeDetails1 = new MessegeDetails(messege, userId, randomKey ,date.getTime());
                 databaseReference.child(senderRoom).child("messeges").child(randomKey).setValue(messegeDetails1)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -144,10 +162,8 @@ public class ChatsActivity extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(Void unused) {
 
-
                                                 getToken();
 
-                                                Toast.makeText(ChatsActivity.this, "data send successfully", Toast.LENGTH_SHORT).show();
 
                                             }
                                         });
@@ -170,7 +186,10 @@ public class ChatsActivity extends AppCompatActivity {
         binding.btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
+
+
+               finish();
             }
         });
 
@@ -190,10 +209,28 @@ public class ChatsActivity extends AppCompatActivity {
                         Admin admin = dataSnapshot.getValue(Admin.class);
 
 
-                        onSendNotification(admin.getFcmToken(), sessionManager.getNaame(), messege,"messege");
 
 
-//
+                        Senders senders = new Senders(sessionManager.getNaame(), sessionManager.getEmail(), userId,token,sessionManager.getNumber(),true);
+
+                        senderRef.child(userId)
+                                .setValue(senders).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        onSendNotification(admin.getFcmToken(), sessionManager.getNaame(), messege,"messege");
+
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(ChatsActivity.this, "Try again", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+
+
+
 
                     }
 
@@ -215,9 +252,10 @@ public class ChatsActivity extends AppCompatActivity {
         });
 
 
+
     }
 
-    private void onSendNotification(String token, String name, String order , String notificationType) {
+    private void onSendNotification(String token, String name, String body , String notificationType) {
 
         try {
 
@@ -229,7 +267,7 @@ public class ChatsActivity extends AppCompatActivity {
 //            jsonObject.put("title", name);
 //            jsonObject.put("body", order);
             jsonObject.put("title", name);
-            jsonObject.put("body", order);
+            jsonObject.put("body", body);
             jsonObject.put("data", new JSONObject().put("notification_type", notificationType));
 
 
@@ -297,4 +335,7 @@ public class ChatsActivity extends AppCompatActivity {
         super.onDestroy();
         unregisterNetworkChangeReceiver();
     }
+
+
+
 }

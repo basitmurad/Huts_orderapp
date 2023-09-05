@@ -26,24 +26,30 @@ public class MessegeClass extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage message) {
         super.onMessageReceived(message);
-        Intent intent = new Intent(this, ChatsActivity.class);
+        String title = message.getData().get("title");
+        String messageBody = message.getData().get("message");
+        Intent intent = new Intent(getApplicationContext(), ChatsActivity.class);
+
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         int notificationId= new Random().nextInt();
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel(manager);
         }
-        PendingIntent intent1 = PendingIntent.getActivities(this,0,new Intent[]{intent},PendingIntent.FLAG_UPDATE_CURRENT);
+//        PendingIntent intent1 = PendingIntent.getActivities(this,0,new Intent[]{intent},PendingIntent.FLAG_UPDATE_CURRENT);
+       PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         Notification notification ;
 
         notification = new NotificationCompat.Builder(this,CHANNEL_ID)
-                .setContentTitle(message.getData().get("title"))
-                .setContentText(message.getData().get("message"))
+                .setContentTitle(title)
+                .setContentText(messageBody)
                 .setSmallIcon(R.drawable.baseline_notifications_active_24)
                 .setAutoCancel(true)
-                .setContentIntent(intent1)
+                .setContentIntent(pendingIntent)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .build();
+
 
 
         manager.notify(notificationId,notification);

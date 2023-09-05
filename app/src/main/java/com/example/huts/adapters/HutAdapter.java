@@ -57,7 +57,7 @@ public class HutAdapter extends RecyclerView.Adapter<HutAdapter.MyHolder> {
             @Override
             public void onClick(View v) {
                 sessionManager.saveHutName(hutsClass.getHutsName());
-                sessionManager.saveHutImage(String.valueOf(hutsClass.getImageUri()));
+
                 Intent intent = new Intent(context.getApplicationContext(), OrderActivity.class);
                 intent.putExtra("hutName" , hutsClass.getHutsName());
                 intent.putExtra("imageUri",hutsClass.getImageUri());

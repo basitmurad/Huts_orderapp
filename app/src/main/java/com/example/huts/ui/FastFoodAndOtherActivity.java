@@ -38,7 +38,7 @@ public class FastFoodAndOtherActivity extends AppCompatActivity {
        list.add(new BreakfastClass("Zinger Burger" , "250", R.drawable.zingerburger));
        list.add(new BreakfastClass("Chicken Burger  " , "100", R.drawable.chickenburger));
        list.add(new BreakfastClass("Anda Burger " , "100", R.drawable.andaburger));
-       list.add(new BreakfastClass("Zinger Shwrma " , "250", R.drawable.zingershawarma));
+       list.add(new BreakfastClass("Zinger Shawarma " , "250", R.drawable.zingershawarma));
        list.add(new BreakfastClass("Chick Shawarma " , "100", R.drawable.chickenshawarma));
        list.add(new BreakfastClass("Zinger Roll " , "100", R.drawable.zingerroll));
        list.add(new BreakfastClass("Samosa Chat " , "100", R.drawable.samosachat));
@@ -48,16 +48,16 @@ public class FastFoodAndOtherActivity extends AppCompatActivity {
        list.add(new BreakfastClass("Samosa " , "100", R.drawable.samosa));
        list.add(new BreakfastClass("Mango Shake " , "100", R.drawable.mangoshake));
        list.add(new BreakfastClass("Apple Shake " , "100", R.drawable.appleshake));
-       list.add(new BreakfastClass("Orange Shake " , "100", R.drawable.orangeshake));
+       list.add(new BreakfastClass("Orange Shake " , "110", R.drawable.orangeshake));
        list.add(new BreakfastClass("Anar Juice " , "100", R.drawable.anarjuice));
-       list.add(new BreakfastClass("Peech Shake " , "100", R.drawable.peechshake));
-       list.add(new BreakfastClass("Fruit Chat " , "100", R.drawable.fruitchat));
+       list.add(new BreakfastClass("Peach Shake " , "110", R.drawable.peechshake));
+       list.add(new BreakfastClass("Fruit Chart " , "100", R.drawable.fruitchat));
        list.add(new BreakfastClass("Water Mallon " , "100", R.drawable.watermallon));
        list.add(new BreakfastClass("Lassi " , "100", R.drawable.lassi));
        list.add(new BreakfastClass("Water " , "100", R.drawable.water));
-       list.add(new BreakfastClass("Lamon Soda " , "100", R.drawable.lamonsoda));
-       list.add(new BreakfastClass("Stawbery Shake " , "100", R.drawable.stawberyshake));
-       list.add(new BreakfastClass("Chicken Soap " , "100", R.drawable.chickensoap));
+       list.add(new BreakfastClass("Lemon Soda " , "100", R.drawable.lamonsoda));
+       list.add(new BreakfastClass("Strawberry Shake " , "150", R.drawable.stawberyshake));
+       list.add(new BreakfastClass("Chicken Soap " , "150", R.drawable.chickensoap));
 
 
        filterList.addAll(list);
