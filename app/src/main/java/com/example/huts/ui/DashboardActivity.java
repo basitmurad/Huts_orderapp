@@ -12,6 +12,7 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -209,9 +210,14 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(new Intent(DashboardActivity.this, ChatsActivity.class));
             } else if (itemId == R.id.nav_terms) {
                 {
-                    Toast.makeText(this, "terms and conditions", Toast.LENGTH_SHORT).show();
-                }
+                    String privacyPolicyUrl = "https://doc-hosting.flycricket.io/huts-privacy-policy/6e630c34-22d9-48ab-a097-505d4f0c3921/privacy"; // Replace with your privacy policy URL
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(privacyPolicyUrl));
+                    startActivity(intent);
 
+                    return true;
+
+                }
+               // https://doc-hosting.flycricket.io/huts-privacy-policy/6e630c34-22d9-48ab-a097-505d4f0c3921/privacy
             }
 
 

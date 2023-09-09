@@ -19,7 +19,7 @@ public class OrderActivity extends AppCompatActivity {
     private String quantity, name, price;
 private  ArrayList<OrderDetails> orderDetailsList;
 
-    private String hutName , hutImage ;
+    private String hutName  ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

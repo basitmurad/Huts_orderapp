@@ -31,24 +31,24 @@ public class BreakFastActivity extends AppCompatActivity {
 
         list = new ArrayList<>();
         filteredList = new ArrayList<>();
-list.clear();
-filteredList.clear();
+        list.clear();
+        filteredList.clear();
 
 
-        list.add(new BreakfastClass("Lahori Chaney " , "100", R.drawable.lahorichaneyingle));
-//        list.add(new BreakfastClass("Lahori Chaney Single" , "120", R.drawable.lahorichaneyingle));
-        list.add(new BreakfastClass("Paratha" , "50", R.drawable.paratha));
-        list.add(new BreakfastClass("Aloo Paratha" , "80", R.drawable.alooparatha));
-        list.add(new BreakfastClass("Anda Fri" , "50", R.drawable.andafri));
-        list.add(new BreakfastClass("Omlete" , "50", R.drawable.omlete));
-        list.add(new BreakfastClass("Chaye" , "40", R.drawable.chaye));
-        list.add(new BreakfastClass("Naan" , "30", R.drawable.naan));
-//        list.add(new BreakfastClass("Lahori Kofta Chaney" , "110", R.drawable.lahorikoftachaney));
-        list.add(new BreakfastClass("Lahori Kofta " , "110", R.drawable.lahorikoftachaney));
-        list.add(new BreakfastClass("Sandwitch" , "100", R.drawable.sandwitch));
-        list.add(new BreakfastClass("Anda Burji" , "50", R.drawable.andaburji));
-        list.add(new BreakfastClass("Jam Malai" , "60", R.drawable.jammalai));
-        list.add(new BreakfastClass("Roghni Naan" , "60", R.drawable.roghnnaan));
+        list.add(new BreakfastClass("Sandwitch", "100", R.drawable.sandwitch));
+        list.add(new BreakfastClass("Anda Burji", "50", R.drawable.andaburji));
+        list.add(new BreakfastClass("Jam Malai", "60", R.drawable.jammalai));
+        list.add(new BreakfastClass("Roghni Naan", "60", R.drawable.roghnnaan));
+
+        list.add(new BreakfastClass("Omlete", "50", R.drawable.omlete));
+        list.add(new BreakfastClass("Chaye", "50", R.drawable.chaye));
+        list.add(new BreakfastClass("Naan", "30", R.drawable.naan));
+        list.add(new BreakfastClass("Lahori chaney", "100", R.drawable.lahorichaneyingle));
+
+        list.add(new BreakfastClass("Paratha", "50", R.drawable.paratha));
+        list.add(new BreakfastClass("Aloo Paratha", "80", R.drawable.alooparatha));
+        list.add(new BreakfastClass("Anda Fri", "50", R.drawable.andafri));
+
 
         filteredList.addAll(list);
 

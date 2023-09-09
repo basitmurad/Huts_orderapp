@@ -42,6 +42,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -113,13 +115,24 @@ public class ChatsActivity extends AppCompatActivity {
                                 messegeDetailsArrayList.add(messegeDetails);
 //                                Toast.makeText(ChatsActivity.this, ""+messegeDetails.getMessege(), Toast.LENGTH_SHORT).show();
                             }
+                            // Get the last item from the ArrayList (assuming it's not empty)
+                            MessegeDetails lastMessage = null;
+                            if (!messegeDetailsArrayList.isEmpty()) {
+                                lastMessage = messegeDetailsArrayList.get(messegeDetailsArrayList.size() - 1);
+                            }
+
+                            // Reverse the ArrayList to display the latest message at the bottom
+                            Collections.reverse(messegeDetailsArrayList);
 
                             messAdapter =new MessAdapter(ChatsActivity.this,messegeDetailsArrayList);
 
                             binding.recyclerMess.setAdapter(messAdapter);
                             binding.recyclerMess.setLayoutManager(new LinearLayoutManager(ChatsActivity.this));
                             messAdapter.notifyDataSetChanged();
-
+                            if (lastMessage != null) {
+                                final int lastPosition = messegeDetailsArrayList.size() - 1;
+                                binding.recyclerMess.scrollToPosition(lastPosition);
+                            }
                         }
                         else {
                             Toast.makeText(ChatsActivity.this, "no data", Toast.LENGTH_SHORT).show();
