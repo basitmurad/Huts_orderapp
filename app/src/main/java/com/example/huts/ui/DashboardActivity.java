@@ -26,6 +26,7 @@ import com.example.huts.R;
 import com.example.huts.SessionManager;
 import com.example.huts.adapters.DashboardAdapter;
 import com.example.huts.databinding.ActivityDashboardBinding;
+import com.example.huts.model.Senders;
 import com.example.huts.model.Users;
 import com.example.utils.InternetChecker;
 import com.example.utils.NetworkChanger;
@@ -48,8 +49,10 @@ public class DashboardActivity extends AppCompatActivity {
     private SessionManager sessionManager;
     private ArrayList<DashboardClass> list;
     private FirebaseAuth firebaseAuth;
-    private String userEmail, userName , userNumber , userFcmToken;
+    private String userEmail, userName, userNumber, userFcmToken;
     private BroadcastReceiver broadcastReceiver;
+
+    private DatabaseReference databaseReference;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -64,10 +67,45 @@ public class DashboardActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         sessionManager = new SessionManager(this);
 
+        databaseReference = FirebaseDatabase.getInstance().getReference("SenderAdmin");
+
+
         getToken();
 
 
+        adminDetail();
+//        binding.btnLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                binding.notif.setVisibility(View.INVISIBLE);
+//                Intent intent  = new Intent(DashboardActivity.this, ChatsActivity.class);
+//
+//                intent.putExtra("id" ,sessionManager.getAdminUserId());
+//                startActivity(intent);
+//
+//
+//             databaseReference.child(sessionManager.getAdminUserId()).child("read").setValue(false);
+//             finish();
+//            }
+//        });
 
+        binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                binding.notif.setVisibility(View.INVISIBLE);
+                Intent intent = new Intent(DashboardActivity.this, ChatsActivity.class);
+
+
+                intent.putExtra("id", sessionManager.getAdminUserId());
+                startActivity(intent);
+
+
+                databaseReference.child(sessionManager.getAdminUserId()).child("read").setValue(false);
+
+                finish();
+            }
+        });
 
 
         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -90,8 +128,7 @@ public class DashboardActivity extends AppCompatActivity {
                         String pass = user.getPassword();
 
 
-                        sessionManager.saveCredentials(userName,pass,userEmail,userNumber,userFcmToken);
-
+                        sessionManager.saveCredentials(userName, pass, userEmail, userNumber, userFcmToken);
 
 
                         // ... other fields
@@ -204,10 +241,11 @@ public class DashboardActivity extends AppCompatActivity {
                     Toast.makeText(DashboardActivity.this, "No apps available", Toast.LENGTH_SHORT).show();
                 }
 
-            }
-            else if (itemId == R.id.nav_chats) {
+            } else if (itemId == R.id.nav_chats) {
 
                 startActivity(new Intent(DashboardActivity.this, ChatsActivity.class));
+
+                binding.notif.setVisibility(View.INVISIBLE);
             } else if (itemId == R.id.nav_terms) {
                 {
                     String privacyPolicyUrl = "https://doc-hosting.flycricket.io/huts-privacy-policy/6e630c34-22d9-48ab-a097-505d4f0c3921/privacy"; // Replace with your privacy policy URL
@@ -217,7 +255,7 @@ public class DashboardActivity extends AppCompatActivity {
                     return true;
 
                 }
-               // https://doc-hosting.flycricket.io/huts-privacy-policy/6e630c34-22d9-48ab-a097-505d4f0c3921/privacy
+                // https://doc-hosting.flycricket.io/huts-privacy-policy/6e630c34-22d9-48ab-a097-505d4f0c3921/privacy
             }
 
 
@@ -251,37 +289,39 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
 
+    }
 
+    private void adminDetail() {
+        databaseReference.child(sessionManager.getAdminUserId()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    Senders senders = dataSnapshot.getValue(Senders.class);
+//                    Toast.makeText(DashboardActivity.this, ""+senders.getUserId(), Toast.LENGTH_SHORT).show();
+
+                    if (senders.isRead()) {
+                        binding.notif.setVisibility(View.VISIBLE);
+                    }
+
+
+                } else {
+
+                    binding.notif.setVisibility(View.INVISIBLE);
+                    // User data does not exist
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle potential errors here
+            }
+        });
 
     }
 
-    private void getUserDetail() {
 
-
-        String uerID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("UsersDetail").child(uerID)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            userName = snapshot.child("username").getValue(String.class);
-                            Toast.makeText(DashboardActivity.this, "Exist" + userName, Toast.LENGTH_SHORT).show();
-                            String userEmail = snapshot.child("email").getValue(String.class);
-
-                        } else {
-                            Toast.makeText(DashboardActivity.this, "no data", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(DashboardActivity.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-
-    }
 
 
     @Override
@@ -307,10 +347,8 @@ public class DashboardActivity extends AppCompatActivity {
                         Admin admin = dataSnapshot.getValue(Admin.class);
 
 
-
                         sessionManager.setAdminFcmToken(admin.getFcmToken());
                         sessionManager.setAdminUerId(admin.getUserId());
-
 
 
                     }
@@ -344,6 +382,33 @@ public class DashboardActivity extends AppCompatActivity {
 
             internetChecker.showInternetDialog();
         }
+        databaseReference.child(sessionManager.getAdminUserId()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    Senders senders = dataSnapshot.getValue(Senders.class);
+//                    Toast.makeText(DashboardActivity.this, ""+senders.getUserId(), Toast.LENGTH_SHORT).show();
+
+                    if (senders.isRead()) {
+                        binding.notif.setVisibility(View.VISIBLE);
+                    }
+
+
+                } else {
+
+                    binding.notif.setVisibility(View.INVISIBLE);
+                    // User data does not exist
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle potential errors here
+            }
+        });
+
     }
 
     private void registerNetworkChangeReceiver() {
@@ -361,5 +426,43 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterNetworkChangeReceiver();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        databaseReference.child(sessionManager.getAdminUserId()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    Senders senders = dataSnapshot.getValue(Senders.class);
+//                    Toast.makeText(DashboardActivity.this, ""+senders.getUserId(), Toast.LENGTH_SHORT).show();
+
+                    if (senders.isRead()) {
+                        binding.notif.setVisibility(View.VISIBLE);
+                    }
+
+
+                } else {
+
+                    binding.notif.setVisibility(View.INVISIBLE);
+                    // User data does not exist
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle potential errors here
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adminDetail();
     }
 }

@@ -58,7 +58,7 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:layout_marginBottom="10dp"
-                android:text="Conform"
+                android:text="Confirm"
                 android:textAllCaps="false"
                 android:textSize="12sp"
 

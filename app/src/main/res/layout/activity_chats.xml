@@ -45,7 +45,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:fontFamily="@font/inter_bold"
-                android:text="Chats"
+                android:text="Messeges"
+
                 android:textAlignment="center"
 
                 android:textColor="@color/white"
@@ -54,13 +55,15 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <ImageView
-                android:id="@+id/btncart"
+                android:id="@+id/btnCall"
                 android:layout_width="30dp"
 
+                android:visibility="invisible"
+                android:src="@drawable/common_full_open_on_phone"
                 android:layout_height="30dp"
                 android:layout_marginEnd="10dp"
-android:visibility="invisible"
-                android:src="@drawable/cart"
+
+
                 app:layout_constraintEnd_toEndOf="parent" />
         </LinearLayout>
 
@@ -111,12 +114,12 @@ android:visibility="invisible"
         android:layout_height="0dp"
         android:id="@+id/recyclerMess"
 
-        tools:listitem="@layout/sender_layout"
+        tools:listitem="@layout/receiver_layout"
+        android:scrollbars="vertical"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -137,11 +140,12 @@ android:visibility="invisible"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/backcart"
             android:fontFamily="@font/inter"
-            android:hint="type messege"
 
+            android:hint="type messege"
             android:paddingStart="18dp"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"

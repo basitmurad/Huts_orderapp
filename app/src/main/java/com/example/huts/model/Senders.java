@@ -4,13 +4,14 @@ public class Senders {
     private String name, email , userId  , fcmToken , number ;
     private boolean isRead = false;
 
-//    public Senders(String name, String email, String userId, String fcmToken, String number) {
-//        this.name = name;
-//        this.email = email;
-//        this.userId = userId;
-//        this.fcmToken = fcmToken;
-//        this.number = number;
-//    }
+    public Senders(String name, String userId, boolean isRead)
+    {
+        this.name = name;
+
+        this.userId = userId;
+
+        this.isRead = isRead;
+    }
 
 
     public Senders(String name, String email, String userId, String fcmToken, String number, boolean isRead) {

@@ -35,6 +35,9 @@ public class SpeciaLOfferActivity extends AppCompatActivity {
         filterList.clear();
 
         list.add(new BreakfastClass("Momos", "350", R.drawable.momos));
+        list.add(new BreakfastClass("Chowmein", "350", R.drawable.chowmin));
+        list.add(new BreakfastClass("Chicken chilli rice", "350", R.drawable.chickenchilli));
+        list.add(new BreakfastClass("manchurian", "350", R.drawable.manchurianrice));
 
 
 

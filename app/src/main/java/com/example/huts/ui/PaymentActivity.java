@@ -93,7 +93,7 @@ public class PaymentActivity extends AppCompatActivity {
         String orderId = generateRandomNumber(16);
 
         DbHelper dbHelper = new DbHelper(PaymentActivity.this);
-        total = (int) dbHelper.calculateTotalNewPrice();
+//        total = (int) dbHelper.calculateTotalNewPrice();
 
 
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
@@ -121,16 +121,17 @@ public class PaymentActivity extends AppCompatActivity {
                     ArrayList<OrderDetails> orderDetailsList = dbHelper.getAll();
                     total = (int) dbHelper.calculateTotalNewPrice();
 
+                    int total1 = total + 50;
+
 
                     // Send data to Firebase
                     DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("ActiveOrders");
 
-                    OrderData orderData = new OrderData(hut, userId, pushID, orderId, address, total, orderDetailsList, true);
+                    OrderData orderData = new OrderData(hut, userId, pushID, orderId, address, total1, orderDetailsList, true);
                     ordersRef.child(userId).child(pushID).setValue(orderData)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
-                                    progressDialog.dismiss();
 
 
                                     databaseReference.child(userId).setValue(orderData)
@@ -141,27 +142,25 @@ public class PaymentActivity extends AppCompatActivity {
                                                     DatabaseReference activeOrder = FirebaseDatabase.getInstance().getReference("ActiveOrdersUser");
 
 
-
-                                                    ActiveOrderUsers activeOrderUsers = new ActiveOrderUsers(sessionManager.getNaame(),sessionManager.getEmail(),sessionManager.getNumber() ,userId,true);
+                                                    ActiveOrderUsers activeOrderUsers = new ActiveOrderUsers(sessionManager.getNaame(), sessionManager.getEmail(), sessionManager.getNumber(), userId, true);
 
                                                     activeOrder.child(orderData.getUserId())
-                                                                    .setValue(activeOrderUsers).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            .setValue(activeOrderUsers).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override
                                                                 public void onSuccess(Void unused) {
 
                                                                     getToken();
-                                                                    Toast.makeText(PaymentActivity.this, "Order Placed successfully", Toast.LENGTH_SHORT).show();
-                                                                    startActivity(new Intent(PaymentActivity.this, DashboardActivity.class));
+//                                                                    Toast.makeText(PaymentActivity.this, "Order Placed successfully", Toast.LENGTH_SHORT).show();
+//                                                                    startActivity(new Intent(PaymentActivity.this, DashboardActivity.class));
                                                                 }
                                                             })
-                                                                    .addOnFailureListener(new OnFailureListener() {
-                                                                        @Override
-                                                                        public void onFailure(@NonNull Exception e) {
+                                                            .addOnFailureListener(new OnFailureListener() {
+                                                                @Override
+                                                                public void onFailure(@NonNull Exception e) {
 
-                                                                            Toast.makeText(PaymentActivity.this, ""+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                                                                        }
-                                                                    });
-
+                                                                    Toast.makeText(PaymentActivity.this, "" + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            });
 
 
                                                 }
@@ -292,6 +291,9 @@ public class PaymentActivity extends AppCompatActivity {
 
                             //     Toast.makeText(PaymentActivity.this, "notifications send  " + response.toString(), Toast.LENGTH_SHORT).show();
 
+                            progressDialog.dismiss();
+                            Toast.makeText(PaymentActivity.this, "Order Placed successfully", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(PaymentActivity.this, DashboardActivity.class));
                             Log.d("Notification", "sent notification");
                         }
 
@@ -329,6 +331,7 @@ public class PaymentActivity extends AppCompatActivity {
 
         return stringBuilder.toString();
     }
+
     @Override
     protected void onResume() {
         super.onResume();

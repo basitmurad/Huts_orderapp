@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/inter_bold"
-                android:text="Lunch &amp; Dinner"
+                android:text="Special Offer"
                 android:textAlignment="center"
 
                 android:textColor="@color/white"

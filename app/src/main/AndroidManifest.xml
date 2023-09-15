@@ -16,14 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Huts1"
         tools:targetApi="31">
+
         <activity
             android:name=".ui.ChatsActivity"
             android:exported="false"
-            android:theme="@style/Custom.Theme.Huts"/>
-        <activity
-            android:name=".ui.MessegeActivity"
-            android:exported="true"
-            android:theme="@style/Custom.Theme.Huts"></activity>
+            android:theme="@style/Custom.Theme.Huts"
+            android:windowSoftInputMode="stateHidden"/>
+
 
         <service
             android:name=".messeges.MessegeClass"
@@ -46,7 +45,7 @@
         <activity
             android:name=".ui.PaymentActivity"
             android:exported="true"
-            android:theme="@style/Custom.Theme.Huts"></activity>
+            android:theme="@style/Custom.Theme.Huts" />
         <activity
             android:name=".ui.OrderActivity"
             android:exported="true"
@@ -79,7 +78,6 @@
             android:name=".ui.SettingActivity"
             android:exported="false"
             android:theme="@style/Custom.Theme.Huts" />
-
         <activity
             android:name=".ui.DashboardActivity"
             android:exported="true"

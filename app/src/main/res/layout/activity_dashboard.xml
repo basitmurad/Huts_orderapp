@@ -37,7 +37,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-              android:layout_marginTop="24dp"
+                    android:layout_marginTop="28dp"
                     android:orientation="vertical">
 
                     <androidx.cardview.widget.CardView
@@ -46,11 +46,11 @@
                         android:layout_marginStart="6dp"
                         android:layout_marginTop="12dp"
 
+                        android:padding="6dp"
                         android:layout_marginEnd="6dp"
                         android:layout_marginBottom="12dp"
                         android:orientation="vertical"
-                        app:cardCornerRadius="20dp"
-    >
+                        app:cardCornerRadius="20dp">
 
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -111,7 +111,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
                         android:layout_marginTop="12dp"
-
+                        android:padding="6dp"
                         android:layout_marginEnd="6dp"
                         android:layout_marginBottom="12dp"
                         android:orientation="vertical"
@@ -172,7 +172,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
                         android:layout_marginTop="12dp"
-
+                        android:padding="6dp"
                         android:layout_marginEnd="6dp"
                         android:layout_marginBottom="12dp"
                         android:orientation="vertical"
@@ -235,8 +235,9 @@
                         android:layout_marginStart="6dp"
                         android:layout_marginTop="12dp"
 
+                        android:padding="6dp"
                         android:layout_marginEnd="6dp"
-                        android:layout_marginBottom="12dp"
+                        android:layout_marginBottom="50dp"
                         android:orientation="vertical"
                         app:cardCornerRadius="20dp"
 
@@ -291,6 +292,44 @@
                 </LinearLayout>
 
             </ScrollView>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btnLayout"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="35dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+
+                <ImageView
+                    android:id="@+id/notif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_notifications_active_24"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toTopOf="@+id/floatingActionButton"
+                    app:layout_constraintStart_toEndOf="@+id/floatingActionButton"
+                    app:layout_constraintTop_toTopOf="@+id/floatingActionButton" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/floatingActionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+
+                    android:src="@drawable/baseline_message"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -5,6 +5,8 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
@@ -23,9 +25,10 @@ import com.example.huts.SessionManager;
 
 import com.example.huts.adapters.MessAdapter;
 import com.example.huts.databinding.ActivityChatsBinding;
+import com.example.huts.model.HideKeyBoard;
 import com.example.huts.model.MessegeDetails;
 import com.example.huts.model.Senders;
-import com.example.huts.model.Users;
+
 import com.example.utils.InternetChecker;
 import com.example.utils.NetworkChanger;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -42,8 +45,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,12 +53,12 @@ import java.util.Map;
 public class ChatsActivity extends AppCompatActivity {
 
     private ActivityChatsBinding binding;
-    private DatabaseReference databaseReference ,senderRef;
+    private DatabaseReference databaseReference, senderRef , adminRef;
     String senderRoom, recieverRoom;
 
     private SessionManager sessionManager;
     private MessAdapter messAdapter;
-    private BroadcastReceiver broadcastReceiver ;
+    private BroadcastReceiver broadcastReceiver;
     String token, adminId, userId;
     String messege;
 
@@ -69,8 +71,18 @@ public class ChatsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityChatsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        messegeDetailsArrayList = new ArrayList<>();
+//        setListner();
+        //  messegeDetailsArrayList.clear();
         databaseReference = FirebaseDatabase.getInstance().getReference("chats");
         senderRef = FirebaseDatabase.getInstance().getReference("Sender");
+        adminRef = FirebaseDatabase.getInstance().getReference("SenderAdmin");
+
+
+        String id = getIntent().getStringExtra("id");
+
+
         broadcastReceiver = new NetworkChanger();
         registerNetworkChangeReceiver();
         FirebaseMessaging.getInstance().getToken()
@@ -86,11 +98,15 @@ public class ChatsActivity extends AppCompatActivity {
 
         sessionManager = new SessionManager(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        messegeDetailsArrayList = new ArrayList<>();
 
 
         adminId = String.valueOf(sessionManager.getAdminUserId());
-        userId = FirebaseAuth.getInstance().getUid();
+       adminRef.child(adminId).child("read").setValue(false);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null) {
+            userId = auth.getCurrentUser().getUid();
+            // Rest of your code
+        }
 
 
         senderRoom = userId + adminId;
@@ -98,55 +114,41 @@ public class ChatsActivity extends AppCompatActivity {
         recieverRoom = adminId + userId;
 
 
-//        Toast.makeText(this, "admin" + sessionManager.getAdminFcmToken(), Toast.LENGTH_SHORT).show();
-
-
-        databaseReference.child(senderRoom)
-                .child("messeges").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists())
-                        {
-                            messegeDetailsArrayList.clear();
-
-                            for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                            {
-                                MessegeDetails messegeDetails = dataSnapshot.getValue(MessegeDetails.class);
-                                messegeDetailsArrayList.add(messegeDetails);
-//                                Toast.makeText(ChatsActivity.this, ""+messegeDetails.getMessege(), Toast.LENGTH_SHORT).show();
-                            }
-                            // Get the last item from the ArrayList (assuming it's not empty)
-                            MessegeDetails lastMessage = null;
-                            if (!messegeDetailsArrayList.isEmpty()) {
-                                lastMessage = messegeDetailsArrayList.get(messegeDetailsArrayList.size() - 1);
-                            }
-
-                            // Reverse the ArrayList to display the latest message at the bottom
-                            Collections.reverse(messegeDetailsArrayList);
-
-                            messAdapter =new MessAdapter(ChatsActivity.this,messegeDetailsArrayList);
-
-                            binding.recyclerMess.setAdapter(messAdapter);
-                            binding.recyclerMess.setLayoutManager(new LinearLayoutManager(ChatsActivity.this));
-                            messAdapter.notifyDataSetChanged();
-                            if (lastMessage != null) {
-                                final int lastPosition = messegeDetailsArrayList.size() - 1;
-                                binding.recyclerMess.scrollToPosition(lastPosition);
-                            }
-                        }
-                        else {
-                            Toast.makeText(ChatsActivity.this, "no data", Toast.LENGTH_SHORT).show();
-                        }
+        databaseReference.child(senderRoom).child("messages").orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    messegeDetailsArrayList.clear();
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        MessegeDetails messegeDetails = dataSnapshot.getValue(MessegeDetails.class);
+                        messegeDetailsArrayList.add(messegeDetails); // Add messages at the beginning of the list
                     }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                    messAdapter = new MessAdapter(ChatsActivity.this, messegeDetailsArrayList);
 
-                        Toast.makeText(ChatsActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
+                    binding.recyclerMess.setAdapter(messAdapter);
 
+
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatsActivity.this);
+                    linearLayoutManager.setReverseLayout(false);
+                    binding.recyclerMess.setLayoutManager(linearLayoutManager);
+
+                    messAdapter.notifyDataSetChanged();
+
+                    // Scroll to the last item (latest message)
+                    if (messegeDetailsArrayList.size() > 0) {
+                        binding.recyclerMess.scrollToPosition(messegeDetailsArrayList.size() - 1);
                     }
-                });
+                } else {
+                    Toast.makeText(ChatsActivity.this, "No Messages", Toast.LENGTH_SHORT).show();
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(ChatsActivity.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         binding.btnSend.setOnClickListener(new View.OnClickListener() {
@@ -156,19 +158,20 @@ public class ChatsActivity extends AppCompatActivity {
                 Date date = new Date();
 
                 String randomKey = firebaseDatabase.getReference().push().getKey();
+
+                HideKeyBoard.hideKeyboard(ChatsActivity.this);
+
                 binding.editText.setText("");
 
 
-
-
-                MessegeDetails messegeDetails1 = new MessegeDetails(messege, userId, randomKey ,date.getTime());
-                databaseReference.child(senderRoom).child("messeges").child(randomKey).setValue(messegeDetails1)
+                MessegeDetails messegeDetails1 = new MessegeDetails(messege, userId, randomKey, date.getTime());
+                databaseReference.child(senderRoom).child("messages").child(randomKey).setValue(messegeDetails1)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
 
                                 databaseReference.child(recieverRoom)
-                                        .child("messeges")
+                                        .child("messages")
                                         .child(randomKey)
                                         .setValue(messegeDetails1)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -186,7 +189,7 @@ public class ChatsActivity extends AppCompatActivity {
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(ChatsActivity.this, " no data send successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ChatsActivity.this, "Error " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 
 
                             }
@@ -201,11 +204,48 @@ public class ChatsActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-
-               finish();
+                finish();
             }
         });
 
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        HideKeyBoard.hideKeyboard(ChatsActivity.this);
+
+
+    }
+
+
+    private void setListner() {
+
+        binding.recyclerMess.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                if (bottom < oldBottom) {
+
+                    if (messegeDetailsArrayList.size() == 0) {
+                        binding.recyclerMess.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                binding.recyclerMess.smoothScrollToPosition(messegeDetailsArrayList.size());
+
+                            }
+                        }, 100);
+                    }
+                } else {
+                    binding.recyclerMess.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            binding.recyclerMess.smoothScrollToPosition(messegeDetailsArrayList.size() - 1);
+                        }
+                    }, 100);
+                }
+            }
+        });
     }
 
     private void getToken() {
@@ -222,15 +262,13 @@ public class ChatsActivity extends AppCompatActivity {
                         Admin admin = dataSnapshot.getValue(Admin.class);
 
 
-
-
-                        Senders senders = new Senders(sessionManager.getNaame(), sessionManager.getEmail(), userId,token,sessionManager.getNumber(),true);
+                        Senders senders = new Senders(sessionManager.getNaame(), sessionManager.getEmail(), userId, token, sessionManager.getNumber(), true);
 
                         senderRef.child(userId)
                                 .setValue(senders).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
-                                        onSendNotification(admin.getFcmToken(), sessionManager.getNaame(), messege,"messege");
+                                        onSendNotification(admin.getFcmToken(), sessionManager.getNaame(), messege, "messege");
 
                                     }
                                 })
@@ -240,9 +278,6 @@ public class ChatsActivity extends AppCompatActivity {
                                         Toast.makeText(ChatsActivity.this, "Try again", Toast.LENGTH_SHORT).show();
                                     }
                                 });
-
-
-
 
 
                     }
@@ -265,10 +300,9 @@ public class ChatsActivity extends AppCompatActivity {
         });
 
 
-
     }
 
-    private void onSendNotification(String token, String name, String body , String notificationType) {
+    private void onSendNotification(String token, String name, String body, String notificationType) {
 
         try {
 
@@ -294,7 +328,7 @@ public class ChatsActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
 
-                            //     Toast.makeText(PaymentActivity.this, "notifications send  " + response.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ChatsActivity.this, "Message send", Toast.LENGTH_SHORT).show();
 
                             Log.d("Notification", "sent notification");
                         }
@@ -321,15 +355,24 @@ public class ChatsActivity extends AppCompatActivity {
         }
 
     }
+
     @Override
     protected void onResume() {
         super.onResume();
+
 
         InternetChecker internetChecker = new InternetChecker(ChatsActivity.this);
         if (!internetChecker.isConnected()) {
 
             internetChecker.showInternetDialog();
         }
+
+        if (messAdapter != null)
+            messAdapter.notifyDataSetChanged();
+
+
+        HideKeyBoard.hideKeyboard(ChatsActivity.this);
+        adminRef.child(adminId).child("read").setValue(false);
     }
 
     private void registerNetworkChangeReceiver() {
@@ -349,6 +392,12 @@ public class ChatsActivity extends AppCompatActivity {
         unregisterNetworkChangeReceiver();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        adminRef.child(adminId).child("read").setValue(false);
 
+        finish();
 
+    }
 }
