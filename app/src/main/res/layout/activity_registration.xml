@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.RegistrationActivity">
+    tools:context="com.afaq.huts.ui.RegistrationActivity">
 
 
 
@@ -15,7 +15,7 @@
         android:paddingTop="16dp"
         android:paddingEnd="10dp"
         android:paddingBottom="16dp"
-        tools:context=".ui.SignUpActivity">
+        tools:context="com.afaq.huts.ui.SignUpActivity">
 
         <ImageView
             android:id="@+id/imageView2"

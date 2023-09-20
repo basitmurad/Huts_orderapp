@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backBarchild"
-    tools:context=".ui.ChatsActivity">
+    tools:context="com.afaq.huts.ui.ChatsActivity">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -108,7 +109,6 @@
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -145,6 +145,7 @@
             android:background="@drawable/backcart"
             android:fontFamily="@font/inter"
 
+            android:textColor="@color/black"
             android:hint="type messege"
             android:paddingStart="18dp"
             android:paddingTop="8dp"
@@ -169,6 +170,9 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,7 +14,7 @@
         android:paddingTop="16dp"
         android:paddingEnd="10dp"
         android:paddingBottom="16dp"
-        tools:context=".ui.SignUpActivity">
+        tools:context="com.afaq.huts.ui.SignUpActivity">
 
         <ImageView
             android:id="@+id/imageView2"

@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.SplashActivity">
+        tools:context="com.afaq.huts.ui.SplashActivity">
 
         <TextView
             android:id="@+id/textView"

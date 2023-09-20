@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -10,9 +9,7 @@
     android:layout_marginBottom="4dp"
     app:cardCornerRadius="20dp"
     app:cardElevation="20dp"
-
     >
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,7 +19,6 @@
             android:id="@+id/linearLayout8"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
@@ -37,20 +33,16 @@
                 android:id="@+id/hutname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/inter_bold"
                 android:padding="3dp"
                 android:text="hut name "
-
-
                 android:textColor="@color/white"
                 android:textSize="16dp" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnHuts"
                 android:layout_width="wrap_content"
-
                 android:layout_height="30dp"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/backcart"
@@ -61,7 +53,6 @@
                 android:text="Confirm"
                 android:textAllCaps="false"
                 android:textSize="12sp"
-
                 />
         </LinearLayout>
 
@@ -69,7 +60,6 @@
             android:id="@+id/hutImage"
             android:layout_width="100dp"
             android:layout_height="115dp"
-
             android:layout_marginEnd="16dp"
             android:src="@drawable/chaneychat"
             app:layout_constraintBottom_toBottomOf="@+id/linearLayout8"
@@ -79,6 +69,8 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.cardview.widget.CardView>
 
 
