@@ -19,13 +19,20 @@ public class OrderActivity extends AppCompatActivity {
     private String quantity, name, price;
 private  ArrayList<OrderDetails> orderDetailsList;
 
-    private String hutName  ;
+    private String hutName,specialName , specialPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityOrderBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
+//        intent.putExtra("name" , breakfastClass.getName());
+//        intent.putExtra("price", breakfastClass.getPrice());
+//
+//        specialName = getIntent().getStringExtra("name");
+//        specialPrice = getIntent().getStringExtra("price");
 
 
         DbHelper dbHelper = new DbHelper(this);

@@ -67,35 +67,7 @@ public class DashboardActivity extends AppCompatActivity {
 
 
         getToken();
-//        String adminUserId = sessionManager.getAdminUserId();
-//        if (adminUserId != null) {
-//            adminDetail();            // Continue with database operations
-//        } else {
-//
-//            Toast.makeText(this, "no data", Toast.LENGTH_SHORT).show();
-//            // Handle the case where adminUserId is null
-//        }
 
-
-
-
-
-
-
-//        binding.btnLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                binding.notif.setVisibility(View.INVISIBLE);
-//                Intent intent  = new Intent(DashboardActivity.this, ChatsActivity.class);
-//
-//                intent.putExtra("id" ,sessionManager.getAdminUserId());
-//                startActivity(intent);
-//
-//
-//             databaseReference.child(sessionManager.getAdminUserId()).child("read").setValue(false);
-//             finish();
-//            }
-//        });
 
         binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override

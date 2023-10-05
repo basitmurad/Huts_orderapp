@@ -34,6 +34,7 @@ public class HutsActivity extends AppCompatActivity {
 
         list.clear();
         filterList.clear();
+
         list.add(new HutsClass("Majeed Hut" , R.drawable.chaneychat));
         list.add(new HutsClass("Chemistry Hut" , R.drawable.chaneychat));
         list.add(new HutsClass("Social Hut" , R.drawable.chaneychat));
@@ -45,6 +46,9 @@ public class HutsActivity extends AppCompatActivity {
         list.add(new HutsClass("Shabbir Hut" , R.drawable.chaneychat));
         list.add(new HutsClass("Daniyal Hut" , R.drawable.chaneychat));
         list.add(new HutsClass("Mphil Hut" , R.drawable.chaneychat));
+        list.add(new HutsClass("Quetta cafe" , R.drawable.chaneychat));
+        list.add(new HutsClass("Qau cafe" , R.drawable.chaneychat));
+        list.add(new HutsClass("Ahmed Food point\n(hut special)" , R.drawable.chaneychat));
 
 
 
