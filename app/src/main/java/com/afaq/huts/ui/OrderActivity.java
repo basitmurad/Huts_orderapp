@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.afaq.huts.databinding.ActivityOrderBinding;
 import com.afaq.huts.model.OrderDetails;
@@ -38,7 +39,8 @@ private  ArrayList<OrderDetails> orderDetailsList;
         DbHelper dbHelper = new DbHelper(this);
 
 
-        hutName = getIntent().getStringExtra("hutName");
+        hutName = getIntent().getStringExtra("hutname");
+        Toast.makeText(this, ""+hutName, Toast.LENGTH_SHORT).show();
 
 
 

@@ -22,18 +22,27 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String COLUMN_IMAGE = "image";
     private static final String COLUMN_NEW_QUANTITY = "new_quantity";
     private static final String COLUMN_NEW_PRICE = "new_price";
+    private static final String COLUMN_HUT_NAME = "hutName"; // Add the hutName column
 
-    private static final String CREATE_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME + " (" +
-            COLUMN_NAME + " TEXT NOT NULL PRIMARY KEY, " +
-            COLUMN_PRICE + " INTEGER, " +
-            COLUMN_QUANTITY + " INTEGER, " +
-            COLUMN_NEW_PRICE + " INTEGER, " + // Add the new_price column
-            COLUMN_NEW_QUANTITY + " INTEGER, " + // Add the new_quantity column
-            COLUMN_IMAGE + " BLOB);";
 
+//    private static final String CREATE_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME + " (" +
+//            COLUMN_NAME + " TEXT NOT NULL PRIMARY KEY, " +
+//            COLUMN_PRICE + " INTEGER, " +
+//            COLUMN_QUANTITY + " INTEGER, " +
+//            COLUMN_NEW_PRICE + " INTEGER, " + // Add the new_price column
+//            COLUMN_NEW_QUANTITY + " INTEGER, " + // Add the new_quantity column
+//            COLUMN_IMAGE + " BLOB);";
+private static final String CREATE_TABLE_QUERY = "CREATE TABLE " + TABLE_NAME + " (" +
+        COLUMN_NAME + " TEXT NOT NULL PRIMARY KEY, " +
+        COLUMN_PRICE + " INTEGER, " +
+        COLUMN_QUANTITY + " INTEGER, " +
+        COLUMN_NEW_PRICE + " INTEGER, " +
+        COLUMN_NEW_QUANTITY + " INTEGER, " +
+        COLUMN_IMAGE + " BLOB, " +
+        COLUMN_HUT_NAME + " TEXT);";
 
     public DbHelper(@Nullable Context context   ) {
-        super(context, "user.db", null, 1);
+        super(context, "user.db", null, 2);
     }
 
 
@@ -49,19 +58,32 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
-
-    public long insertDish(String name, int price,int quantity , byte[] imageByteArray, int newPrice , int newQuantity) {
+    public long insertDish(String hutName, String name, int price, int quantity, byte[] imageByteArray, int newPrice, int newQuantity) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(COLUMN_HUT_NAME, hutName); // Insert the hutName
         values.put(COLUMN_NAME, name);
         values.put(COLUMN_PRICE, price);
         values.put(COLUMN_QUANTITY, quantity);
         values.put(COLUMN_IMAGE, imageByteArray);
         values.put(COLUMN_NEW_PRICE, newPrice);
-        values.put(COLUMN_NEW_QUANTITY,newQuantity);
+        values.put(COLUMN_NEW_QUANTITY, newQuantity);
         return db.insert(TABLE_NAME, null, values);
     }
 
+
+//    public long insertDish(String name, int price,int quantity , byte[] imageByteArray, int newPrice , int newQuantity) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//        values.put(COLUMN_NAME, name);
+//        values.put(COLUMN_PRICE, price);
+//        values.put(COLUMN_QUANTITY, quantity);
+//        values.put(COLUMN_IMAGE, imageByteArray);
+//        values.put(COLUMN_NEW_PRICE, newPrice);
+//        values.put(COLUMN_NEW_QUANTITY,newQuantity);
+//        return db.insert(TABLE_NAME, null, values);
+//    }
+//
 
     public void updateDishQuantityAndPrice(String name, int newQuantity, int newPrice) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -89,12 +111,13 @@ public class DbHelper extends SQLiteOpenHelper {
 
         if (cursor != null) {
             while (cursor.moveToNext()) {
+                @SuppressLint("Range") String hutName = cursor.getString(cursor.getColumnIndex(COLUMN_HUT_NAME));
                 @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
                 @SuppressLint("Range") int price = cursor.getInt(cursor.getColumnIndex(COLUMN_PRICE));
                 @SuppressLint("Range") int quantity = cursor.getInt(cursor.getColumnIndex(COLUMN_QUANTITY));
                 @SuppressLint("Range") byte[] imageByteArray = cursor.getBlob(cursor.getColumnIndex(COLUMN_IMAGE));
 
-                DishDetail dish = new DishDetail(name, price, quantity, imageByteArray);
+                DishDetail dish = new DishDetail(hutName ,name, price, quantity, imageByteArray);
                 dishList.add(dish);
             }
             cursor.close();

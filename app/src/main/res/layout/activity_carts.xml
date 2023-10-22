@@ -69,46 +69,11 @@
                 app:layout_constraintEnd_toEndOf="parent" />
         </LinearLayout>
 
-        <!--        <LinearLayout-->
-        <!--            android:layout_width="0dp"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginStart="w"-->
-        <!--            android:layout_marginTop="12dp"-->
-        <!--            android:layout_marginEnd="40dp"-->
-        <!--            android:visibility="invisible"-->
-        <!--            android:layout_marginBottom="16dp"-->
-        <!--            android:orientation="vertical"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:layout_constraintEnd_toEndOf="@+id/linearLayout4"-->
-        <!--            app:layout_constraintStart_toStartOf="@+id/linearLayout4"-->
-        <!--            app:layout_constraintTop_toBottomOf="@+id/linearLayout4">-->
 
-        <!--            <TextView-->
-        <!--                android:id="@+id/textView8"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_marginStart="2dp"-->
-        <!--                android:fontFamily="@font/inter"-->
-
-
-        <!--                android:padding="2dp"-->
-        <!--                android:text="Search Your Dish"-->
-        <!--                android:textColor="@color/white"-->
-        <!--                android:textSize="14sp" />-->
-
-        <!--            <androidx.appcompat.widget.SearchView-->
-        <!--                android:id="@+id/btnSearch"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="40dp"-->
-        <!--                android:layout_marginTop="5dp"-->
-        <!--                android:background="@drawable/back_edittext"-->
-        <!--                android:backgroundTint="@color/white"-->
-
-
-        <!--                android:paddingTop="10dp"-->
-        <!--                android:paddingBottom="8dp" />-->
-        <!--        </LinearLayout>-->
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cardRecycler"

@@ -23,7 +23,9 @@
                 layout="@layout/appbar_layout"
                 android:layout_width="match_parent"
 
-                android:layout_height="100dp" />
+                android:layout_height="100dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
 
             <ScrollView
                 android:layout_width="0dp"

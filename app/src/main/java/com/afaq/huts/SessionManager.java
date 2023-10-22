@@ -51,8 +51,12 @@ public class SessionManager {
     public void setAdminFcmToken(String adminFcmToken) {
         editor.putString(KEY_ADMIN_FCM_TOKEN, adminFcmToken);
         editor.apply();
+
     }
 
+    public String getAdminFcmToken() {
+        return sharedPreferences.getString(KEY_ADMIN_FCM_TOKEN, null);
+    }
 
     public String getAdminUserId() {
         return sharedPreferences.getString(KEY_ADMIN_USERID, null);

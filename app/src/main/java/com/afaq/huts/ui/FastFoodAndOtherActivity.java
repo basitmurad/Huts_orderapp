@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.afaq.huts.R;
@@ -23,41 +25,20 @@ public class FastFoodAndOtherActivity extends AppCompatActivity {
     private ArrayList<BreakfastClass> list;
     private ArrayList<BreakfastClass> filterList;
     private BreakFastAdapter breakFastAdapter;
+    private String hutName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityFastFoodAndOtherBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        hutName  = getIntent()
+                .getStringExtra("hutname");
 
 
        list = new ArrayList<>();
        filterList = new ArrayList<>();
        list.clear();
        filterList.clear();
-
-//       list.add(new BreakfastClass("Zinger Burger" , "250", R.drawable.zingerburger));
-//       list.add(new BreakfastClass("Chicken Burger  " , "100", R.drawable.chickenburger));
-//       list.add(new BreakfastClass("Anda Burger " , "100", R.drawable.andaburger));
-//       list.add(new BreakfastClass("Zinger Shawarma " , "250", R.drawable.zingershawarma));
-//       list.add(new BreakfastClass("Chick Shawarma " , "100", R.drawable.chickenshawarma));
-//       list.add(new BreakfastClass("Zinger Roll " , "100", R.drawable.zingerroll));
-//       list.add(new BreakfastClass("Samosa Chat " , "100", R.drawable.samosachat));
-//       list.add(new BreakfastClass("Dahi Baley " , "100", R.drawable.dahibaley));
-//       list.add(new BreakfastClass("Chaney Chat " , "100", R.drawable.chaneychat));
-//       list.add(new BreakfastClass("Gol Gapey " , "100", R.drawable.golgapey));
-//       list.add(new BreakfastClass("Samosa " , "100", R.drawable.samosa));
-//       list.add(new BreakfastClass("Mango Shake " , "100", R.drawable.mangoshake));
-//       list.add(new BreakfastClass("Apple Shake " , "100", R.drawable.appleshake));
-//       list.add(new BreakfastClass("Orange Shake " , "110", R.drawable.orangeshake));
-//       list.add(new BreakfastClass("Anar Juice " , "100", R.drawable.anarjuice));
-//       list.add(new BreakfastClass("Peach Shake " , "110", R.drawable.peechshake));
-//       list.add(new BreakfastClass("Fruit Chart " , "100", R.drawable.fruitchat));
-//       list.add(new BreakfastClass("Water Mallon " , "100", R.drawable.watermallon));
-//       list.add(new BreakfastClass("Lassi " , "100", R.drawable.lassi));
-//       list.add(new BreakfastClass("Water " , "100", R.drawable.water));
-//       list.add(new BreakfastClass("Lemon Soda " , "100", R.drawable.lamonsoda));
-//       list.add(new BreakfastClass("Strawberry Shake " , "150", R.drawable.stawberyshake));
-//       list.add(new BreakfastClass("Chicken Soap " , "150", R.drawable.chickensoap));
 
 
 
@@ -68,6 +49,7 @@ public class FastFoodAndOtherActivity extends AppCompatActivity {
         list.add(new BreakfastClass("Chaney Chat", "100", R.drawable.chaneychat));
         list.add(new BreakfastClass("Chicken Shawarma", "180", R.drawable.chickenshawarma));
         list.add(new BreakfastClass("Zinger Burger", "250", R.drawable.zingerburger));
+        list.add(new BreakfastClass("Zinger Burger(2X)", "350", R.drawable.zingerburger));
         list.add(new BreakfastClass("Chicken Burger", "250", R.drawable.chickenburger));
         list.add(new BreakfastClass("Anda Burger", "120", R.drawable.andaburger));
         list.add(new BreakfastClass("Zinger Shawarma", "250", R.drawable.zingershawarma));
@@ -87,24 +69,52 @@ public class FastFoodAndOtherActivity extends AppCompatActivity {
 
 
         filterList.addAll(list);
-       breakFastAdapter = new BreakFastAdapter(this , filterList);
+       breakFastAdapter = new BreakFastAdapter(this , filterList , hutName);
 
        binding.recyclerFastFood.setAdapter(breakFastAdapter);
        binding.recyclerFastFood.setLayoutManager(new LinearLayoutManager(this));
+        SearchView btnSearch = findViewById(R.id.btnSearch);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Set focus on the SearchView
+                btnSearch.setIconified(false);
 
+                // Show the keyboard
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(btnSearch, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
 
-       binding.btnSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-           @Override
-           public boolean onQueryTextSubmit(String query) {
-               return false;
-           }
+// Set the query listener as you have in your code
+        binding.btnSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Handle search query submission
+                filter(query);
+                return false;
+            }
 
-           @Override
-           public boolean onQueryTextChange(String newText) {
-               Filter(newText);
-               return false;
-           }
-       });
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Handle query text changes
+                filter(newText);
+                return true;
+            }
+        });
+
+//       binding.btnSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//           @Override
+//           public boolean onQueryTextSubmit(String query) {
+//               return false;
+//           }
+//
+//           @Override
+//           public boolean onQueryTextChange(String newText) {
+//               Filter(newText);
+//               return false;
+//           }
+//       });
 
 
        binding.btnBack.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +134,7 @@ public class FastFoodAndOtherActivity extends AppCompatActivity {
 
     }
 
-    private void Filter(String newText) {
+    private void filter(String newText) {
 
         filterList.clear();
         for (BreakfastClass item :  list)

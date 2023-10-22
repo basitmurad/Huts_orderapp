@@ -30,6 +30,7 @@ import com.afaq.utils.InternetChecker;
 import com.afaq.utils.NetworkChanger;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -57,6 +58,9 @@ public class PaymentActivity extends AppCompatActivity {
     private int total;
     private String fcmToken, userName;
     private DatabaseReference databaseReference;
+    private static final int APP_UPDATE_REQUEST_CODE = 123;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -230,10 +234,10 @@ public class PaymentActivity extends AppCompatActivity {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         Admin admin = dataSnapshot.getValue(Admin.class);
 
-                        onSendNotification(admin.getFcmToken(), sessionManager.getNaame(), "Place an Order");
+//                        onSendNotification(admin.getFcmToken(), sessionManager.getNaame(), "Place an Order");
 
-
-//                        Toast.makeText(PaymentActivity.this, ""+admin.g, Toast.LENGTH_SHORT).show();
+                        onSendNotification(sessionManager.getAdminFcmToken(), sessionManager.getNaame(), "Place an Order");
+//                        Toast.makeText(PaymentActivity.this, ""+sessionManager.getAdminFcmToken(), Toast.LENGTH_SHORT).show();
                     }
 
 

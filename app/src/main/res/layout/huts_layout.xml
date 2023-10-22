@@ -20,52 +20,104 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="12dp"
+
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="8dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/hutImage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/hutname"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/inter_bold"
-                android:padding="3dp"
-                android:text="hut name "
-                android:textColor="@color/white"
-                android:textSize="16dp" />
+                android:layout_marginBottom="4dp"
+                android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnHuts"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginTop="24dp"
-                android:background="@drawable/backcart"
-                android:fontFamily="@font/inter"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:layout_marginBottom="10dp"
-                android:text="Confirm"
-                android:textAllCaps="false"
-                android:textSize="12sp"
-                />
+                <TextView
+                    android:id="@+id/hutname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:fontFamily="@font/inter_bold"
+                    android:padding="1dp"
+
+                    android:text="hut name "
+                    android:textColor="@color/white"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/hutTiming"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+
+                    android:fontFamily="@font/inter"
+
+                    android:text="10:00 Am to 11:00 PM"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+
+                    android:text="Status : "
+
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+
+                    android:layout_gravity="center"
+
+                    android:fontFamily="@font/inter_bold"
+                    android:text="  Active"
+                    android:textColor="#3CFD07"
+                    android:textSize="12sp"
+                    android:layout_marginStart="16dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!--            <androidx.appcompat.widget.AppCompatButton-->
+            <!--                android:id="@+id/btnHuts"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="30dp"-->
+            <!--                android:layout_marginTop="24dp"-->
+            <!--                android:layout_marginBottom="10dp"-->
+            <!--                android:background="@drawable/backcart"-->
+            <!--                android:fontFamily="@font/inter"-->
+            <!--                android:paddingStart="20dp"-->
+            <!--                android:paddingEnd="20dp"-->
+            <!--                android:text="Contine"-->
+            <!--                android:textAllCaps="false"-->
+            <!--                android:textSize="12sp" />-->
         </LinearLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/hutImage"
-            android:layout_width="100dp"
-            android:layout_height="115dp"
-            android:layout_marginEnd="16dp"
-            android:src="@drawable/chaneychat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:src="@drawable/farward"
             app:layout_constraintBottom_toBottomOf="@+id/linearLayout8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/linearLayout8"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.411" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

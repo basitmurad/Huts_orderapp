@@ -57,15 +57,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.itemName.setText(dishDetail.getName());
         holder.itemPrice.setText(String.valueOf(dishDetail.getPrice()));
         holder.cartItemPriceTOTAL.setText(String.valueOf(dishDetail.getPrice()));
+        holder.hutName.setText(dishDetail.getHutName());
         byte[] imageByteArray = dishDetail.getImageByteArray();
 
 
-
+//        Toast.makeText(context, ""+dishDetail.getHutName(), Toast.LENGTH_SHORT).show();
 
         Bitmap imageBitmap1 = convertByteArrayToBitmap(imageByteArray);
 
         holder.itemImage.setImageBitmap(imageBitmap1);
-
 
 
         holder.btndelete.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +90,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         });
 
 
-
         holder.btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,12 +99,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 holder.itemQuantity.setText(String.valueOf(item));
 
                 int actualPrice = Integer.parseInt(holder.itemPrice.getText().toString());
-                int totalPrice  = item*actualPrice;
+                int totalPrice = item * actualPrice;
 
 
                 holder.cartItemPriceTOTAL.setText(String.valueOf(totalPrice));
 //                Toast.makeText(context, ""+totalPrice, Toast.LENGTH_SHORT).show();
-                dbHelper.updateDishQuantityAndPrice(dishDetail.getName(),item, totalPrice);
+                dbHelper.updateDishQuantityAndPrice(dishDetail.getName(), item, totalPrice);
 
             }
         });
@@ -126,12 +125,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
                     holder.cartItemPriceTOTAL.setText(String.valueOf(totalPrice));
 //                    Toast.makeText(context, "" + totalPrice, Toast.LENGTH_SHORT).show();
-                    dbHelper.updateDishQuantityAndPrice(dishDetail.getName(),item, totalPrice);
+                    dbHelper.updateDishQuantityAndPrice(dishDetail.getName(), item, totalPrice);
                 }
             }
         });
-
-
 
 
     }
@@ -145,9 +142,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     }
 
 
-
-
-
     @Override
     public int getItemCount() {
         return dishDetails.size();
@@ -155,7 +149,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     public class CartViewHolder extends RecyclerView.ViewHolder {
         ImageView itemImage;
-        TextView itemName, itemPrice, itemQuantity, cartItemPriceTOTAL;
+        TextView itemName, itemPrice, itemQuantity, cartItemPriceTOTAL, hutName;
         ImageView btndelete, btnPlus, btnMinus;
         LinearLayout layout;
 
@@ -169,11 +163,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             itemQuantity = itemView.findViewById(R.id.itemQuantity);
             cartItemPriceTOTAL = itemView.findViewById(R.id.cartItemPriceTOTAL);
             btndelete = itemView.findViewById(R.id.btnDelete);
+            btndelete = itemView.findViewById(R.id.btnDelete);
             btnPlus = itemView.findViewById(R.id.btnPlus);
             btnMinus = itemView.findViewById(R.id.btnMinus);
             layout = itemView.findViewById(R.id.linearLayout);
+
+            hutName = itemView.findViewById(R.id.hutname12);
         }
     }
+
     private Uri getImageUriFromBitmap(Context context, Bitmap image) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);

@@ -2,6 +2,10 @@
     <string name="app_name">Huts</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-<!--    <string name="serverKey">AAAAbLbshB4:APA91bGnUYsH35Uw2Knc0bABVFfAPkQZGg5F2YyUbgFsh9xe6bQb5uSm3QI_nH0alHATCT8mRkPNkweJsk5BoaB344dz6sgiFjKtTPBPo6pSuhsbZ-CdpccR5SuXSBuc5yvmOcetmxY9</string>-->
+    <!--    <string name="serverKey">AAAAbLbshB4:APA91bGnUYsH35Uw2Knc0bABVFfAPkQZGg5F2YyUbgFsh9xe6bQb5uSm3QI_nH0alHATCT8mRkPNkweJsk5BoaB344dz6sgiFjKtTPBPo6pSuhsbZ-CdpccR5SuXSBuc5yvmOcetmxY9</string>-->
     <string name="serverKey">AAAAZqPVNqc:APA91bEn6NINzxkjSXCo6nHQ60cJD0JY0EpqUBpxkkEUX2Fx7ZpO79NeoDI39kS3vWUevsND5l3JmW3d15X3uEJtK9T74pETeQJiLervbPDjjJfZ671Cd55kf023issCy07zrbez7X-t</string>
+    <string name="title_activity_hikmat_huts">HikmatHutsActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

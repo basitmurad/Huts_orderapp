@@ -2,6 +2,7 @@ package com.afaq.huts.ui;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 
@@ -26,6 +27,7 @@ import com.afaq.huts.adapters.DashboardAdapter;
 import com.afaq.huts.databinding.ActivityDashboardBinding;
 import com.afaq.huts.model.Senders;
 import com.afaq.huts.model.Users;
+import com.afaq.utils.GetDateTime;
 import com.afaq.utils.InternetChecker;
 import com.afaq.utils.NetworkChanger;
 import com.google.android.material.navigation.NavigationView;
@@ -57,6 +59,29 @@ public class DashboardActivity extends AppCompatActivity {
         binding = ActivityDashboardBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
+
+
+
+//        GetDateTime getDateTime =new GetDateTime(this);
+//
+//        getDateTime.getCurrentDateTime(new GetDateTime.TimeCallBack() {
+//            @Override
+//            public void getDateTime(String date, String time) {
+//
+//
+//                String[] timeParts = time.split(":");
+//                int hours = Integer.parseInt(timeParts[0]);
+//
+//                if (hours >= 9 && hours < 21) {
+//                    // Current time is between 9 AM and 9 PM, navigate to the dashboard
+////                    navigateToDashboard();
+//                    Toast.makeText(DashboardActivity.this, "Service is available", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    // Show a dialogue indicating that the service is off
+//                    showServiceOffDialog();
+//                }            }
+//        });
+
 
         broadcastReceiver = new NetworkChanger();
         registerNetworkChangeReceiver();
@@ -174,20 +199,21 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
         binding.btnBreakfast.setOnClickListener(v -> startActivity(new Intent(
-                DashboardActivity.this, BreakFastActivity.class
+                DashboardActivity.this, HutsActivity.class
         )));
 //
         binding.btnLunchAndDinner.setOnClickListener(v -> startActivity(new Intent(
-                DashboardActivity.this, LunchAndDinnerActivity.class
+                DashboardActivity.this, HutsActivity.class
         )));
 
         binding.btnfastFood.setOnClickListener(v -> startActivity(new Intent(
-                DashboardActivity.this, FastFoodAndOtherActivity.class
+                DashboardActivity.this, HutsActivity.class
         )));
 
         binding.btnHutsSpecial.setOnClickListener(v -> startActivity(new Intent(
-                DashboardActivity.this, SpeciaLOfferActivity.class
+                DashboardActivity.this, HutsActivity.class
         )));
+
 
         dashboardAdapter = new DashboardAdapter(this, list);
         sessionManager = new SessionManager(this);
@@ -327,10 +353,11 @@ public class DashboardActivity extends AppCompatActivity {
                         Admin admin = dataSnapshot.getValue(Admin.class);
 
 
-                        sessionManager.setAdminFcmToken(admin.getFcmToken());
+                      sessionManager.setAdminFcmToken(admin.getFcmToken());
                         sessionManager.setAdminUerId(admin.getUserId());
 
 
+//                        Toast.makeText(DashboardActivity.this, ""+sessionManager.getAdminFcmToken()  + " and " + admin.getUserId(), Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -439,5 +466,16 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        getToken();
+    }
+
+    private void showServiceOffDialog() {
+        // Create a dialogue to inform the user that the service is off
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Service Hours");
+        builder.setMessage("The service is currently not available. Please check back during service hours (9 AM to 9 PM).");
+        builder.setPositiveButton("OK", (dialog, which) -> finishAffinity());
+        builder.setCancelable(false);
+        builder.show();
     }
 }

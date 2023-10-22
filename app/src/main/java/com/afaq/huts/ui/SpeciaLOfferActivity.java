@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 
@@ -23,12 +25,15 @@ public class SpeciaLOfferActivity extends AppCompatActivity {
     private ActivitySpeciaLofferBinding binding;
     private ArrayList<BreakfastClass> list;
     private ArrayList<BreakfastClass> filterList;
+    private String hutName;
     private BreakFastAdapter breakFastAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySpeciaLofferBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        hutName = getIntent().getStringExtra("hutname");
 
         list = new ArrayList<>();
         filterList = new ArrayList<>();
@@ -46,26 +51,54 @@ public class SpeciaLOfferActivity extends AppCompatActivity {
 
         filterList.addAll(list);
 
-        breakFastAdapter = new BreakFastAdapter(this, filterList);
+        breakFastAdapter = new BreakFastAdapter(this, filterList , hutName);
 
         binding.recyclerLunch.setAdapter(breakFastAdapter);
 
         binding.recyclerLunch.setLayoutManager(new LinearLayoutManager(this));
 
+//        binding.btnSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                Filter(newText);
+//                return false;
+//            }
+//        });
+
+        SearchView btnSearch = findViewById(R.id.btnSearch);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Set focus on the SearchView
+                btnSearch.setIconified(false);
+
+                // Show the keyboard
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(btnSearch, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
+
+// Set the query listener as you have in your code
         binding.btnSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                // Handle search query submission
+                filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Filter(newText);
-                return false;
+                // Handle query text changes
+                filter(newText);
+                return true;
             }
         });
-
-
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +116,7 @@ public class SpeciaLOfferActivity extends AppCompatActivity {
 
     }
 
-    private void Filter(String newText) {
+    private void filter(String newText) {
 
         filterList.clear();
 

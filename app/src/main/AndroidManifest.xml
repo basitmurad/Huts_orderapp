@@ -15,17 +15,67 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Huts1"
-        tools:targetApi="31">
-
+        tools:targetApi="34">
         <activity
-            android:name="com.afaq.huts.ui.ChatsActivity"
+            android:name=".details.HnineActivity"
+            android:exported="true"
+            android:theme="@style/Custom.Theme.Huts">
+
+        </activity>
+        <activity
+            android:name=".details.BioHutsActivity"
+            android:exported="true"
+            android:theme="@style/Custom.Theme.Huts">
+
+        </activity>
+        <activity
+            android:name=".details.DaniyalHutsActivity"
+            android:exported="true"
+            android:theme="@style/Custom.Theme.Huts"></activity>
+        <activity
+            android:name=".details.ShabbirHutsActivity"
+            android:exported="true"
+            android:theme="@style/Custom.Theme.Huts" />
+        <activity
+            android:name=".details.MphilCanteenActivity"
+            android:exported="true"
+            android:theme="@style/Custom.Theme.Huts" />
+        <activity
+            android:name=".details.HikmatHutsActivity"
+            android:exported="true"
+            android:theme="@style/Custom.Theme.Huts" />
+        <activity
+            android:name=".details.FaizanHutsActivity"
+            android:exported="true"
+            android:theme="@style/Custom.Theme.Huts" />
+        <activity
+            android:name=".details.QuettaCafeActivity"
+            android:exported="true"
+            android:theme="@style/Custom.Theme.Huts" />
+        <activity
+            android:name=".details.ParadiseHutsActivity"
+            android:exported="true"
+            android:theme="@style/Custom.Theme.Huts" />
+        <activity
+            android:name=".details.SocialHutActivity"
+            android:exported="true"
+            android:theme="@style/Custom.Theme.Huts" />
+        <activity
+            android:name=".details.MajeedHutsActivity"
+            android:exported="true"
+            android:theme="@style/Custom.Theme.Huts" />
+        <activity
+            android:name=".details.QuaCafeActivity"
+            android:exported="true"
+            android:theme="@style/Custom.Theme.Huts" />
+        <activity
+            android:name=".ui.ChatsActivity"
             android:exported="false"
             android:theme="@style/Custom.Theme.Huts"
-            android:windowSoftInputMode="stateHidden"/>
-
+            android:windowSoftInputMode="stateHidden" />
 
         <service
-            android:name="com.afaq.huts.messeges.MessegeClass"
+            android:name=".messeges.MessegeClass"
             android:exported="true"
             android:permission="com.google.android.c2dm.permission.Send">
             <intent-filter>
@@ -35,63 +85,65 @@
         </service>
 
         <activity
-            android:name="com.afaq.huts.ui.MyOrdersActivity"
+            android:name=".ui.MyOrdersActivity"
             android:exported="true"
             android:theme="@style/Custom.Theme.Huts" />
         <activity
-            android:name="com.afaq.huts.ui.OtpViewActivity"
+            android:name=".ui.OtpViewActivity"
             android:exported="true"
             android:theme="@style/Custom.Theme.Huts" />
         <activity
-            android:name="com.afaq.huts.ui.PaymentActivity"
+            android:name=".ui.PaymentActivity"
             android:exported="true"
             android:theme="@style/Custom.Theme.Huts" />
         <activity
-            android:name="com.afaq.huts.ui.OrderActivity"
+            android:name=".ui.OrderActivity"
             android:exported="true"
             android:theme="@style/Custom.Theme.Huts" />
         <activity
-            android:name="com.afaq.huts.ui.HutsActivity"
+            android:name=".ui.HutsActivity"
+            android:exported="true"
+            android:theme="@style/Custom.Theme.Huts" >
+
+        </activity>
+        <activity
+            android:name=".ui.CartsActivity"
+            android:exported="false"
+            android:theme="@style/Custom.Theme.Huts" />
+        <activity
+            android:name=".ui.SpeciaLOfferActivity"
+            android:exported="false"
+            android:theme="@style/Custom.Theme.Huts" />
+        <activity
+            android:name=".ui.FastFoodAndOtherActivity"
+            android:exported="false"
+            android:theme="@style/Custom.Theme.Huts" />
+        <activity
+            android:name=".ui.LunchAndDinnerActivity"
+            android:exported="false"
+            android:theme="@style/Custom.Theme.Huts" />
+        <activity
+            android:name=".ui.BreakFastActivity"
+            android:exported="false"
+            android:theme="@style/Custom.Theme.Huts" />
+        <activity
+            android:name=".ui.SettingActivity"
+            android:exported="false"
+            android:theme="@style/Custom.Theme.Huts" />
+        <activity
+            android:name=".ui.DashboardActivity"
             android:exported="true"
             android:theme="@style/Custom.Theme.Huts" />
         <activity
-            android:name="com.afaq.huts.ui.CartsActivity"
+            android:name=".ui.RegistrationActivity"
             android:exported="false"
             android:theme="@style/Custom.Theme.Huts" />
         <activity
-            android:name="com.afaq.huts.ui.SpeciaLOfferActivity"
+            android:name=".ui.SignUpActivity"
             android:exported="false"
             android:theme="@style/Custom.Theme.Huts" />
         <activity
-            android:name="com.afaq.huts.ui.FastFoodAndOtherActivity"
-            android:exported="false"
-            android:theme="@style/Custom.Theme.Huts" />
-        <activity
-            android:name="com.afaq.huts.ui.LunchAndDinnerActivity"
-            android:exported="false"
-            android:theme="@style/Custom.Theme.Huts" />
-        <activity
-            android:name="com.afaq.huts.ui.BreakFastActivity"
-            android:exported="false"
-            android:theme="@style/Custom.Theme.Huts" />
-        <activity
-            android:name="com.afaq.huts.ui.SettingActivity"
-            android:exported="false"
-            android:theme="@style/Custom.Theme.Huts" />
-        <activity
-            android:name="com.afaq.huts.ui.DashboardActivity"
-            android:exported="true"
-            android:theme="@style/Custom.Theme.Huts" />
-        <activity
-            android:name="com.afaq.huts.ui.RegistrationActivity"
-            android:exported="false"
-            android:theme="@style/Custom.Theme.Huts" />
-        <activity
-            android:name="com.afaq.huts.ui.SignUpActivity"
-            android:exported="false"
-            android:theme="@style/Custom.Theme.Huts" />
-        <activity
-            android:name="com.afaq.huts.ui.SplashActivity"
+            android:name=".ui.SplashActivity"
             android:exported="true"
             android:theme="@style/Custom.Theme.Huts">
             <intent-filter>
@@ -99,9 +151,15 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
-            android:name="com.afaq.huts.MainActivity"
+            android:name=".MainActivity"
             android:exported="true" />
 
         <meta-data

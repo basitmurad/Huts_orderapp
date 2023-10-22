@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.afaq.huts.R;
 import com.afaq.huts.model.BreakfastClass;
+import com.afaq.huts.model.DishDetail;
 import com.afaq.huts.ui.CartsActivity;
 import com.afaq.huts.ui.DbHelper;
 
@@ -31,14 +33,22 @@ public class BreakFastAdapter extends RecyclerView.Adapter<BreakFastAdapter.MyHo
     private ArrayList<BreakfastClass> listBreakFast;
 
     private DbHelper dbHelper;
-
-    public BreakFastAdapter(Context context, ArrayList<BreakfastClass> listBreakFast) {
+    private String hutName;
+    public BreakFastAdapter(Context context, ArrayList<BreakfastClass> listBreakFast , String hutName) {
         this.context = context;
         this.listBreakFast = listBreakFast;
+        this.hutName = hutName;
 
 
         dbHelper = new DbHelper(context.getApplicationContext());
     }
+//    public BreakFastAdapter(Context context, ArrayList<BreakfastClass> listBreakFast) {
+//        this.context = context;
+//        this.listBreakFast = listBreakFast;
+//
+//
+//        dbHelper = new DbHelper(context.getApplicationContext());
+//    }
 
 
     @NonNull
@@ -57,7 +67,86 @@ public class BreakFastAdapter extends RecyclerView.Adapter<BreakFastAdapter.MyHo
         holder.bItemPrice.setText(breakfastClass.getPrice());
 
 
+
         holder.bItemPic.setImageResource(breakfastClass.getImageUri());
+
+//        holder.btnCard.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String name = breakfastClass.getName();
+//                int price = Integer.parseInt(breakfastClass.getPrice());
+//                Bitmap imageBitmap = BitmapFactory.decodeResource(context.getResources(), breakfastClass.getImageUri());
+//                byte[] imageByteArray = convertImageToByteArray(imageBitmap);
+//
+//                boolean canAddToCart = true;
+//                for (DishDetail dish : dbHelper.getAllDishes()) {
+//                    if (dish != null && dish.getHutName() != null) {
+//                        // Log the values for debugging
+//                        Log.d("Debug", "dish.getHutName(): " + dish.getHutName());
+//                        Log.d("Debug", "hutName: " + hutName);
+//                        if (dish.getHutName().equals(hutName)) {
+//                            canAddToCart = true;
+//                            break;  // No need to check further, we found a matching hut
+//                        } else {
+//                            canAddToCart = false;
+//                        }
+//                    }
+//                }
+//
+//                if (canAddToCart) {
+//                    long result = dbHelper.insertDish(hutName, name, price, 1, imageByteArray, price, 1);
+//                    if (result != -1) {
+//                        // Data successfully inserted
+//                        Intent intent = new Intent(context.getApplicationContext(), CartsActivity.class);
+//                        intent.putExtra("hutname", hutName);
+//                        v.getContext().startActivity(intent);
+//                        Toast.makeText(context, "Added to cart", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        // Data insertion failed
+//                        Toast.makeText(context, "Failed to add to cart", Toast.LENGTH_SHORT).show();
+//                    }
+//                } else {
+//                    Toast.makeText(context, "Item must be ordered from the same hut", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+
+
+
+//        holder.btnCard.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String name = breakfastClass.getName();
+//                int price = Integer.parseInt(breakfastClass.getPrice());
+//                Bitmap imageBitmap = BitmapFactory.decodeResource(context.getResources(), breakfastClass.getImageUri());
+//                byte[] imageByteArray = convertImageToByteArray(imageBitmap);
+//
+//                boolean canAddToCart = true;
+//                for (DishDetail dish : dbHelper.getAllDishes()) {
+//                    if (!dish.getHutName().equals(hutName)) {
+//                        canAddToCart = false;
+//                        break;  // No need to check further, we found a different hut
+//                    }
+//                }
+//
+//                if (canAddToCart) {
+//                    long result = dbHelper.insertDish(hutName, name, price, 1, imageByteArray, price, 1);
+//                    if (result != -1) {
+//                        // Data successfully inserted
+//                        Intent intent = new Intent(context.getApplicationContext(), CartsActivity.class);
+//                        intent.putExtra("hutname", hutName);
+//                        v.getContext().startActivity(intent);
+//                        Toast.makeText(context, "Added to cart", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        // Data insertion failed
+//                        Toast.makeText(context, "Failed to add to cart", Toast.LENGTH_SHORT).show();
+//                    }
+//                } else {
+//                    Toast.makeText(context, "Item must be ordered from the same hut", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+
 
         holder.btnCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,10 +160,11 @@ public class BreakFastAdapter extends RecyclerView.Adapter<BreakFastAdapter.MyHo
 //
 
 //                Toast.makeText(context, ""+imageByteArray, Toast.LENGTH_SHORT).show();
-                long result = dbHelper.insertDish(name, price, 1, imageByteArray, price, 1);
+                long result = dbHelper.insertDish(hutName,name, price, 1, imageByteArray, price, 1);
 
                 if (result != -1) {
                     Intent intent = new Intent(context.getApplicationContext(), CartsActivity.class);
+                    intent.putExtra("hutname", hutName);
                     v.getContext().startActivity(intent);
 
                     Toast.makeText(context, "Add to cart", Toast.LENGTH_SHORT).show();
