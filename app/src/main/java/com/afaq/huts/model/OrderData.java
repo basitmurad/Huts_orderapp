@@ -6,8 +6,11 @@ public class OrderData {
 
 
     private String hutName , userId , pushId ,orderId ,address;
+    private long timestamp;
     private int totalPrice;
     private ArrayList<OrderDetails> orderDetailsList;
+
+
     private boolean isActive ;
 
 
@@ -23,6 +26,25 @@ public class OrderData {
         this.totalPrice = totalPrice;
         this.orderDetailsList = orderDetailsList;
         this.isActive = isActive;
+    }
+
+    public OrderData(String hutName, String userId, String pushId, String orderId, String address, int totalPrice, ArrayList<OrderDetails> orderDetailsList, boolean isActive, long timestamp) {
+        this.hutName = hutName;
+        this.userId = userId;
+        this.pushId = pushId;
+        this.orderId = orderId;
+        this.address = address;
+        this.totalPrice = totalPrice;
+        this.orderDetailsList = orderDetailsList;
+        this.isActive = isActive;
+        this.timestamp = timestamp; // Set the timestamp
+    }
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getOrderId() {

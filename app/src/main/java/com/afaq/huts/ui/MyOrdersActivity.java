@@ -14,6 +14,7 @@ public class MyOrdersActivity extends AppCompatActivity {
     private ActivityMyOrdersBinding binding;
 
     private MyFragmentStateAdapter fragmentStateAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,19 +22,17 @@ public class MyOrdersActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
-fragmentStateAdapter = new MyFragmentStateAdapter(MyOrdersActivity.this);
-binding.viewPager.setAdapter(fragmentStateAdapter);
-
+        fragmentStateAdapter = new MyFragmentStateAdapter(MyOrdersActivity.this);
+        binding.viewPager.setAdapter(fragmentStateAdapter);
 
 
         binding.tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
-                binding.viewPager.setCurrentItem(tab.getPosition(),true);
+                binding.viewPager.setCurrentItem(tab.getPosition(), true);
 
             }
-
 
 
             @Override
@@ -53,7 +52,6 @@ binding.viewPager.setAdapter(fragmentStateAdapter);
                 binding.tablayout.selectTab(binding.tablayout.getTabAt(position));
             }
         });
-
 
 
     }

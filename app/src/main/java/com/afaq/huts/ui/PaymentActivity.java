@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.afaq.huts.databinding.ActivityPaymentBinding;
+import com.afaq.utils.GetDateTime;
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -41,7 +42,10 @@ import com.google.firebase.database.ValueEventListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -56,7 +60,9 @@ public class PaymentActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private BroadcastReceiver broadcastReceiver;
     private int total;
-    private String fcmToken, userName;
+    private Date date;
+
+
     private DatabaseReference databaseReference;
     private static final int APP_UPDATE_REQUEST_CODE = 123;
 
@@ -68,6 +74,11 @@ public class PaymentActivity extends AppCompatActivity {
         binding = ActivityPaymentBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
+
+
+
+
+
         broadcastReceiver = new NetworkChanger();
         registerNetworkChangeReceiver();
 
@@ -78,6 +89,8 @@ public class PaymentActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
 
 
+
+        date = new Date();
         databaseReference = FirebaseDatabase.getInstance().getReference("LatestOrders");
 
 
@@ -101,9 +114,18 @@ public class PaymentActivity extends AppCompatActivity {
         });
 
 
+
+
+
+
         binding.btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                DateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
+                String dateString = dateFormat. format(new Date()). toString();
+//                Toast.makeText(PaymentActivity.this, ""+dateString, Toast.LENGTH_SHORT).show();
+
 
                 if (binding.editextDelivery.getText().toString().isEmpty()) {
                     Toast.makeText(PaymentActivity.this, "Please enter you detail address", Toast.LENGTH_SHORT).show();
@@ -122,7 +144,7 @@ public class PaymentActivity extends AppCompatActivity {
                     // Send data to Firebase
                     DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("ActiveOrders");
 
-                    OrderData orderData = new OrderData(hut, userId, pushID, orderId, address, total1, orderDetailsList, true);
+                    OrderData orderData = new OrderData(hut, userId, pushID, orderId, address, total1, orderDetailsList, true );
                     ordersRef.child(userId).child(pushID).setValue(orderData)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -137,7 +159,10 @@ public class PaymentActivity extends AppCompatActivity {
                                                     DatabaseReference activeOrder = FirebaseDatabase.getInstance().getReference("ActiveOrdersUser");
 
 
-                                                    ActiveOrderUsers activeOrderUsers = new ActiveOrderUsers(sessionManager.getNaame(), sessionManager.getEmail(), sessionManager.getNumber(), userId, true);
+                                                    ActiveOrderUsers activeOrderUsers = new ActiveOrderUsers(sessionManager.getNaame(), sessionManager.getEmail(), sessionManager.getNumber(), userId, true ,dateString);
+
+
+//                                                    Toast.makeText(PaymentActivity.this, ""+currentTimestamp, Toast.LENGTH_SHORT).show();
 
                                                     activeOrder.child(orderData.getUserId())
                                                             .setValue(activeOrderUsers).addOnSuccessListener(new OnSuccessListener<Void>() {

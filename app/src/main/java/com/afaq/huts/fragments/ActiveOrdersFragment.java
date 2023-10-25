@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afaq.huts.R;
@@ -39,6 +40,7 @@ public class ActiveOrdersFragment extends Fragment {
     private ArrayList<OrderDetails> orderDetailsArrayList = new ArrayList<>();
 
     private DatabaseReference ordersRef;
+    private TextView textView;
 
     private ParentAdapter parentAdapters;
 
@@ -52,6 +54,7 @@ public class ActiveOrdersFragment extends Fragment {
 
 
         recyclerView = rootView.findViewById(R.id.activeRecycler);
+        textView = rootView.findViewById(R.id.textCounter12);
 
         ShowDialoge.showProgressDialog(getContext(), "Fetching your orders");
 
@@ -92,6 +95,13 @@ public class ActiveOrdersFragment extends Fragment {
                     recyclerView.setAdapter(parentAdapters);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     parentAdapters.notifyDataSetChanged();
+
+                    if (activeOrdersList.isEmpty()) {
+
+                        textView.setVisibility(View.GONE);
+                    } else {
+                        textView.setVisibility(View.VISIBLE);
+                    }
 //
 //                    if (activeOrdersList.isEmpty()) {
 //                        showNoActiveUsersDialog();
@@ -133,4 +143,6 @@ public class ActiveOrdersFragment extends Fragment {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+
 }

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 
 import android.content.BroadcastReceiver;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -52,7 +53,7 @@ import java.util.Map;
 public class ChatsActivity extends AppCompatActivity {
 
     private ActivityChatsBinding binding;
-    private DatabaseReference databaseReference, senderRef , adminRef;
+    private DatabaseReference databaseReference, senderRef, adminRef;
     String senderRoom, recieverRoom;
 
     private SessionManager sessionManager;
@@ -103,7 +104,7 @@ public class ChatsActivity extends AppCompatActivity {
 
 
         adminId = String.valueOf(sessionManager.getAdminUserId());
-       adminRef.child(adminId).child("read").setValue(false);
+        adminRef.child(adminId).child("read").setValue(false);
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
             userId = auth.getCurrentUser().getUid();
@@ -206,7 +207,7 @@ public class ChatsActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                finish();
+                startActivity(new Intent(ChatsActivity.this, DashboardActivity.class));
             }
         });
 
@@ -220,8 +221,6 @@ public class ChatsActivity extends AppCompatActivity {
 
 
     }
-
-
 
 
     private void getToken() {
@@ -243,8 +242,9 @@ public class ChatsActivity extends AppCompatActivity {
 
 //                        Senders senders = new Senders(sessionManager.getNaame(), sessionManager.getEmail(), userId, token, sessionManager.getNumber(), date1.getTime(), true );
 
-Senders senders = new Senders(sessionManager.getNaame() , sessionManager.getEmail(), userId,token
-,sessionManager.getNumber(),true,date.getTime());
+//                        Toast.makeText(ChatsActivity.this, ""+admin.getFcmToken(), Toast.LENGTH_SHORT).show();
+                        Senders senders = new Senders(sessionManager.getNaame(), sessionManager.getEmail(), userId, token
+                                , sessionManager.getNumber(), true, date.getTime());
                         senderRef.child(userId)
                                 .setValue(senders).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
@@ -292,8 +292,6 @@ Senders senders = new Senders(sessionManager.getNaame() , sessionManager.getEmai
             String url = "https://fcm.googleapis.com/fcm/send";
             JSONObject jsonObject = new JSONObject();
 
-//            jsonObject.put("title", name);
-//            jsonObject.put("body", order);
             jsonObject.put("title", name);
             jsonObject.put("body", body);
             jsonObject.put("data", new JSONObject().put("notification_type", notificationType));
@@ -378,7 +376,7 @@ Senders senders = new Senders(sessionManager.getNaame() , sessionManager.getEmai
         super.onBackPressed();
         adminRef.child(adminId).child("read").setValue(false);
 
-        finish();
+        startActivity(new Intent(ChatsActivity.this, DashboardActivity.class));
 
     }
 }

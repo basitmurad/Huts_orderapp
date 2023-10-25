@@ -62,8 +62,8 @@ public class DashboardActivity extends AppCompatActivity {
 
 
 
-//        GetDateTime getDateTime =new GetDateTime(this);
-//
+        GetDateTime getDateTime =new GetDateTime(this);
+
 //        getDateTime.getCurrentDateTime(new GetDateTime.TimeCallBack() {
 //            @Override
 //            public void getDateTime(String date, String time) {
@@ -72,7 +72,7 @@ public class DashboardActivity extends AppCompatActivity {
 //                String[] timeParts = time.split(":");
 //                int hours = Integer.parseInt(timeParts[0]);
 //
-//                if (hours >= 9 && hours < 21) {
+//                if (hours >= 9 && hours < 23) {
 //                    // Current time is between 9 AM and 9 PM, navigate to the dashboard
 ////                    navigateToDashboard();
 //                    Toast.makeText(DashboardActivity.this, "Service is available", Toast.LENGTH_SHORT).show();
@@ -171,20 +171,12 @@ public class DashboardActivity extends AppCompatActivity {
                 "restaurants and home \n" +
                 "chefs", R.drawable.breakfast));
 
-        list.add(new DashboardClass("Lunch & Dinner", "Oder from your favorite\n" +
+        list.add(new DashboardClass("Lunch  ", "Oder from your favorite\n" +
                 "restaurants and home \n" +
                 "chefs", R.drawable.lunch));
-        list.add(new DashboardClass("BreakFast", "Oder from your favorite\n" +
+        list.add(new DashboardClass("Dinner", "Oder from your favorite\n" +
                 "restaurants and home \n" +
                 "chefs"));
-
-        list.add(new DashboardClass("Fast Food & Others", "Oder from your favorite\n" +
-                "restaurants and home \n" +
-                "chefs", R.drawable.huts));
-
-        list.add(new DashboardClass("Huts Special", "Oder from your favorite\n" +
-                "restaurants and home \n" +
-                "chefs", R.drawable.hutspecial));
 
 
         binding.logout12.setOnClickListener(new View.OnClickListener() {
@@ -210,9 +202,6 @@ public class DashboardActivity extends AppCompatActivity {
                 DashboardActivity.this, HutsActivity.class
         )));
 
-        binding.btnHutsSpecial.setOnClickListener(v -> startActivity(new Intent(
-                DashboardActivity.this, HutsActivity.class
-        )));
 
 
         dashboardAdapter = new DashboardAdapter(this, list);
@@ -473,9 +462,9 @@ public class DashboardActivity extends AppCompatActivity {
         // Create a dialogue to inform the user that the service is off
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Service Hours");
-        builder.setMessage("The service is currently not available. Please check back during service hours (9 AM to 9 PM).");
+        builder.setMessage("The service is currently not available. Please check back during service hours (9 AM to 11 PM).");
         builder.setPositiveButton("OK", (dialog, which) -> finishAffinity());
-        builder.setCancelable(false);
+        builder.setCancelable(true);
         builder.show();
     }
 }

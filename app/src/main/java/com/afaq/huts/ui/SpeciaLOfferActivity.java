@@ -40,11 +40,30 @@ public class SpeciaLOfferActivity extends AppCompatActivity {
         list.clear();
         filterList.clear();
 
-        list.add(new BreakfastClass("Momos", "350", R.drawable.momos));
-        list.add(new BreakfastClass("Chowmein", "350", R.drawable.chowmin));
-        list.add(new BreakfastClass("Chicken chilli rice", "350", R.drawable.chickenchilli));
-        list.add(new BreakfastClass("manchurian", "350", R.drawable.manuc));
-        list.add(new BreakfastClass("Chicken shashlik rice", "380", R.drawable.chirice));
+        // First, remove the items you want to replace
+        list.clear();
+
+// Then, add the new items to the list
+        list.add(new BreakfastClass("Banana shake", "120", R.drawable.bananashake));
+        list.add(new BreakfastClass("Oreo shake", "120", R.drawable.oreashake));
+        list.add(new BreakfastClass("Apple shake", "120", R.drawable.appleshake));
+        list.add(new BreakfastClass("Grapes juice", "130", R.drawable.graphjuice));
+        list.add(new BreakfastClass("Fruit chat", "120", R.drawable.fruitchat));
+        list.add(new BreakfastClass("Fruit chat special", "150", R.drawable.fruitchatspecial));
+        list.add(new BreakfastClass("Masammi juice", "120", R.drawable.massamijuice));
+        list.add(new BreakfastClass("Orange juice", "120", R.drawable.orangejuice));
+        list.add(new BreakfastClass("Falsa juice", "130", R.drawable.falsajuice));
+        list.add(new BreakfastClass("Mineral water S", "60", R.drawable.water));
+        list.add(new BreakfastClass("Mineral water L", "100", R.drawable.water));
+        list.add(new BreakfastClass("Pepsi 200ml", "70", R.drawable.pepsi));
+        list.add(new BreakfastClass("Pepsi 500ml", "100", R.drawable.pepsi));
+        list.add(new BreakfastClass("Pepsi 1.5 litre", "100", R.drawable.pepsi));
+        list.add(new BreakfastClass("Coke 200ml", "70", R.drawable.coke));
+        list.add(new BreakfastClass("Coke 500ml", "100", R.drawable.coke));
+        list.add(new BreakfastClass("Coke 1.5 litre", "100", R.drawable.coke));
+
+        list.add(new BreakfastClass("Disposable glass", "5", R.drawable.glasss));
+
 
 
 

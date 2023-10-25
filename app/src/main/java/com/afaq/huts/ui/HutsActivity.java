@@ -40,16 +40,16 @@ public class HutsActivity extends AppCompatActivity {
 
         list.add(new HutsClass("Qau Cafe", "10:00  to 22:00 ", R.drawable.farward));
         list.add(new HutsClass("Majeed Hut", "10:00  to 22:00 ", R.drawable.farward));
-        list.add(new HutsClass("Social Hut", "10:00  to 22:00 ", R.drawable.farward));
+        list.add(new HutsClass("Social Hut", "10:00  to 18:00 ", R.drawable.farward));
         list.add(new HutsClass("Paradise Hut", "10:00  to 22:00 ", R.drawable.farward));
         list.add(new HutsClass("Mphil Canteen", "10:00  to 22:00 ", R.drawable.farward));
-        list.add(new HutsClass("Quetta Cafe", "10:00  to 22:00 ", R.drawable.farward));
+        list.add(new HutsClass("Quetta Cafe", "10:00  to 23:00 ", R.drawable.farward));
         list.add(new HutsClass("Faizan Hut", "10:00  to 16:00 ", R.drawable.farward));
         list.add(new HutsClass("Hikmat Hut", "10:00  to 22:00 ", R.drawable.farward));
         list.add(new HutsClass("Shabbir Hut", "10:00  to 22:00 ", R.drawable.farward));
         list.add(new HutsClass("Daniyal Hut", "10:00  to 16:00 ", R.drawable.farward));
 
-        list.add(new HutsClass("Bio Hut", "10:00  to 4:00 ", R.drawable.farward));
+        list.add(new HutsClass("Bio Hut", "10:00  to 16:00 ", R.drawable.farward));
 
         list.add(new HutsClass("H9 Canteen", "4:00  to 23:00 ", R.drawable.farward));
 
@@ -75,18 +75,7 @@ public class HutsActivity extends AppCompatActivity {
                 finish();
             }
         });
-//        binding.btnSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                filter(newText);
-//                return true;
-//            }
-//        });
+
 
         SearchView btnSearch = findViewById(R.id.btnSearch);
         btnSearch.setOnClickListener(new View.OnClickListener() {

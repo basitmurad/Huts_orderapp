@@ -9,6 +9,21 @@
 
 
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="Your Order Will Be Deliver in 35 to 40 minutes "
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/white"
+        android:padding="8dp"
+        android:visibility="invisible"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="14dp"
+        android:id="@+id/textCounter12"
+        />
+
 <androidx.recyclerview.widget.RecyclerView
     android:layout_width="match_parent"
     android:layout_height="match_parent"

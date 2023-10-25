@@ -40,13 +40,13 @@ public class HnineActivity extends AppCompatActivity {
         list.clear();
         filteredList.clear();
 
-        list.add(new BreakfastClass("Quarma", "180", R.drawable.qourma));
+        list.add(new BreakfastClass("Qourma", "180", R.drawable.qourma));
         list.add(new BreakfastClass("Chai", "50", R.drawable.chaye));
         list.add(new BreakfastClass("Qeema", "150", R.drawable.aluqeema));
         list.add(new BreakfastClass("Roti", "20", R.drawable.roti));
         list.add(new BreakfastClass("Aalu paratha", "90", R.drawable.alooparatha));
         list.add(new BreakfastClass("Paratha", "50", R.drawable.paratha));
-        list.add(new BreakfastClass("Kalaji", "150", R.drawable.kalijifri));
+        list.add(new BreakfastClass("Kaliji fri", "150", R.drawable.kalijifri));
         list.add(new BreakfastClass("Egg fri", "50", R.drawable.eggfri));
         list.add(new BreakfastClass("Anda paratha", "100", R.drawable.andaparatha));
         list.add(new BreakfastClass("Lobya", "120", R.drawable.lobia));
@@ -58,6 +58,28 @@ public class HnineActivity extends AppCompatActivity {
         list.add(new BreakfastClass("Anda shami burger", "150", R.drawable.andaburger));
         list.add(new BreakfastClass("Chicken burger", "200", R.drawable.chickenburger));
         list.add(new BreakfastClass("Shawarma", "180", R.drawable.sharma));
+
+
+        list.add(new BreakfastClass("Banana shake", "120", R.drawable.bananashake));
+        list.add(new BreakfastClass("Oreo shake", "120", R.drawable.oreashake));
+        list.add(new BreakfastClass("Apple shake", "120", R.drawable.appleshake));
+        list.add(new BreakfastClass("Grapes juice", "130", R.drawable.graphjuice));
+        list.add(new BreakfastClass("Fruit chat", "120", R.drawable.fruitchat));
+        list.add(new BreakfastClass("Fruit chat special", "150", R.drawable.fruitchatspecial));
+        list.add(new BreakfastClass("Masammi juice", "120", R.drawable.massamijuice));
+        list.add(new BreakfastClass("Orange juice", "120", R.drawable.orangejuice));
+        list.add(new BreakfastClass("Falsa juice", "130", R.drawable.falsajuice));
+        list.add(new BreakfastClass("Mineral water S", "60", R.drawable.water));
+        list.add(new BreakfastClass("Mineral water L", "100", R.drawable.water));
+        list.add(new BreakfastClass("Pepsi 200ml", "70", R.drawable.pepsi));
+        list.add(new BreakfastClass("Pepsi 500ml", "100", R.drawable.pepsi));
+        list.add(new BreakfastClass("Pepsi 1.5 litre", "170", R.drawable.pepsi));
+        list.add(new BreakfastClass("Coke 200ml", "70", R.drawable.coke));
+        list.add(new BreakfastClass("Coke 500ml", "100", R.drawable.coke));
+        list.add(new BreakfastClass("Coke 1.5 litre", "170", R.drawable.coke));
+
+        list.add(new BreakfastClass("Disposable glass", "5", R.drawable.glasss));
+
 
         filteredList.addAll(list);
 

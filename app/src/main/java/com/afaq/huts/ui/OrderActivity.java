@@ -40,7 +40,7 @@ private  ArrayList<OrderDetails> orderDetailsList;
 
 
         hutName = getIntent().getStringExtra("hutname");
-        Toast.makeText(this, ""+hutName, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, ""+hutName, Toast.LENGTH_SHORT).show();
 
 
 

@@ -47,20 +47,7 @@ public class CartsActivity extends AppCompatActivity {
         binding.cardRecycler.setAdapter(cartAdapter);
 
 
-//        binding.btnOrder.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (dishList.isEmpty()) {
-//                    Toast.makeText(CartsActivity.this, "order is empty", Toast.LENGTH_SHORT).show();
-//                } else {
-////                    startActivity(new Intent(CartsActivity.this, OrderActivity.class));
-//
-//                    Intent intent = new Intent(CartsActivity.this,OrderActivity.class);
-//                    intent.putExtra("hutname", hutName);
-//                    startActivity(intent);
-//                }
-//            }
-//        });
+
         binding.btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

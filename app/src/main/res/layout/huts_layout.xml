@@ -86,7 +86,7 @@
                     android:layout_gravity="center"
 
                     android:fontFamily="@font/inter_bold"
-                    android:text="  Active"
+                    android:text=" "
                     android:textColor="#3CFD07"
                     android:textSize="12sp"
                     android:layout_marginStart="16dp"

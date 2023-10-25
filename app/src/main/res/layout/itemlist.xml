@@ -127,6 +127,36 @@
                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
                    app:layout_constraintVertical_bias="0.0" />
 
+
+               <LinearLayout
+                   android:id="@+id/linearLayout13"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="16dp"
+                   android:visibility="gone"
+                   app:layout_constraintBottom_toBottomOf="@+id/btnCancelOrders"
+                   app:layout_constraintStart_toEndOf="@+id/btnCancelOrders"
+                   app:layout_constraintTop_toTopOf="@+id/btnCancelOrders">
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Order will be delivered in "
+                       android:textColor="@color/black"
+                       android:textSize="14sp" />
+
+                   <TextView
+                       android:id="@+id/counter"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:fontFamily="@font/inter_bold"
+                       android:paddingStart="8dp"
+                       android:text="00:00"
+                       android:textColor="@color/white"
+                       android:textSize="14sp" />
+
+               </LinearLayout>
+
                <ImageView
                    android:id="@+id/btnOpen"
                    android:layout_width="35dp"
@@ -134,7 +164,7 @@
 
                    android:layout_marginEnd="16dp"
                    android:src="@drawable/baseline_navigate_next_24"
-                   app:layout_constraintBottom_toBottomOf="@+id/btnCancelOrders"
+                   app:layout_constraintBottom_toBottomOf="@+id/linearLayout13"
                    app:layout_constraintEnd_toEndOf="parent"
                    app:layout_constraintTop_toTopOf="@+id/constraintLayout3" />
 
