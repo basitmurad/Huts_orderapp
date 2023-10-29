@@ -84,6 +84,7 @@ public class HutAdapter extends RecyclerView.Adapter<HutAdapter.MyHolder> {
                         public void onClick(View v) {
                             String hutName = hutsClass.getHutsName();
 
+
                             if (hutName.equals("Daniyal Hut")) {
 
                                 Intent intent = new Intent(context, DaniyalHutsActivity.class);

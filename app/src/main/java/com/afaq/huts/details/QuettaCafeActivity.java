@@ -42,6 +42,8 @@ public class QuettaCafeActivity extends AppCompatActivity {
 
 
         list.add(new BreakfastClass("Paratha", "60", R.drawable.paratha));
+        list.add(new BreakfastClass("Chappal Kabab small", "120", R.drawable.chappalkabab));
+        list.add(new BreakfastClass("Chappal Kabab large", "180", R.drawable.chappalkabab));
         list.add(new BreakfastClass("Chai", "60", R.drawable.chaye));
         list.add(new BreakfastClass("Aalu Paratha", "100", R.drawable.alooparatha));
         list.add(new BreakfastClass("Aalu Cheese Paratha", "150", R.drawable.alocheeseparatha));
@@ -49,7 +51,7 @@ public class QuettaCafeActivity extends AppCompatActivity {
         list.add(new BreakfastClass("Egg Fri", "50", R.drawable.eggfri));
         list.add(new BreakfastClass("Omlete", "50", R.drawable.omlete));
         list.add(new BreakfastClass("Chaney", "100", R.drawable.dalchaney));
-        list.add(new BreakfastClass("Chicken Biryani", "200", R.drawable.chickenbiryani));
+        list.add(new BreakfastClass("Chicken Biryani", "220", R.drawable.chickenbiryani));
 
 
         list.add(new BreakfastClass("Banana shake", "120", R.drawable.bananashake));
@@ -64,11 +66,13 @@ public class QuettaCafeActivity extends AppCompatActivity {
         list.add(new BreakfastClass("Mineral water S", "60", R.drawable.water));
         list.add(new BreakfastClass("Mineral water L", "100", R.drawable.water));
         list.add(new BreakfastClass("Pepsi 200ml", "70", R.drawable.pepsi));
-        list.add(new BreakfastClass("Pepsi 500ml", "100", R.drawable.pepsi));
-        list.add(new BreakfastClass("Pepsi 1.5 litre", "170", R.drawable.pepsi));
+        list.add(new BreakfastClass("Pepsi 1 litre", "160", R.drawable.pepsi));
+        list.add(new BreakfastClass("coke 1 litre", "160", R.drawable.coke));
+        list.add(new BreakfastClass("Pepsi 500ml", "120", R.drawable.pepsi));
+        list.add(new BreakfastClass("Pepsi 1.5 litre", "190", R.drawable.pepsi));
         list.add(new BreakfastClass("Coke 200ml", "70", R.drawable.coke));
-        list.add(new BreakfastClass("Coke 500ml", "100", R.drawable.coke));
-        list.add(new BreakfastClass("Coke 1.5 litre", "170", R.drawable.coke));
+        list.add(new BreakfastClass("Coke 500ml", "120", R.drawable.coke));
+        list.add(new BreakfastClass("Coke 1.5 litre", "190", R.drawable.coke));
 
         list.add(new BreakfastClass("Disposable glass", "5", R.drawable.glasss));
 

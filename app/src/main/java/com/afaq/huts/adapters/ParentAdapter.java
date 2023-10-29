@@ -169,7 +169,7 @@ public class ParentAdapter extends RecyclerView.Adapter<ParentAdapter.MyHolder> 
             super(itemView);
 
             orderId = itemView.findViewById(R.id.orderId);
-            hutName = itemView.findViewById(R.id.hutName);
+            hutName = itemView.findViewById(R.id.hutNameOrder);
             totalPrice = itemView.findViewById(R.id.totalPrice);
             imageView = itemView.findViewById(R.id.btnOpen);
             btnCancel = itemView.findViewById(R.id.btnCancelOrders);

@@ -55,7 +55,7 @@ public class QuaCafeActivity extends AppCompatActivity {
         list.add(new BreakfastClass("Samosa Chat", "120", R.drawable.samosachat));
         list.add(new BreakfastClass("Dahi Baley", "120", R.drawable.dahibaley));
         list.add(new BreakfastClass("Chaney Chaat", "110", R.drawable.chaneychat));
-        list.add(new BreakfastClass("Zinger Burger", "270", R.drawable.zingerburger));
+        list.add(new BreakfastClass("Zinger Burger", "230", R.drawable.zingerburger));
         list.add(new BreakfastClass("Shawarma", "180", R.drawable.sharma));
         list.add(new BreakfastClass("Zinger Shawarma", "270", R.drawable.zingershawarma));
         list.add(new BreakfastClass("Paratha Roll", "250", R.drawable.paratharoll));
@@ -65,6 +65,11 @@ public class QuaCafeActivity extends AppCompatActivity {
         list.add(new BreakfastClass("Chai", "50", R.drawable.chaye));
         list.add(new BreakfastClass("Egg Fri", "50", R.drawable.eggfri));
         list.add(new BreakfastClass("Omelette", "50", R.drawable.omlete));
+
+        list.add(new BreakfastClass("Mali boti", "250", R.drawable.maliboti));
+        list.add(new BreakfastClass("BBQ piece", "250", R.drawable.bbq));
+        list.add(new BreakfastClass("Beef kabab", "120", R.drawable.beefkabab));
+        list.add(new BreakfastClass("Tikkat boti", "280", R.drawable.tikaboti));
 
 
 
@@ -80,11 +85,13 @@ public class QuaCafeActivity extends AppCompatActivity {
         list.add(new BreakfastClass("Mineral water S", "60", R.drawable.water));
         list.add(new BreakfastClass("Mineral water L", "100", R.drawable.water));
         list.add(new BreakfastClass("Pepsi 200ml", "70", R.drawable.pepsi));
-        list.add(new BreakfastClass("Pepsi 500ml", "100", R.drawable.pepsi));
-        list.add(new BreakfastClass("Pepsi 1.5 litre", "170", R.drawable.pepsi));
+        list.add(new BreakfastClass("Pepsi 1 litre", "160", R.drawable.pepsi));
+        list.add(new BreakfastClass("coke 1 litre", "160", R.drawable.coke));
+        list.add(new BreakfastClass("Pepsi 500ml", "120", R.drawable.pepsi));
+        list.add(new BreakfastClass("Pepsi 1.5 litre", "190", R.drawable.pepsi));
         list.add(new BreakfastClass("Coke 200ml", "70", R.drawable.coke));
-        list.add(new BreakfastClass("Coke 500ml", "100", R.drawable.coke));
-        list.add(new BreakfastClass("Coke 1.5 litre", "170", R.drawable.coke));
+        list.add(new BreakfastClass("Coke 500ml", "120", R.drawable.coke));
+        list.add(new BreakfastClass("Coke 1.5 litre", "190", R.drawable.coke));
 
         list.add(new BreakfastClass("Disposable glass", "5", R.drawable.glasss));
 

@@ -60,11 +60,9 @@ public class PaymentActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private BroadcastReceiver broadcastReceiver;
     private int total;
-    private Date date;
 
 
     private DatabaseReference databaseReference;
-    private static final int APP_UPDATE_REQUEST_CODE = 123;
 
 
 
@@ -90,7 +88,6 @@ public class PaymentActivity extends AppCompatActivity {
 
 
 
-        date = new Date();
         databaseReference = FirebaseDatabase.getInstance().getReference("LatestOrders");
 
 
@@ -103,6 +100,7 @@ public class PaymentActivity extends AppCompatActivity {
         DbHelper dbHelper = new DbHelper(PaymentActivity.this);
 //        total = (int) dbHelper.calculateTotalNewPrice();
 
+        
 
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,6 +168,7 @@ public class PaymentActivity extends AppCompatActivity {
                                                                 public void onSuccess(Void unused) {
 
                                                                     getToken();
+//                                                                    Toast.makeText(PaymentActivity.this, ""+dateString, Toast.LENGTH_SHORT).show();
 //                                                                    Toast.makeText(PaymentActivity.this, "Order Placed successfully", Toast.LENGTH_SHORT).show();
 //                                                                    startActivity(new Intent(PaymentActivity.this, DashboardActivity.class));
                                                                 }
