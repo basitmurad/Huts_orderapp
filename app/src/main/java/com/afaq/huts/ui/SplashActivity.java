@@ -64,6 +64,8 @@ public class SplashActivity extends AppCompatActivity {
 
 
 
+
+
     }
 
 
@@ -78,46 +80,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        if (!internetChecker.isConnected())
-//        {
-//            internetChecker.showInternetDialog();
-//        }
-//        else {
-//
-//
-//            new Handler().postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//
-//                    if (currentUser != null) {
-//
-//                        ObjectAnimator zoomOut = ObjectAnimator.ofFloat(binding.imageView, "scaleX", 1.0f, 0.5f);
-//                        zoomOut.setDuration(1000); // Animation duration in milliseconds
-//                        zoomOut.setInterpolator(new DecelerateInterpolator()); // Optional: Add an interpolator for smoothness
-//
-//                        zoomOut.start();
-//                        startActivity(new Intent(SplashActivity.this, DashboardActivity.class));
-//                        //   applyBlurEffect(SplashActivity.this, binding.imageView, 25f); // 25f is the radius of the blur
-//
-//                        finish(); // Finish the current activity
-//                    } else {
-//
-//                        binding.imageView.animate().alpha(0f).setDuration(1000).start();
-//                        binding.imageView.animate()
-//                                .scaleX(0f)
-//                                .scaleY(0f)
-//                                .translationXBy(100f) // Move horizontally
-//                                .translationYBy(100f) // Move vertically
-//                                .setDuration(500)
-//                                .start();
-//                        // User is not authenticated, go to the signup activity
-//                        startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
-//                        finish(); // Finish the current activity
-//                    }
-//                }
-//            }, 700);
 
-      //  }
     }
 
     private void checkForAppUpdate() {

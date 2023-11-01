@@ -3,6 +3,7 @@ package com.afaq.huts.adapters;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,9 @@ public class ParentAdapter extends RecyclerView.Adapter<ParentAdapter.MyHolder> 
         OrderData orderData = orderDataArrayList.get(position);
 
         holder.orderId.setText(orderData.getOrderId());
-        holder.hutName.setText(orderData.getHutName());
+        holder.hutName.setText(String.valueOf(orderData.getHutName()));
+
+        Log.d("name" , orderData.getHutName());
         holder.totalPrice.setText("Total Rs. " + String.valueOf(orderData.getTotalPrice()));
 
         orderData.getOrderDetailsList();

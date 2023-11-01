@@ -119,8 +119,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
                             progressDialog.dismiss();
 
-                            Toast.makeText(RegistrationActivity.this, "Please try again", Toast.LENGTH_SHORT).show();
-                        }
+                            Log.e(TAG, "Account creation failed: " + task.getException());
+                            Toast.makeText(RegistrationActivity.this, "Please try again", Toast.LENGTH_SHORT).show();                        }
                     }
                 });
     }

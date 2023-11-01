@@ -60,60 +60,95 @@ public class DeliverFragment extends Fragment {
 
         activeOrdersList = new ArrayList<>();
         orderDetailsArrayList = new ArrayList<>();
-
         ordersRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                try {
-
-
+                if (isAdded()) {
                     if (snapshot.exists()) {
                         activeOrdersList.clear();
                         orderDetailsArrayList.clear();
                         ShowDialoge.dismissProgressDialog();
-
-
                         for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                             OrderData orderData = snapshot1.getValue(OrderData.class);
-                            if (orderData != null ) {
+                            if (orderData != null) {
                                 activeOrdersList.add(orderData);
-
                                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                     OrderDetails orderDetails = dataSnapshot.getValue(OrderDetails.class);
-
                                     orderDetailsArrayList.add(orderDetails);
-
                                 }
-
-
                             }
-
                         }
-
-
                         deliveredOrdersAdapter = new DeliveredOrdersAdapter(requireContext(), activeOrdersList);
                         recyclerView.setAdapter(deliveredOrdersAdapter);
-
                         deliveredOrdersAdapter.notifyDataSetChanged();
                         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
                     } else {
                         ShowDialoge.dismissProgressDialog();
-                        Log.d("Exception", "error");
                     }
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    Log.d("Exception", "error");
-                    // Toast.makeText(getActivity().getApplicationContext(), " "+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                ShowDialoge.dismissProgressDialog();
-                Log.d("Exception", "error");
+                if (isAdded()) {
+                    ShowDialoge.dismissProgressDialog();
+                }
             }
         });
+//        ordersRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                try {
+//
+//
+//
+//                    if (snapshot.exists()) {
+//                        activeOrdersList.clear();
+//                        orderDetailsArrayList.clear();
+//                        ShowDialoge.dismissProgressDialog();
+//
+//
+//                        for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+//                            OrderData orderData = snapshot1.getValue(OrderData.class);
+//                            if (orderData != null ) {
+//                                activeOrdersList.add(orderData);
+//
+//                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                                    OrderDetails orderDetails = dataSnapshot.getValue(OrderDetails.class);
+//
+//                                    orderDetailsArrayList.add(orderDetails);
+//
+//                                }
+//
+//
+//                            }
+//
+//                        }
+//
+//
+//                        deliveredOrdersAdapter = new DeliveredOrdersAdapter(requireContext(), activeOrdersList);
+//                        recyclerView.setAdapter(deliveredOrdersAdapter);
+//
+//                        deliveredOrdersAdapter.notifyDataSetChanged();
+//                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//
+//                    } else {
+//                        ShowDialoge.dismissProgressDialog();
+//                        Log.d("Exception", "error");
+//                    }
+//                } catch (ArrayIndexOutOfBoundsException e) {
+//                    Log.d("Exception", "error");
+//                    // Toast.makeText(getActivity().getApplicationContext(), " "+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                ShowDialoge.dismissProgressDialog();
+//                Log.d("Exception", "error");
+//            }
+//        });
 
 
         return view;

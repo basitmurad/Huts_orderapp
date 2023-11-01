@@ -29,18 +29,11 @@ private  ArrayList<OrderDetails> orderDetailsList;
         setContentView(binding.getRoot());
 
 
-//        intent.putExtra("name" , breakfastClass.getName());
-//        intent.putExtra("price", breakfastClass.getPrice());
-//
-//        specialName = getIntent().getStringExtra("name");
-//        specialPrice = getIntent().getStringExtra("price");
-
-
         DbHelper dbHelper = new DbHelper(this);
 
 
         hutName = getIntent().getStringExtra("hutname");
-//        Toast.makeText(this, ""+hutName, Toast.LENGTH_SHORT).show();
+
 
 
 
@@ -117,6 +110,8 @@ private  ArrayList<OrderDetails> orderDetailsList;
 
                 Intent intent = new Intent(OrderActivity.this,PaymentActivity.class);
 //
+
+                intent.putExtra("hut" , hutName);
 
                 startActivity(intent);
             }

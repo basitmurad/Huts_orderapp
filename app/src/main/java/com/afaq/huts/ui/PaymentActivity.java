@@ -64,6 +64,8 @@ public class PaymentActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
 
+    private String hutName  ;
+
 
 
     @Override
@@ -74,6 +76,7 @@ public class PaymentActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
+        hutName = getIntent().getStringExtra("hut");
 
 
 
@@ -142,7 +145,7 @@ public class PaymentActivity extends AppCompatActivity {
                     // Send data to Firebase
                     DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("ActiveOrders");
 
-                    OrderData orderData = new OrderData(hut, userId, pushID, orderId, address, total1, orderDetailsList, true );
+                    OrderData orderData = new OrderData(hutName, userId, pushID, orderId, address, total1, orderDetailsList, true );
                     ordersRef.child(userId).child(pushID).setValue(orderData)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override

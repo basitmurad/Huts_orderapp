@@ -13,6 +13,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -50,7 +51,7 @@ public class DashboardActivity extends AppCompatActivity {
     private String userEmail, userName, userNumber, userFcmToken;
     private BroadcastReceiver broadcastReceiver;
 
-    private DatabaseReference databaseReference ;
+    private DatabaseReference databaseReference;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -61,59 +62,58 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
-
-        GetDateTime getDateTime =new GetDateTime(this);
-
-//        getDateTime.getCurrentDateTime(new GetDateTime.TimeCallBack() {
-//            @Override
-//            public void getDateTime(String date, String time) {
-//
-//
-//                String[] timeParts = time.split(":");
-//                int hours = Integer.parseInt(timeParts[0]);
-//
-//                if (hours >= 9 && hours < 23) {
-//                    // Current time is between 9 AM and 9 PM, navigate to the dashboard
-////                    navigateToDashboard();
-//                    Toast.makeText(DashboardActivity.this, "Service is available", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    // Show a dialogue indicating that the service is off
-//                    showServiceOffDialog();
-//                }            }
-//        });
-
-
         broadcastReceiver = new NetworkChanger();
         registerNetworkChangeReceiver();
         firebaseAuth = FirebaseAuth.getInstance();
         sessionManager = new SessionManager(this);
-
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference("SenderAdmin");
 
 
         getToken();
 
 
+//        binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                binding.notif.setVisibility(View.INVISIBLE);
+//                Intent intent = new Intent(DashboardActivity.this, ChatsActivity.class);
+//
+//
+//                intent.putExtra("id", sessionManager.getAdminUserId());
+//                startActivity(intent);
+//
+//
+//                databaseReference.child(sessionManager.getAdminUserId()).child("read").setValue(false);
+//
+//                finish();
+//            }
+//        });
+
         binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 binding.notif.setVisibility(View.INVISIBLE);
                 Intent intent = new Intent(DashboardActivity.this, ChatsActivity.class);
 
+                String adminUserId = sessionManager.getAdminUserId();
+                if (adminUserId != null) {
+                    intent.putExtra("id", adminUserId);
+                    startActivity(intent);
 
-                intent.putExtra("id", sessionManager.getAdminUserId());
-                startActivity(intent);
+                    // Update the 'read' status in the database
+                    databaseReference.child(adminUserId).child("read").setValue(false);
 
 
-                databaseReference.child(sessionManager.getAdminUserId()).child("read").setValue(false);
+                } else {
 
-                finish();
+                    Toast.makeText(DashboardActivity.this, "Database error", Toast.LENGTH_SHORT).show();
+                    // Handle the case where adminUserId is null
+                    // You can show a message or take appropriate action here.
+                }
             }
         });
-
-
-        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
@@ -201,7 +201,6 @@ public class DashboardActivity extends AppCompatActivity {
         binding.btnfastFood.setOnClickListener(v -> startActivity(new Intent(
                 DashboardActivity.this, HutsActivity.class
         )));
-
 
 
         dashboardAdapter = new DashboardAdapter(this, list);
@@ -317,8 +316,6 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
 
-
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -328,46 +325,6 @@ public class DashboardActivity extends AppCompatActivity {
         dbHelper.deleteAllOrders();
     }
 
-    private void getToken() {
-
-        DatabaseReference adminDetailRef;
-
-        adminDetailRef = FirebaseDatabase.getInstance().getReference("AdminDetail");
-        adminDetailRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Admin admin = dataSnapshot.getValue(Admin.class);
-
-
-                      sessionManager.setAdminFcmToken(admin.getFcmToken());
-                        sessionManager.setAdminUerId(admin.getUserId());
-
-
-//                        Toast.makeText(DashboardActivity.this, ""+sessionManager.getAdminFcmToken()  + " and " + admin.getUserId(), Toast.LENGTH_SHORT).show();
-                    }
-
-
-                } else {
-
-                    Toast.makeText(DashboardActivity.this, "No user", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-
-                Toast.makeText(DashboardActivity.this, "database error" + error.getMessage(), Toast.LENGTH_SHORT).show();
-
-
-            }
-        });
-
-
-    }
 
     @Override
     protected void onResume() {
@@ -397,9 +354,14 @@ public class DashboardActivity extends AppCompatActivity {
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                     // Handle potential errors here
+
+                    Toast.makeText(DashboardActivity.this, "" + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
+//        else {
+//            getToken();
+//        }
     }
 
     private void registerNetworkChangeReceiver() {
@@ -422,32 +384,32 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        databaseReference.child(sessionManager.getAdminUserId()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-
-                    Senders senders = dataSnapshot.getValue(Senders.class);
-//                    Toast.makeText(DashboardActivity.this, ""+senders.getUserId(), Toast.LENGTH_SHORT).show();
-
-                    if (senders.isRead()) {
-                        binding.notif.setVisibility(View.VISIBLE);
+        String adminUserId = sessionManager.getAdminUserId();
+        if (adminUserId != null) {
+            databaseReference.child(adminUserId).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        Senders senders = dataSnapshot.getValue(Senders.class);
+                        if (senders.isRead()) {
+                            binding.notif.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        binding.notif.setVisibility(View.INVISIBLE);
                     }
-
-
-                } else {
-
-                    binding.notif.setVisibility(View.INVISIBLE);
-                    // User data does not exist
-
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Handle potential errors here
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Handle potential errors here
+
+                    Toast.makeText(DashboardActivity.this, "" + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+//        else {
+//            getToken();
+//        }
 
     }
 
@@ -455,16 +417,54 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        getToken();
+        if (sessionManager.getAdminFcmToken() == null && sessionManager.getAdminUserId() == null) {
+            getToken();
+        }
+
+
     }
 
-    private void showServiceOffDialog() {
-        // Create a dialogue to inform the user that the service is off
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Service Hours");
-        builder.setMessage("The service is currently not available. Please check back during service hours (9 AM to 11 PM).");
-        builder.setPositiveButton("OK", (dialog, which) -> finishAffinity());
-        builder.setCancelable(true);
-        builder.show();
+    private void getToken() {
+
+        DatabaseReference adminDetailRef;
+
+        adminDetailRef = FirebaseDatabase.getInstance().getReference("AdminDetail");
+
+        adminDetailRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        Admin admin = dataSnapshot.getValue(Admin.class);
+
+                        if (admin != null) {
+                            sessionManager.setAdminFcmToken(admin.getFcmToken());
+                            sessionManager.setAdminUerId(admin.getUserId());
+                        } else {
+                            Toast.makeText(DashboardActivity.this, "No Admin ", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+
+
+                } else {
+
+                    Toast.makeText(DashboardActivity.this, "No user", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+
+                Toast.makeText(DashboardActivity.this, "database error" + error.getMessage(), Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
+
     }
 }
